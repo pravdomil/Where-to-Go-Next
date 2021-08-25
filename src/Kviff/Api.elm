@@ -7,14 +7,11 @@ import Utils.Json.Decode_ as D_
 type alias Item =
     { id : Int
     , type_ : String
-    , typeCz : String
-    , typeEn : String
+    , typeName : Localized String
 
     --
-    , nameCz : String
-    , nameEn : String
-    , descriptionCz : String
-    , descriptionEn : String
+    , name : Localized String
+    , description : Localized String
 
     --
     , timeStart : String
@@ -22,8 +19,7 @@ type alias Item =
 
     --
     , addressId : Int
-    , addressNameCz : String
-    , addressNameEN : String
+    , addressName : Localized String
     , address : String
     , addressGps : String
     , addressPhone : String
@@ -31,6 +27,12 @@ type alias Item =
 
     --
     , order : Int
+    }
+
+
+type alias Localized a =
+    { en : a
+    , cz : a
     }
 
 
@@ -46,20 +48,16 @@ decodeItem =
             , timeStart = v2
             , id = v3
             , address = v4
-            , addressNameCz = v5
-            , addressNameEN = v6
+            , addressName = Localized v6 v5
             , addressGps = v7
             , addressId = v8
             , addressPhone = v9
             , addressWebsite = v10
-            , nameCz = v11
-            , nameEn = v12
+            , name = Localized v12 v11
             , order = v13
-            , descriptionCz = v14
-            , descriptionEn = v15
+            , description = Localized v15 v14
             , type_ = v16
-            , typeCz = v17
-            , typeEn = v18
+            , typeName = Localized v18 v17
             }
         )
         (D.field "casDo" D.string)
