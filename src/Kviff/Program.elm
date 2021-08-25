@@ -131,8 +131,13 @@ viewEvent model a =
                 [ text
                     ([ a.type_ |> Translation.type_ |> Just
                      , a.place.name |> Api.localize model.locale |> Just
-                     , a.timeStart
-                     , a.timeEnd
+                     , a.timeStart |> Maybe.map Translation.time
+                     , Maybe.map2
+                        (\start end ->
+                            Translation.duration (Time.posixToMillis end - Time.posixToMillis start)
+                        )
+                        a.timeStart
+                        a.timeEnd
                      ]
                         |> List.filterMap identity
                         |> String.join " – "
