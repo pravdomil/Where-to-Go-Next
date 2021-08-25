@@ -107,16 +107,23 @@ localize locale a =
 --
 
 
-getEvents : Task Http.Error (List Event)
-getEvents =
-    Http.task
-        { method = "GET"
-        , headers = []
-        , url = "https://www.kviff.com/en/exports/json/acmp-events"
-        , body = Http.emptyBody
-        , resolver = Resolver.json decodeEvents
-        , timeout = Just 30000
-        }
+getData : Task Http.Error Data
+getData =
+    let
+        request : D.Decoder a -> String -> Task Http.Error a
+        request decoder a =
+            Http.task
+                { method = "GET"
+                , headers = []
+                , url = "https://www.kviff.com/en/exports/json/acmp-" ++ a
+                , body = Http.emptyBody
+                , resolver = Resolver.json decoder
+                , timeout = Just 30000
+                }
+    in
+    Task.map2 Data
+        (request decodeFilms "catalog")
+        (request decodeEvents "events")
 
 
 
