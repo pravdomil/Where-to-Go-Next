@@ -10,7 +10,7 @@ import Time
 
 type alias Model =
     { locale : Api.Locale
-    , program : Result Error (List Api.Event)
+    , data : Result Error Api.Data
     }
 
 
@@ -22,10 +22,10 @@ type Error
 init : ( Model, Cmd Msg )
 init =
     ( { locale = Api.English
-      , program = Err Loading
+      , data = Err Loading
       }
-    , Api.getEvents
-        |> Task.attempt GotProgram
+    , Api.getData
+        |> Task.attempt GotData
     )
 
 
@@ -35,7 +35,7 @@ init =
 
 type Msg
     = ChangeLocale Api.Locale
-    | GotProgram (Result Http.Error (List Api.Event))
+    | GotData (Result Http.Error Api.Data)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -46,8 +46,8 @@ update msg model =
             , Cmd.none
             )
 
-        GotProgram b ->
-            ( { model | program = b |> Result.map sortProgram |> Result.mapError HttpError }
+        GotData b ->
+            ( { model | data = b |> Result.map sortData |> Result.mapError HttpError }
             , Cmd.none
             )
 
@@ -81,9 +81,9 @@ view model =
                 ]
             , localeChooser
             ]
-        , case model.program of
+        , case model.data of
             Ok b ->
-                viewProgram model b
+                viewEvents model b.events
 
             Err b ->
                 viewError b
@@ -114,8 +114,8 @@ viewError b =
         ]
 
 
-viewProgram : Model -> List Api.Event -> Element Msg
-viewProgram model a =
+viewEvents : Model -> List Api.Event -> Element Msg
+viewEvents model a =
     textColumn [ spacing 16 ]
         (List.map (viewEvent model) a)
 
