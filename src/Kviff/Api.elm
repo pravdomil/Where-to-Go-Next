@@ -39,6 +39,15 @@ type alias Place =
     }
 
 
+
+--
+
+
+type Locale
+    = English
+    | Czech
+
+
 type alias Localized a =
     { en : a
     , cz : a
