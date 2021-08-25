@@ -78,7 +78,8 @@ type alias Event =
 
 
 type EventType
-    = Event_
+    = Screening_
+    | Event_
     | Daily
     | Talk
     | Exhibition
@@ -319,3 +320,53 @@ decodeMaybeGps =
         , Gps.decode
             |> D.map Just
         ]
+
+
+
+--
+
+
+normalizeData : Data -> List Event
+normalizeData a =
+    let
+        filmToEvents : Film -> List Event
+        filmToEvents b =
+            b.screenings |> List.map (screeningToEvent b)
+
+        screeningToEvent : Film -> Screening -> Event
+        screeningToEvent film b =
+            let
+                place : Place
+                place =
+                    { id = b.theatreId
+                    , name = b.theatreName
+
+                    --
+                    , address = b.theatreAddress
+                    , gps = Just b.theatreGps
+
+                    --
+                    , phone = ""
+                    , website = ""
+                    }
+            in
+            { id = Nothing
+            , filmId = Just film.id
+            , type_ = Screening_
+
+            --
+            , name = Localized film.name film.name
+            , description = film.annotation
+
+            --
+            , timeStart = Just b.timeStart
+            , timeEnd = Just (Time.millisToPosix (Time.posixToMillis b.timeStart + (film.duration * 60 * 1000)))
+
+            --
+            , place = place
+
+            --
+            , order = 0
+            }
+    in
+    a.events ++ List.concatMap filmToEvents a.films
