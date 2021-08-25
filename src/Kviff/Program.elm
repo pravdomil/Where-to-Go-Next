@@ -129,7 +129,7 @@ viewEvent model a =
                 ]
             , p [ fontSize 14, fontColor grey4 ]
                 [ text
-                    ([ a.type_ |> Translation.type_ |> Just
+                    ([ a.type_ |> Translation.eventType |> Just
                      , a.place.name |> Api.localize model.locale |> Just
                      , a.timeStart |> Maybe.map Translation.time
                      , Maybe.map2

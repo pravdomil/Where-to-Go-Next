@@ -14,8 +14,8 @@ footer =
     "You are welcome!"
 
 
-type_ : Api.Type -> String
-type_ a =
+eventType : Api.EventType -> String
+eventType a =
     case a of
         Api.Event_ ->
             "Event"

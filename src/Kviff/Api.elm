@@ -11,7 +11,7 @@ import Utils.Json.Decode_ as D_
 
 type alias Event =
     { id : Int
-    , type_ : Type
+    , type_ : EventType
 
     --
     , name : Localized String
@@ -29,7 +29,7 @@ type alias Event =
     }
 
 
-type Type
+type EventType
     = Event_
     | Daily
     | Talk
@@ -150,11 +150,11 @@ decodeEvent =
         |> D_.apply (D.field "order" D.int)
         |> D_.apply (D.field "popis_cz" D.string)
         |> D_.apply (D.field "popis_en" D.string)
-        |> D_.apply (D.field "typ" decodeType)
+        |> D_.apply (D.field "typ" decodeEventType)
 
 
-decodeType : D.Decoder Type
-decodeType =
+decodeEventType : D.Decoder EventType
+decodeEventType =
     D.string
         |> D.andThen
             (\v ->
