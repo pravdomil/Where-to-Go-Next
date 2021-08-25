@@ -14,8 +14,8 @@ type alias Item =
     , description : Localized String
 
     --
-    , timeStart : String
-    , timeEnd : String
+    , timeStart : Maybe String
+    , timeEnd : Maybe String
 
     --
     , addressId : Int
@@ -60,8 +60,8 @@ decodeItem =
             , typeName = Localized v18 v17
             }
         )
-        (D.field "cas_do" D.string)
-        (D.field "cas_od" D.string)
+        (D.field "cas_do" (D_.maybe D.string))
+        (D.field "cas_od" (D_.maybe D.string))
         (D.field "id" D.int)
         (D.field "misto_adresa" D.string)
         (D.field "misto_cz" D.string)
