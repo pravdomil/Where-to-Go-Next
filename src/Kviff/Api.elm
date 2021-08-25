@@ -9,6 +9,33 @@ import Time
 import Utils.Json.Decode_ as D_
 
 
+type alias Data =
+    { films : List Film
+    , events : List Event
+    }
+
+
+type alias Film =
+    { id : Int
+
+    --
+    , name : String
+    , nameLocalized : Localized String
+    , author : String
+
+    --
+    , annotation : Localized String
+    , description : Localized String
+    , additionalDesc : Localized String
+    , internalNotes : String
+
+    --
+    , year : Int
+    , duration : Int
+    , country : Localized String
+    }
+
+
 type alias Event =
     { id : Int
     , type_ : EventType
@@ -94,6 +121,41 @@ getEvents =
 
 
 --
+
+
+decodeFilm : D.Decoder Film
+decodeFilm =
+    D.map8
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 ->
+            { id = v1
+            , nameLocalized = Localized v2 v3
+            , name = v4
+            , author = v5
+            , annotation = Localized v6 v7
+            , description = Localized v8 v9
+            , additionalDesc = Localized v10 v11
+            , internalNotes = v12
+            , year = v13
+            , duration = v14
+            , country = Localized v15 v16
+            }
+        )
+        (D.field "id_film" D.int)
+        (D.field "nazev_en" D.string)
+        (D.field "nazev_cz" D.string)
+        (D.field "nazev_orig" D.string)
+        (D.field "author" D.string)
+        (D.field "anotace_en" D.string)
+        (D.field "anotace_cz" D.string)
+        (D.field "film_en" D.string)
+        |> D_.apply (D.field "film_cz" D.string)
+        |> D_.apply (D.field "doplnujici_text_en" D.string)
+        |> D_.apply (D.field "doplnujici_text_cz" D.string)
+        |> D_.apply (D.field "poznamky" D.string)
+        |> D_.apply (D.field "rok" D.int)
+        |> D_.apply (D.field "delka" D.int)
+        |> D_.apply (D.field "zeme_en" D.string)
+        |> D_.apply (D.field "zeme_cz" D.string)
 
 
 decodeEvents : D.Decoder (List Event)
