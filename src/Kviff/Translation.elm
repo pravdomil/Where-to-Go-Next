@@ -17,6 +17,9 @@ footer =
 eventType : Api.EventType -> String
 eventType a =
     case a of
+        Api.Screening_ ->
+            "Screening"
+
         Api.Event_ ->
             "Event"
 
