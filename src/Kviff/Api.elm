@@ -130,6 +130,12 @@ getData =
 --
 
 
+decodeFilms : D.Decoder (List Film)
+decodeFilms =
+    D.field "sekce" (D.list (D.field "subsekce" (D.list (D.field "film" (D.list decodeFilm)))))
+        |> D.map (List.concat >> List.concat)
+
+
 decodeFilm : D.Decoder Film
 decodeFilm =
     D.map8
