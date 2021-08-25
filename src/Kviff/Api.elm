@@ -37,7 +37,8 @@ type alias Film =
 
 
 type alias Event =
-    { id : Int
+    { id : Maybe Int
+    , filmId : Maybe Int
     , type_ : EventType
 
     --
@@ -181,7 +182,8 @@ decodeEvent : D.Decoder Event
 decodeEvent =
     D.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 ->
-            { id = v3
+            { id = Just v3
+            , filmId = Nothing
             , type_ = v16
 
             --
