@@ -1,6 +1,9 @@
 module Kviff.Api exposing (..)
 
+import Http
+import Http.Resolver as Resolver
 import Json.Decode as D
+import Task exposing (Task)
 import Utils.Json.Decode_ as D_
 
 
@@ -66,6 +69,28 @@ localize locale a =
 
 
 --
+
+
+getProgram : Task Http.Error (List Event)
+getProgram =
+    Http.task
+        { method = "GET"
+        , headers = []
+        , url = "https://www.kviff.com/en/exports/json/acmp-events"
+        , body = Http.emptyBody
+        , resolver = Resolver.json decodeProgram
+        , timeout = Just 30000
+        }
+
+
+
+--
+
+
+decodeProgram : D.Decoder (List Event)
+decodeProgram =
+    D.field "typ" (D.list (D.field "den" (D.list (D.field "akce" (D.list decodeEvent)))))
+        |> D.map (List.concat >> List.concat)
 
 
 decodeEvent : D.Decoder Event
