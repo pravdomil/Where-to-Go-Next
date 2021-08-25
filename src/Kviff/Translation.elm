@@ -30,3 +30,8 @@ type_ a =
 
         Api.Restaurant ->
             "Restaurant"
+
+
+duration : Int -> String
+duration a =
+    String.fromFloat (toFloat (round (toFloat a / 100 / 60 / 60)) / 10) ++ "h"
