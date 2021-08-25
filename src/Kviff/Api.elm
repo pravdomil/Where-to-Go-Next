@@ -80,14 +80,14 @@ localize locale a =
 --
 
 
-getProgram : Task Http.Error (List Event)
-getProgram =
+getEvents : Task Http.Error (List Event)
+getEvents =
     Http.task
         { method = "GET"
         , headers = []
         , url = "https://www.kviff.com/en/exports/json/acmp-events"
         , body = Http.emptyBody
-        , resolver = Resolver.json decodeProgram
+        , resolver = Resolver.json decodeEvents
         , timeout = Just 30000
         }
 
@@ -96,8 +96,8 @@ getProgram =
 --
 
 
-decodeProgram : D.Decoder (List Event)
-decodeProgram =
+decodeEvents : D.Decoder (List Event)
+decodeEvents =
     D.field "typ" (D.list (D.field "den" (D.list (D.field "akce" (D.list decodeEvent)))))
         |> D.map (List.concat >> List.concat)
 

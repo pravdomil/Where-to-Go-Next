@@ -24,7 +24,7 @@ init =
     ( { locale = Api.English
       , program = Err Loading
       }
-    , Api.getProgram
+    , Api.getEvents
         |> Task.attempt GotProgram
     )
 
