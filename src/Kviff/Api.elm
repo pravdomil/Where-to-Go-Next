@@ -70,7 +70,7 @@ type alias Place =
 
     --
     , address : String
-    , gps : String
+    , gps : Maybe Gps
 
     --
     , phone : String
@@ -216,7 +216,7 @@ decodeEvent =
         (D.field "misto_adresa" D.string)
         (D.field "misto_cz" D.string)
         (D.field "misto_en" D.string)
-        (D.field "misto_gps" D.string)
+        (D.field "misto_gps" decodeMaybeGps)
         (D.field "misto_id" D.int)
         |> D_.apply (D.field "misto_telefon" D.string)
         |> D_.apply (D.field "misto_website" D.string)
@@ -252,3 +252,20 @@ decodeEventType =
                     _ ->
                         D.fail ("Unknown type " ++ v ++ ".")
             )
+
+
+decodeMaybeGps : D.Decoder (Maybe Gps)
+decodeMaybeGps =
+    D.oneOf
+        [ D.string
+            |> D.andThen
+                (\v ->
+                    if v == "" then
+                        D.succeed Nothing
+
+                    else
+                        D.fail "GPS coordinates are not empty."
+                )
+        , Gps.decode
+            |> D.map Just
+        ]
