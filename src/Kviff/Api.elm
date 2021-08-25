@@ -250,5 +250,5 @@ decodeEventType =
                         D.succeed Restaurant
 
                     _ ->
-                        D.fail ("Unknow type " ++ v ++ ".")
+                        D.fail ("Unknown type " ++ v ++ ".")
             )
