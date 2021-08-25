@@ -32,7 +32,7 @@ type alias Film =
     , annotation : Localized String
     , description : Localized String
     , additionalDesc : Localized String
-    , internalNotes : String
+    , internalNote : String
 
     --
     , year : Int
@@ -174,7 +174,7 @@ decodeFilm =
             , annotation = Localized v6 v7
             , description = Localized v8 v9
             , additionalDesc = Localized v10 v11
-            , internalNotes = v12
+            , internalNote = v12
             , year = v13
             , duration = v14
             , country = Localized v15 v16
