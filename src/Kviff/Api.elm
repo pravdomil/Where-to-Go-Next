@@ -2,8 +2,10 @@ module Kviff.Api exposing (..)
 
 import Http
 import Http.Resolver as Resolver
+import Iso8601
 import Json.Decode as D
 import Task exposing (Task)
+import Time
 import Utils.Json.Decode_ as D_
 
 
@@ -16,8 +18,8 @@ type alias Event =
     , description : Localized String
 
     --
-    , timeStart : Maybe String
-    , timeEnd : Maybe String
+    , timeStart : Maybe Time.Posix
+    , timeEnd : Maybe Time.Posix
 
     --
     , place : Place
@@ -133,8 +135,8 @@ decodeEvent =
             , order = v13
             }
         )
-        (D.field "cas_do" (D_.maybe D.string))
-        (D.field "cas_od" (D_.maybe D.string))
+        (D.field "cas_do" (D_.maybe Iso8601.decoder))
+        (D.field "cas_od" (D_.maybe Iso8601.decoder))
         (D.field "id" D.int)
         (D.field "misto_adresa" D.string)
         (D.field "misto_cz" D.string)
