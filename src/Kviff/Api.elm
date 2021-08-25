@@ -1,5 +1,6 @@
 module Kviff.Api exposing (..)
 
+import Gps as Gps exposing (Gps)
 import Http
 import Http.Resolver as Resolver
 import Iso8601
