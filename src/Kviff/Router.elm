@@ -35,7 +35,7 @@ update msg model =
             case a of
                 Browser.Internal url ->
                     ( model
-                    , Navigation.pushUrl model.key (Url.toString url)
+                    , Navigation.load (Url.toString url)
                     )
 
                 Browser.External url ->
