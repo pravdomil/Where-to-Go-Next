@@ -9,8 +9,7 @@ import Utils.Json.Decode_ as D_
 
 type alias Event =
     { id : Int
-    , type_ : String
-    , typeName : Localized String
+    , type_ : Type
 
     --
     , name : Localized String
@@ -26,6 +25,14 @@ type alias Event =
     --
     , order : Int
     }
+
+
+type Type
+    = Event_
+    | Daily
+    | Talk
+    | Exhibition
+    | Restaurant
 
 
 type alias Place =
@@ -96,10 +103,9 @@ decodeProgram =
 decodeEvent : D.Decoder Event
 decodeEvent =
     D.map8
-        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 ->
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 ->
             { id = v3
             , type_ = v16
-            , typeName = Localized v18 v17
 
             --
             , name = Localized v12 v11
@@ -142,6 +148,30 @@ decodeEvent =
         |> D_.apply (D.field "order" D.int)
         |> D_.apply (D.field "popis_cz" D.string)
         |> D_.apply (D.field "popis_en" D.string)
-        |> D_.apply (D.field "typ" D.string)
-        |> D_.apply (D.field "typ_cz" D.string)
-        |> D_.apply (D.field "typ_en" D.string)
+        |> D_.apply (D.field "typ" decodeType)
+
+
+decodeType : D.Decoder Type
+decodeType =
+    D.string
+        |> D.andThen
+            (\v ->
+                case v of
+                    "Akce" ->
+                        D.succeed Event_
+
+                    "Denně" ->
+                        D.succeed Daily
+
+                    "KVIFF Talk" ->
+                        D.succeed Talk
+
+                    "Výstava" ->
+                        D.succeed Exhibition
+
+                    "Restaurace" ->
+                        D.succeed Restaurant
+
+                    _ ->
+                        D.fail ("Unknow type " ++ v ++ ".")
+            )
