@@ -5,6 +5,7 @@ import Kviff.Api as Api
 import Kviff.Translation as Translation
 import Kviff.Ui.Base exposing (..)
 import Task exposing (Task)
+import Time
 
 
 type alias Model =
@@ -46,7 +47,7 @@ update msg model =
             )
 
         GotProgram b ->
-            ( { model | program = b |> Result.mapError HttpError }
+            ( { model | program = b |> Result.map sortProgram |> Result.mapError HttpError }
             , Cmd.none
             )
 
@@ -142,3 +143,22 @@ viewEvent model a =
             [ text (Api.localize model.locale a.description)
             ]
         ]
+
+
+
+--
+
+
+sortProgram : List Api.Event -> List Api.Event
+sortProgram a =
+    a
+        |> List.filter
+            (\v ->
+                v.type_ /= Api.Restaurant
+            )
+        |> List.sortBy
+            (\v ->
+                v.timeStart
+                    |> Maybe.map Time.posixToMillis
+                    |> Maybe.withDefault 0
+            )
