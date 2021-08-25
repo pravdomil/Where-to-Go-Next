@@ -71,9 +71,6 @@ type alias Event =
 
     --
     , place : Place
-
-    --
-    , order : Int
     }
 
 
@@ -230,14 +227,14 @@ decodeEvents =
 decodeEvent : D.Decoder Event
 decodeEvent =
     D.map8
-        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 ->
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 ->
             { id = Just v3
             , filmId = Nothing
-            , type_ = v16
+            , type_ = v15
 
             --
             , name = Localized v12 v11
-            , description = Localized v15 v14
+            , description = Localized v14 v13
 
             --
             , timeStart = v2
@@ -256,9 +253,6 @@ decodeEvent =
                 , phone = v9
                 , website = v10
                 }
-
-            --
-            , order = v13
             }
         )
         (D.field "cas_do" (D_.maybe Iso8601.decoder))
@@ -273,7 +267,6 @@ decodeEvent =
         |> D_.apply (D.field "misto_website" D.string)
         |> D_.apply (D.field "nazev_cz" D.string)
         |> D_.apply (D.field "nazev_en" D.string)
-        |> D_.apply (D.field "order" D.int)
         |> D_.apply (D.field "popis_cz" D.string)
         |> D_.apply (D.field "popis_en" D.string)
         |> D_.apply (D.field "typ" decodeEventType)
@@ -364,9 +357,6 @@ normalizeData a =
 
             --
             , place = place
-
-            --
-            , order = 0
             }
     in
     a.events ++ List.concatMap filmToEvents a.films
