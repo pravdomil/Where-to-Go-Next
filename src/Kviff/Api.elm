@@ -18,15 +18,24 @@ type alias Item =
     , timeEnd : Maybe String
 
     --
-    , addressId : Int
-    , addressName : Localized String
-    , address : String
-    , addressGps : String
-    , addressPhone : String
-    , addressWebsite : String
+    , place : Place
 
     --
     , order : Int
+    }
+
+
+type alias Place =
+    { id : Int
+    , name : Localized String
+
+    --
+    , address : String
+    , gps : String
+
+    --
+    , phone : String
+    , website : String
     }
 
 
@@ -57,12 +66,18 @@ decodeItem =
             , timeEnd = v1
 
             --
-            , addressId = v8
-            , addressName = Localized v6 v5
-            , address = v4
-            , addressGps = v7
-            , addressPhone = v9
-            , addressWebsite = v10
+            , place =
+                { id = v8
+                , name = Localized v6 v5
+
+                --
+                , address = v4
+                , gps = v7
+
+                --
+                , phone = v9
+                , website = v10
+                }
 
             --
             , order = v13
