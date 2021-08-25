@@ -154,16 +154,19 @@ viewEvent model a =
 --
 
 
-sortProgram : List Api.Event -> List Api.Event
-sortProgram a =
-    a
-        |> List.filter
-            (\v ->
-                v.type_ /= Api.Restaurant
-            )
-        |> List.sortBy
-            (\v ->
-                v.timeStart
-                    |> Maybe.map Time.posixToMillis
-                    |> Maybe.withDefault 0
-            )
+sortData : Api.Data -> Api.Data
+sortData a =
+    { a
+        | events =
+            a.events
+                |> List.filter
+                    (\v ->
+                        v.type_ /= Api.Restaurant
+                    )
+                |> List.sortBy
+                    (\v ->
+                        v.timeStart
+                            |> Maybe.map Time.posixToMillis
+                            |> Maybe.withDefault 0
+                    )
+    }
