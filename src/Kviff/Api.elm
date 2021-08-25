@@ -54,6 +54,16 @@ type alias Localized a =
     }
 
 
+localize : Locale -> Localized a -> a
+localize locale a =
+    case locale of
+        English ->
+            a.en
+
+        Czech ->
+            a.cz
+
+
 
 --
 
