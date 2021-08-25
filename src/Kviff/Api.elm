@@ -16,6 +16,10 @@ type alias Data =
     }
 
 
+
+--
+
+
 type alias Film =
     { id : Int
 
@@ -54,6 +58,10 @@ type alias Screening =
     , theatreAddress : String
     , theatreGps : Gps
     }
+
+
+
+--
 
 
 type alias Event =
