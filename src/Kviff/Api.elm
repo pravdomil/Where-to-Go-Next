@@ -115,7 +115,7 @@ getData =
             Http.task
                 { method = "GET"
                 , headers = []
-                , url = "https://www.kviff.com/en/exports/json/acmp-" ++ a
+                , url = "https://www.kviff.com/en/exports/json/" ++ a
                 , body = Http.emptyBody
                 , resolver = Resolver.json decoder
                 , timeout = Just 30000
@@ -123,7 +123,7 @@ getData =
     in
     Task.map2 Data
         (request decodeFilms "catalog")
-        (request decodeEvents "events")
+        (request decodeEvents "acmp-events")
 
 
 
