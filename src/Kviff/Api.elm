@@ -34,6 +34,25 @@ type alias Film =
     , year : Int
     , duration : Int
     , country : Localized String
+
+    --
+    , screenings : List Screening
+    }
+
+
+type alias Screening =
+    { code : String
+    , name : Localized String
+    , timeStart : Time.Posix
+
+    --
+    , theatreId : Int
+    , theatreCode : String
+    , theatreName : Localized String
+
+    --
+    , theatreAddress : String
+    , theatreGps : Gps
     }
 
 
@@ -141,7 +160,7 @@ decodeFilms =
 decodeFilm : D.Decoder Film
 decodeFilm =
     D.map8
-        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 ->
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 ->
             { id = v1
             , nameLocalized = Localized v2 v3
             , name = v4
@@ -153,6 +172,7 @@ decodeFilm =
             , year = v13
             , duration = v14
             , country = Localized v15 v16
+            , screenings = v17
             }
         )
         (D.field "id_film" D.int)
@@ -171,6 +191,33 @@ decodeFilm =
         |> D_.apply (D.field "delka" D.int)
         |> D_.apply (D.field "zeme_en" D.string)
         |> D_.apply (D.field "zeme_cz" D.string)
+        |> D_.apply (D.field "screenings" (D.field "screening" (D.list decodeScreening)))
+
+
+decodeScreening : D.Decoder Screening
+decodeScreening =
+    D.map8
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 ->
+            { code = v1
+            , name = Localized v2 v3
+            , timeStart = v4
+            , theatreId = v5
+            , theatreCode = v6
+            , theatreName = Localized v7 v8
+            , theatreAddress = v9
+            , theatreGps = v10
+            }
+        )
+        (D.field "code" D.string)
+        (D.field "title_en" D.string)
+        (D.field "title_cz" D.string)
+        (D.field "timestamp" Iso8601.decoder)
+        (D.field "theatre_misto_id" D.int)
+        (D.field "theatre_code" D.string)
+        (D.field "theatre_en" D.string)
+        (D.field "theatre_cz" D.string)
+        |> D_.apply (D.field "theatre_misto_adresa" D.string)
+        |> D_.apply (D.field "theatre_misto_gps" Gps.decode)
 
 
 decodeEvents : D.Decoder (List Event)
