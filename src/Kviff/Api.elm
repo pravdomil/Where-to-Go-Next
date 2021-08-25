@@ -44,20 +44,28 @@ decodeItem : D.Decoder Item
 decodeItem =
     D.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 ->
-            { timeEnd = v1
-            , timeStart = v2
-            , id = v3
-            , address = v4
-            , addressName = Localized v6 v5
-            , addressGps = v7
-            , addressId = v8
-            , addressPhone = v9
-            , addressWebsite = v10
-            , name = Localized v12 v11
-            , order = v13
-            , description = Localized v15 v14
+            { id = v3
             , type_ = v16
             , typeName = Localized v18 v17
+
+            --
+            , name = Localized v12 v11
+            , description = Localized v15 v14
+
+            --
+            , timeStart = v2
+            , timeEnd = v1
+
+            --
+            , addressId = v8
+            , addressName = Localized v6 v5
+            , address = v4
+            , addressGps = v7
+            , addressPhone = v9
+            , addressWebsite = v10
+
+            --
+            , order = v13
             }
         )
         (D.field "cas_do" (D_.maybe D.string))
