@@ -4,7 +4,7 @@ import Json.Decode as D
 import Utils.Json.Decode_ as D_
 
 
-type alias Item =
+type alias Event =
     { id : Int
     , type_ : String
     , typeName : Localized String
@@ -49,8 +49,8 @@ type alias Localized a =
 --
 
 
-decodeItem : D.Decoder Item
-decodeItem =
+decodeEvent : D.Decoder Event
+decodeEvent =
     D.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 ->
             { id = v3
