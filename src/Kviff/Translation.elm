@@ -1,4 +1,4 @@
-module App.Translation exposing (..)
+module Kviff.Translation exposing (..)
 
 
 title : String

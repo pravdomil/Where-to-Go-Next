@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import App.Main
+import Kviff.Main
 
 
 main =
-    App.Main.main
+    Kviff.Main.main

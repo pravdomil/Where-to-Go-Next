@@ -1,4 +1,4 @@
-module App.Router exposing (..)
+module Kviff.Router exposing (..)
 
 import Browser
 import Browser.Navigation as Navigation

@@ -1,11 +1,11 @@
-module App.Main exposing (..)
+module Kviff.Main exposing (..)
 
-import App.Router as Router
-import App.Translation as Translation
 import Browser
 import Browser.Navigation as Navigation
 import Html
 import Json.Decode as Decode
+import Kviff.Router as Router
+import Kviff.Translation as Translation
 import Url exposing (Url)
 
 
