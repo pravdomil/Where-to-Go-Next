@@ -165,6 +165,9 @@ viewEvent model a =
                     |> Result.withDefault (Api.localize model.locale a.description)
                 )
             ]
+        , p [ fontSize 10, fontColor grey4 ]
+            [ text (Api.localize model.locale a.note)
+            ]
         ]
 
 
