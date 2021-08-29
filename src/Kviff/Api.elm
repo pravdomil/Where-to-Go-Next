@@ -223,7 +223,7 @@ decodeFilmScreening =
         (D.field "code" D.string)
         (D.field "title_en" D.string)
         (D.field "title_cz" D.string)
-        (D.field "timestamp" Iso8601.decoder)
+        (D.field "timestamp" decodePosix)
         (D.field "theatre_misto_id" D.int)
         (D.field "theatre_code" D.string)
         (D.field "theatre_en" D.string)
@@ -281,8 +281,8 @@ decodeEvent =
                 }
             }
         )
-        (D.field "cas_do" (D_.maybe Iso8601.decoder))
-        (D.field "cas_od" (D_.maybe Iso8601.decoder))
+        (D.field "cas_do" (D_.maybe decodePosix))
+        (D.field "cas_od" (D_.maybe decodePosix))
         (D.field "id" D.int)
         (D.field "misto_adresa" D.string)
         (D.field "misto_cz" D.string)
@@ -339,6 +339,20 @@ decodeMaybeGps =
         , Gps.decode
             |> D.map Just
         ]
+
+
+decodePosix : D.Decoder Time.Posix
+decodePosix =
+    Iso8601.decoder
+        |> D.map
+            (\v ->
+                Time.millisToPosix (Time.posixToMillis v - timeOffset)
+            )
+
+
+timeOffset : Int
+timeOffset =
+    2
 
 
 
