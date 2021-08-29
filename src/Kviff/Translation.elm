@@ -93,4 +93,21 @@ time a =
 
 duration : Int -> String
 duration a =
-    String.fromFloat (toFloat (round (toFloat a / 100 / 60 / 60)) / 10) ++ "h"
+    let
+        hours : Int
+        hours =
+            floor (toFloat a / 1000 / 60 / 60)
+
+        minutes : Int
+        minutes =
+            modBy 60 (floor (toFloat a / 1000 / 60))
+
+        nonZero : String -> Int -> String
+        nonZero suffix b =
+            if b /= 0 then
+                String.fromInt b ++ suffix
+
+            else
+                ""
+    in
+    nonZero "h " hours ++ nonZero "min " minutes
