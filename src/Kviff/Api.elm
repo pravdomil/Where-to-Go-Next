@@ -7,6 +7,7 @@ import Iso8601
 import Json.Decode as D
 import Task exposing (Task)
 import Time
+import Url exposing (Url)
 import Utils.Json.Decode_ as D_
 
 
@@ -27,6 +28,7 @@ type alias Film =
     , name : String
     , nameLocalized : Localized String
     , author : String
+    , images : List String
 
     --
     , annotation : Localized String
@@ -71,6 +73,7 @@ type alias Event =
 
     --
     , name : Localized String
+    , image : Maybe String
     , description : Localized String
 
     --
@@ -166,7 +169,7 @@ decodeFilms =
 decodeFilm : D.Decoder Film
 decodeFilm =
     D.map8
-        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 ->
+        (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 ->
             { id = v1
             , nameLocalized = Localized v2 v3
             , name = v4
@@ -179,6 +182,7 @@ decodeFilm =
             , duration = v14
             , country = Localized v15 v16
             , screenings = v17
+            , images = v18
             }
         )
         (D.field "id_film" D.int)
@@ -198,6 +202,7 @@ decodeFilm =
         |> D_.apply (D.field "zeme_en" D.string)
         |> D_.apply (D.field "zeme_cz" D.string)
         |> D_.apply (D.field "screenings" (D.field "screening" (D.list decodeScreening)))
+        |> D_.apply (D.field "film_web_images" (D.field "image" (D.list decodeFilmImage)))
 
 
 decodeScreening : D.Decoder Screening
@@ -226,6 +231,16 @@ decodeScreening =
         |> D_.apply (D.field "theatre_misto_gps" Gps.decode)
 
 
+decodeFilmImage : D.Decoder String
+decodeFilmImage =
+    D.map2
+        (\v1 v2 ->
+            "https://www.kviff.com/en/image/fancybox/" ++ Url.percentEncode (String.fromInt v1) ++ "/" ++ Url.percentEncode v2
+        )
+        (D.field "idWebImage" D.int)
+        (D.field "validationCode" D.string)
+
+
 decodeEvents : D.Decoder (List Event)
 decodeEvents =
     D.field "typ" (D.list (D.field "den" (D.list (D.field "akce" (D.list decodeEvent)))))
@@ -242,6 +257,7 @@ decodeEvent =
 
             --
             , name = Localized v12 v11
+            , image = Nothing
             , description = Localized v14 v13
 
             --
@@ -357,6 +373,7 @@ normalizeData a =
 
             --
             , name = Localized film.name film.name
+            , image = film.images |> List.head
             , description = film.annotation
 
             --
