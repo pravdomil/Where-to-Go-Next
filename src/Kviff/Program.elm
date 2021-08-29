@@ -86,8 +86,8 @@ view model =
                         , onPress = Just (ChangeLocale Api.English)
                         }
     in
-    textColumn [ padding 16, spacing 16, width (fill |> maximum (320 * 2)), centerX ]
-        [ row []
+    textColumn [ padding 16, spacing 32, width (fill |> maximum (320 * 2)), centerX ]
+        [ row [ spacing 8 ]
             [ h1 []
                 [ text Translation.title
                 ]
@@ -128,7 +128,7 @@ viewError b =
 
 viewEvents : Model -> List Api.Event -> Element Msg
 viewEvents model a =
-    textColumn [ spacing 16 ]
+    textColumn [ spacing 20 ]
         (List.map (viewEvent model) a)
 
 
