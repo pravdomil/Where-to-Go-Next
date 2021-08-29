@@ -173,6 +173,17 @@ viewEvent model a =
                         Nothing ->
                             text (Api.localize model.locale a.place.name)
                     )
+                 , case a.filmId of
+                    Just b ->
+                        Just
+                            (newTabLink []
+                                { label = text "Info"
+                                , url = Api.filmLink model.locale b
+                                }
+                            )
+
+                    Nothing ->
+                        Nothing
                  ]
                     |> List.filterMap identity
                     |> List.intersperse (text " – ")
