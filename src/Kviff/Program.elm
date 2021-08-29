@@ -26,8 +26,12 @@ init =
       , time = Nothing
       , data = Err Loading
       }
-    , Api.getData
-        |> Task.attempt GotData
+    , Cmd.batch
+        [ Time.now
+            |> Task.perform GotTime
+        , Api.getData
+            |> Task.attempt GotData
+        ]
     )
 
 
@@ -37,6 +41,7 @@ init =
 
 type Msg
     = ChangeLocale Api.Locale
+    | GotTime Time.Posix
     | GotData (Result Http.Error Api.Data)
 
 
@@ -45,6 +50,11 @@ update msg model =
     case msg of
         ChangeLocale b ->
             ( { model | locale = b }
+            , Cmd.none
+            )
+
+        GotTime b ->
+            ( { model | time = Just b }
             , Cmd.none
             )
 
