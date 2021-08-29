@@ -75,6 +75,7 @@ type alias Event =
     , name : Localized String
     , image : Maybe String
     , description : Localized String
+    , note : String
 
     --
     , timeStart : Maybe Time.Posix
@@ -259,6 +260,7 @@ decodeEvent =
             , name = Localized v12 v11
             , image = Nothing
             , description = Localized v14 v13
+            , note = ""
 
             --
             , timeStart = v2
@@ -366,6 +368,15 @@ normalizeData a =
                     , phone = ""
                     , website = ""
                     }
+
+                note : String
+                note =
+                    String.split "\n" film.internalNote
+                        |> List.filter (String.trim >> String.isEmpty >> not)
+                        |> (::) film.country.en
+                        |> (::) (String.fromInt film.year)
+                        |> (::) b.code
+                        |> String.join " | "
             in
             { id = Nothing
             , filmId = Just film.id
@@ -375,6 +386,7 @@ normalizeData a =
             , name = Localized film.name film.name
             , image = film.images |> List.head
             , description = film.annotation
+            , note = note
 
             --
             , timeStart = Just b.timeStart
