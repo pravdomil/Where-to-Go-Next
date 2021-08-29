@@ -140,21 +140,24 @@ viewEvent model a =
                 [ text (Api.localize model.locale a.name)
                 ]
             , p [ fontSize 14, fontColor grey4 ]
-                [ text
-                    ([ a.type_ |> Translation.eventType |> Just
-                     , a.place.name |> Api.localize model.locale |> Just
-                     , a.timeStart |> Maybe.map Translation.time
-                     , Maybe.map2
-                        (\start end ->
-                            Translation.duration (Time.posixToMillis end - Time.posixToMillis start)
-                        )
-                        a.timeStart
-                        a.timeEnd
-                     ]
-                        |> List.filterMap identity
-                        |> String.join " – "
+                ([ case a.type_ of
+                    Api.Screening_ ->
+                        Nothing
+
+                    _ ->
+                        Just (text (Translation.eventType a.type_))
+                 , a.timeStart
+                    |> Maybe.map (\v -> text (Translation.time v))
+                 , Maybe.map2
+                    (\start end ->
+                        text (Translation.duration (Time.posixToMillis end - Time.posixToMillis start))
                     )
-                ]
+                    a.timeStart
+                    a.timeEnd
+                 ]
+                    |> List.filterMap identity
+                    |> List.intersperse (text " – ")
+                )
             ]
         , p [ fontSize 14, fontColor grey4 ]
             [ text (Api.localize model.locale a.description)
