@@ -159,6 +159,15 @@ viewEvent model a =
                     |> List.intersperse (text " – ")
                 )
             ]
+        , case a.image of
+            Just b ->
+                image [ width (px 128), alignRight ]
+                    { description = ""
+                    , src = b
+                    }
+
+            Nothing ->
+                none
         , p [ fontSize 14, fontColor grey3 ]
             [ text
                 (Utils.Html.stripTags (Api.localize model.locale a.description)
