@@ -17,7 +17,7 @@ baseFontSize =
 
 
 baseLineSpacing =
-    8
+    6
 
 
 linkColor =
