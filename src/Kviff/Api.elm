@@ -359,8 +359,8 @@ timeOffset =
 --
 
 
-normalizeData : Data -> List Event
-normalizeData a =
+dataToEvents : Data -> List Event
+dataToEvents a =
     let
         filmToEvents : Film -> List Event
         filmToEvents b =
