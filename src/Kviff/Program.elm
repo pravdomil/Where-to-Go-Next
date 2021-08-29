@@ -184,6 +184,17 @@ viewEvent model a =
 
                     Nothing ->
                         Nothing
+                 , case a.filmId of
+                    Just _ ->
+                        Just
+                            (newTabLink []
+                                { label = text "CSFD"
+                                , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode a.name.cz
+                                }
+                            )
+
+                    Nothing ->
+                        Nothing
                  ]
                     |> List.filterMap identity
                     |> List.intersperse (text " – ")
