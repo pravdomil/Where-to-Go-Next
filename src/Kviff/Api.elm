@@ -359,6 +359,21 @@ timeOffset =
     2
 
 
+filmLink : Locale -> Int -> String
+filmLink locale a =
+    let
+        lang : String
+        lang =
+            case locale of
+                English ->
+                    "en"
+
+                Czech ->
+                    "cz"
+    in
+    "https://www.kviff.com/" ++ Url.percentEncode lang ++ "/programme/film/57/" ++ Url.percentEncode (String.fromInt a)
+
+
 
 --
 
