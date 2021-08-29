@@ -49,7 +49,7 @@ type alias Film =
 type alias Screening =
     { code : String
     , name : Localized String
-    , timeStart : Time.Posix
+    , startTime : Time.Posix
 
     --
     , theatreId : Int
@@ -78,8 +78,8 @@ type alias Event =
     , note : Localized String
 
     --
-    , timeStart : Maybe Time.Posix
-    , timeEnd : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
+    , endTime : Maybe Time.Posix
 
     --
     , place : Place
@@ -212,7 +212,7 @@ decodeFilmScreening =
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 ->
             { code = v1
             , name = Localized v2 v3
-            , timeStart = v4
+            , startTime = v4
             , theatreId = v5
             , theatreCode = v6
             , theatreName = Localized v7 v8
@@ -263,8 +263,8 @@ decodeEvent =
             , note = Localized "" ""
 
             --
-            , timeStart = v2
-            , timeEnd = v1
+            , startTime = v2
+            , endTime = v1
 
             --
             , place =
@@ -435,8 +435,8 @@ dataToEvents a =
             , note = note
 
             --
-            , timeStart = Just b.timeStart
-            , timeEnd = Just (Time.millisToPosix (Time.posixToMillis b.timeStart + (film.duration * 60 * 1000)))
+            , startTime = Just b.startTime
+            , endTime = Just (Time.millisToPosix (Time.posixToMillis b.startTime + (film.duration * 60 * 1000)))
 
             --
             , place = place

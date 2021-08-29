@@ -148,14 +148,14 @@ viewEvent model a =
 
                     _ ->
                         Just (text (Translation.eventType a.type_))
-                 , a.timeStart
+                 , a.startTime
                     |> Maybe.map (\v -> text (Translation.time Api.timeZone v))
                  , Maybe.map2
                     (\start end ->
                         text (Translation.duration (Time.posixToMillis end - Time.posixToMillis start))
                     )
-                    a.timeStart
-                    a.timeEnd
+                    a.startTime
+                    a.endTime
                  , Just
                     (case a.place.gps of
                         Just b ->
@@ -235,7 +235,7 @@ normalizeData a =
             )
         |> List.sortBy
             (\v ->
-                v.timeStart
+                v.startTime
                     |> Maybe.map Time.posixToMillis
                     |> Maybe.withDefault 0
             )
