@@ -21,7 +21,7 @@ type Error
 
 init : ( Model, Cmd Msg )
 init =
-    ( { locale = Api.English
+    ( { locale = Api.Czech
       , data = Err Loading
       }
     , Api.getData
