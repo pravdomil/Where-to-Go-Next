@@ -359,6 +359,11 @@ timeOffset =
     60 * 2
 
 
+timeZone : Time.Zone
+timeZone =
+    Time.customZone timeOffset []
+
+
 filmLink : Locale -> Int -> String
 filmLink locale a =
     case locale of
