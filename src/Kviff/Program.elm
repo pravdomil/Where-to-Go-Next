@@ -10,7 +10,7 @@ import Time
 
 type alias Model =
     { locale : Api.Locale
-    , data : Result Error Api.Data
+    , data : Result Error (List Api.Event)
     }
 
 
