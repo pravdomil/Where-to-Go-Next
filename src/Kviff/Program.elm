@@ -149,7 +149,7 @@ viewEvent model a =
                     _ ->
                         Just (text (Translation.eventType a.type_))
                  , a.timeStart
-                    |> Maybe.map (\v -> text (Translation.time v))
+                    |> Maybe.map (\v -> text (Translation.time Api.timeZone v))
                  , Maybe.map2
                     (\start end ->
                         text (Translation.duration (Time.posixToMillis end - Time.posixToMillis start))

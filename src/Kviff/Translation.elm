@@ -36,13 +36,9 @@ eventType a =
             "Restaurant"
 
 
-time : Time.Posix -> String
-time a =
+time : Time.Zone -> Time.Posix -> String
+time zone a =
     let
-        zone : Time.Zone
-        zone =
-            Time.customZone 0 []
-
         monthToInt : Time.Month -> Int
         monthToInt b =
             case b of
