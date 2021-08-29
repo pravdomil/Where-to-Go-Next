@@ -159,8 +159,11 @@ viewEvent model a =
                     |> List.intersperse (text " – ")
                 )
             ]
-        , p [ fontSize 14, fontColor grey4 ]
-            [ text (Api.localize model.locale a.description)
+        , p [ fontSize 14, fontColor grey3 ]
+            [ text
+                (Utils.Html.stripTags (Api.localize model.locale a.description)
+                    |> Result.withDefault (Api.localize model.locale a.description)
+                )
             ]
         ]
 
