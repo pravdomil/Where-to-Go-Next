@@ -424,7 +424,7 @@ dataToEvents a =
             , type_ = Screening_
 
             --
-            , name = Localized film.name film.name
+            , name = film.nameLocalized
             , image = film.images |> List.head
             , description = film.annotation
             , note = note
