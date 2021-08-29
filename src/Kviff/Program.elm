@@ -86,7 +86,7 @@ view model =
                         , onPress = Just (ChangeLocale Api.English)
                         }
     in
-    textColumn [ padding 16, spacing 32, width (fill |> maximum (320 * 2)), centerX ]
+    textColumn [ spacing 32, padding 16, width (fill |> maximum (320 * 2)), centerX ]
         [ row [ spacing 8 ]
             [ h1 []
                 [ text Translation.title
