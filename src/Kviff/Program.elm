@@ -6,6 +6,7 @@ import Kviff.Translation as Translation
 import Kviff.Ui.Base exposing (..)
 import Task exposing (Task)
 import Time
+import Url exposing (Url)
 import Utils.Html
 
 
@@ -155,6 +156,23 @@ viewEvent model a =
                     )
                     a.timeStart
                     a.timeEnd
+                 , Just
+                    (case a.place.gps of
+                        Just b ->
+                            newTabLink []
+                                { label = text (Api.localize model.locale a.place.name)
+                                , url =
+                                    "https://mapy.cz/?z=16&y="
+                                        ++ Url.percentEncode (String.fromFloat b.lat)
+                                        ++ "&x="
+                                        ++ Url.percentEncode (String.fromFloat b.lon)
+                                        ++ "&q="
+                                        ++ Url.percentEncode (String.fromFloat b.lat ++ " " ++ String.fromFloat b.lon)
+                                }
+
+                        Nothing ->
+                            text (Api.localize model.locale a.place.name)
+                    )
                  ]
                     |> List.filterMap identity
                     |> List.intersperse (text " – ")
