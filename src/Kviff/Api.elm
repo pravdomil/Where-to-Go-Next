@@ -373,9 +373,9 @@ normalizeData a =
                 note =
                     String.split "\n" film.internalNote
                         |> List.filter (String.trim >> String.isEmpty >> not)
-                        |> (::) film.country.en
-                        |> (::) (String.fromInt film.year)
-                        |> (::) b.code
+                        |> (\v ->
+                                b.code :: String.fromInt film.year :: film.country.en :: v
+                           )
                         |> String.join " | "
             in
             { id = Nothing
