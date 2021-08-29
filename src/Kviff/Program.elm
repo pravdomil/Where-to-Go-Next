@@ -136,7 +136,7 @@ viewEvent : Model -> Api.Event -> Element Msg
 viewEvent model a =
     textColumn [ spacing 4 ]
         [ textColumn [ spacing 2 ]
-            [ h2 []
+            [ h2 [ fontSemiBold ]
                 [ text (Api.localize model.locale a.name)
                 ]
             , p [ fontSize 14, fontColor grey4 ]
