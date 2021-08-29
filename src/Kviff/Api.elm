@@ -346,7 +346,7 @@ decodePosix =
     Iso8601.decoder
         |> D.map
             (\v ->
-                Time.millisToPosix (Time.posixToMillis v - timeOffset)
+                Time.millisToPosix (Time.posixToMillis v - (1000 * 60 * timeOffset))
             )
 
 
@@ -356,7 +356,7 @@ decodePosix =
 
 timeOffset : Int
 timeOffset =
-    2
+    60 * 2
 
 
 filmLink : Locale -> Int -> String
