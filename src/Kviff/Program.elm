@@ -59,7 +59,7 @@ update msg model =
             )
 
         GotData b ->
-            ( { model | data = b |> Result.map sortData |> Result.mapError HttpError }
+            ( { model | data = b |> Result.map normalizeData |> Result.mapError HttpError }
             , Cmd.none
             )
 
@@ -95,7 +95,7 @@ view model =
             ]
         , case model.data of
             Ok b ->
-                viewEvents model b.events
+                viewEvents model b
 
             Err b ->
                 viewError b
@@ -166,19 +166,17 @@ viewEvent model a =
 --
 
 
-sortData : Api.Data -> Api.Data
-sortData a =
-    { a
-        | events =
-            a.events
-                |> List.filter
-                    (\v ->
-                        v.type_ /= Api.Restaurant
-                    )
-                |> List.sortBy
-                    (\v ->
-                        v.timeStart
-                            |> Maybe.map Time.posixToMillis
-                            |> Maybe.withDefault 0
-                    )
-    }
+normalizeData : Api.Data -> List Api.Event
+normalizeData a =
+    a
+        |> Api.dataToEvents
+        |> List.filter
+            (\v ->
+                v.type_ /= Api.Restaurant
+            )
+        |> List.sortBy
+            (\v ->
+                v.timeStart
+                    |> Maybe.map Time.posixToMillis
+                    |> Maybe.withDefault 0
+            )
