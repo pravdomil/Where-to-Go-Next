@@ -10,6 +10,7 @@ import Time
 
 type alias Model =
     { locale : Api.Locale
+    , time : Maybe Time.Posix
     , data : Result Error (List Api.Event)
     }
 
@@ -22,6 +23,7 @@ type Error
 init : ( Model, Cmd Msg )
 init =
     ( { locale = Api.Czech
+      , time = Nothing
       , data = Err Loading
       }
     , Api.getData
