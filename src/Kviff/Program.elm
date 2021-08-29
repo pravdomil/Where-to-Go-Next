@@ -6,6 +6,7 @@ import Kviff.Translation as Translation
 import Kviff.Ui.Base exposing (..)
 import Task exposing (Task)
 import Time
+import Utils.Html
 
 
 type alias Model =
