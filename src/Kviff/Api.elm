@@ -201,12 +201,12 @@ decodeFilm =
         |> D_.apply (D.field "delka" D.int)
         |> D_.apply (D.field "zeme_en" D.string)
         |> D_.apply (D.field "zeme_cz" D.string)
-        |> D_.apply (D.field "screenings" (D.field "screening" (D.list decodeScreening)))
+        |> D_.apply (D.field "screenings" (D.field "screening" (D.list decodeFilmScreening)))
         |> D_.apply (D.field "film_web_images" (D.field "image" (D.list decodeFilmImage)))
 
 
-decodeScreening : D.Decoder Screening
-decodeScreening =
+decodeFilmScreening : D.Decoder Screening
+decodeFilmScreening =
     D.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 ->
             { code = v1
