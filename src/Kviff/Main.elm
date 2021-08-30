@@ -92,7 +92,6 @@ view : Model -> Browser.Document Msg
 view model =
     { title = Translation.title
     , body =
-        [ adaptiveScale
-        , layout [] (Program.view model.program |> map ProgramMsg)
+        [ layout [] (Program.view model.program |> map ProgramMsg)
         ]
     }
