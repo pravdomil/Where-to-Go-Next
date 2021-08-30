@@ -236,9 +236,9 @@ decodeFilmImage : D.Decoder String
 decodeFilmImage =
     D.map2
         (\v1 v2 ->
-            "https://www.kviff.com/en/image/fancybox/" ++ Url.percentEncode (String.fromInt v1) ++ "/" ++ Url.percentEncode v2
+            "https://www.kviff.com/en/image/film/" ++ Url.percentEncode (String.fromInt v1) ++ "/" ++ Url.percentEncode v2
         )
-        (D.field "idWebImage" D.int)
+        (D.field "id" D.int)
         (D.field "validationCode" D.string)
 
 
