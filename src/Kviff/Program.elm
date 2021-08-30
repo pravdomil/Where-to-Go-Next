@@ -108,7 +108,7 @@ scrollToUpcomingEvent model =
             Dom.getElement (eventId id)
                 |> Task.andThen
                     (\v ->
-                        Dom.setViewport v.element.x v.element.y
+                        Dom.setViewport v.element.x (v.element.y - 12)
                     )
 
         Nothing ->
