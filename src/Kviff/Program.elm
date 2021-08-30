@@ -141,12 +141,12 @@ viewEvents model a =
                 )
     in
     textColumn [ spacing 20 ]
-        (imgContain :: List.map (viewEvent model) a)
+        (imgContain :: List.indexedMap (viewEvent model) a)
 
 
-viewEvent : Model -> Api.Event -> Element Msg
-viewEvent model a =
-    textColumn [ spacing 4 ]
+viewEvent : Model -> Int -> Api.Event -> Element Msg
+viewEvent model index a =
+    textColumn [ spacing 4, id (eventId index) ]
         [ textColumn [ spacing 2 ]
             [ h2 [ fontSemiBold ]
                 [ text (Api.localize model.locale a.name)
@@ -233,6 +233,11 @@ viewEvent model a =
 
 
 --
+
+
+eventId : Int -> String
+eventId a =
+    "e-" ++ String.fromInt a
 
 
 normalizeData : Api.Data -> List Api.Event
