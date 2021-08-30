@@ -130,8 +130,18 @@ viewError b =
 
 viewEvents : Model -> List Api.Event -> Element Msg
 viewEvents model a =
+    let
+        imgContain : Element msg
+        imgContain =
+            html
+                (Html.node "style"
+                    []
+                    [ Html.text "img { object-fit: contain; }"
+                    ]
+                )
+    in
     textColumn [ spacing 20 ]
-        (List.map (viewEvent model) a)
+        (imgContain :: List.map (viewEvent model) a)
 
 
 viewEvent : Model -> Api.Event -> Element Msg
@@ -202,7 +212,7 @@ viewEvent model a =
             ]
         , case a.image of
             Just b ->
-                image [ width (px 128), alignRight ]
+                image [ width (px 128), height (px 128), alignRight ]
                     { description = ""
                     , src = b
                     }
