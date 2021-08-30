@@ -1,5 +1,6 @@
 module Kviff.Program exposing (..)
 
+import Browser.Dom as Dom
 import Html
 import Http
 import Kviff.Api as Api
@@ -65,6 +66,40 @@ update msg model =
             ( { model | data = b |> Result.map normalizeData |> Result.mapError HttpError }
             , Cmd.none
             )
+
+
+scrollToUpcomingEvent : Model -> Task Dom.Error ()
+scrollToUpcomingEvent model =
+    let
+        upcomingEvents : Result Error (List ( Int, Api.Event ))
+        upcomingEvents =
+            model.data
+                |> Result.map
+                    (\v1 ->
+                        v1
+                            |> List.indexedMap Tuple.pair
+                            |> List.filter
+                                (\( _, v2 ) ->
+                                    Maybe.map2
+                                        (\startTime now ->
+                                            Time.posixToMillis startTime > Time.posixToMillis now
+                                        )
+                                        v2.startTime
+                                        model.time
+                                        |> Maybe.withDefault False
+                                )
+                    )
+    in
+    case upcomingEvents |> Result.toMaybe |> Maybe.andThen List.head of
+        Just ( id, _ ) ->
+            Dom.getElement (eventId id)
+                |> Task.andThen
+                    (\v ->
+                        Dom.setViewport v.element.x v.element.y
+                    )
+
+        Nothing ->
+            Task.succeed ()
 
 
 
