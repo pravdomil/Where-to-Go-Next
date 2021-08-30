@@ -1,5 +1,6 @@
 module Kviff.Program exposing (..)
 
+import Html
 import Http
 import Kviff.Api as Api
 import Kviff.Translation as Translation
