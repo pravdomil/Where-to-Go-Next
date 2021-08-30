@@ -47,6 +47,7 @@ type Msg
     = ChangeLocale Api.Locale
     | GotTime Time.Posix
     | GotData (Result Http.Error Api.Data)
+    | ViewportSet (Result Dom.Error ())
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -63,7 +64,19 @@ update msg model =
             )
 
         GotData b ->
-            ( { model | data = b |> Result.map normalizeData |> Result.mapError HttpError }
+            let
+                nextModel : Model
+                nextModel =
+                    { model
+                        | data = b |> Result.map normalizeData |> Result.mapError HttpError
+                    }
+            in
+            ( nextModel
+            , scrollToUpcomingEvent nextModel |> Task.attempt ViewportSet
+            )
+
+        ViewportSet _ ->
+            ( model
             , Cmd.none
             )
 
