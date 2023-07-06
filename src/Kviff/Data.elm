@@ -171,7 +171,7 @@ decodeFilmScreening =
         (Json.Decode.field "code" Json.Decode.string)
         (Json.Decode.field "title_en" Json.Decode.string)
         (Json.Decode.field "title_cz" Json.Decode.string)
-        (Json.Decode.field "timestamp" decodePosix)
+        (Json.Decode.field "timestamp" posixDecoder)
         (Json.Decode.field "theatre_misto_id" Json.Decode.int)
         (Json.Decode.field "theatre_code" Json.Decode.string)
         (Json.Decode.field "theatre_en" Json.Decode.string)
@@ -229,8 +229,8 @@ decodeEvent =
                 }
             }
         )
-        (Json.Decode.field "cas_do" (D_.maybe decodePosix))
-        (Json.Decode.field "cas_od" (D_.maybe decodePosix))
+        (Json.Decode.field "cas_do" (D_.maybe posixDecoder))
+        (Json.Decode.field "cas_od" (D_.maybe posixDecoder))
         (Json.Decode.field "id" Json.Decode.int)
         (Json.Decode.field "misto_adresa" Json.Decode.string)
         (Json.Decode.field "misto_cz" Json.Decode.string)
@@ -388,8 +388,8 @@ dataToEvents a =
 --
 
 
-decodePosix : Json.Decode.Decoder Time.Posix
-decodePosix =
+posixDecoder : Json.Decode.Decoder Time.Posix
+posixDecoder =
     Iso8601.decoder
         |> Json.Decode.map
             (\v ->
