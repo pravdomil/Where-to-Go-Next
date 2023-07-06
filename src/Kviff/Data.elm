@@ -63,6 +63,14 @@ type alias Film =
 
     --
     , directors : List String
+    , production : String
+    , cast : String
+    , dop : String
+    , screenplay : String
+    , artDirector : String
+    , cut : String
+    , music : String
+    , sound : String
 
     --
     , year : Int
