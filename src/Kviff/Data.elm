@@ -391,3 +391,12 @@ dataToEvents a =
             }
     in
     a.events ++ List.concatMap filmToEvents a.films
+
+
+
+--
+
+
+idDecoder : Json.Decode.Decoder (Id.Id a)
+idDecoder =
+    Json.Decode.map (\x -> Id.fromString (String.fromInt x)) Json.Decode.int
