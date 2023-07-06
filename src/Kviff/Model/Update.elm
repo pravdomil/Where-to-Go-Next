@@ -54,7 +54,9 @@ update msg =
         Kviff.Msg.DataReceived b ->
             case b of
                 Ok c ->
-                    \model -> ( { model | data = Ok (normalizeData c) }, Cmd.none )
+                    \model ->
+                        ( { model | data = Ok (normalizeData c) }, Cmd.none )
+                            |> Platform.Extra.andThen scrollToUpcomingEvent
 
                 Err c ->
                     \model -> ( { model | data = Err (Kviff.Model.HttpError c) }, Cmd.none )
@@ -76,7 +78,7 @@ subscriptions _ =
 --
 
 
-scrollToUpcomingEvent : Kviff.Model.Model -> Task.Task Browser.Dom.Error ()
+scrollToUpcomingEvent : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 scrollToUpcomingEvent model =
     let
         upcomingEvents : Result Kviff.Model.Error (List ( Int, Kviff.Api.Event ))
@@ -100,14 +102,17 @@ scrollToUpcomingEvent model =
     in
     case upcomingEvents |> Result.toMaybe |> Maybe.andThen List.head of
         Just ( id, _ ) ->
-            Browser.Dom.getElement (eventId id)
+            ( model
+            , Browser.Dom.getElement (eventId id)
                 |> Task.andThen
                     (\v ->
                         Browser.Dom.setViewport v.element.x (v.element.y - 12)
                     )
+                |> Task.attempt Kviff.Msg.ViewportSet
+            )
 
         Nothing ->
-            Task.succeed ()
+            Platform.Extra.noOperation model
 
 
 
