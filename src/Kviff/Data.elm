@@ -187,6 +187,27 @@ screeningTypeDecoder =
 --
 
 
+filmsDecoder : Json.Decode.Decoder (Dict.Any.Dict (Id.Id Film) Film)
+filmsDecoder =
+    Json.Decode.field "sekce"
+        (Json.Decode.list
+            (Json.Decode.field "subsekce"
+                (Json.Decode.list
+                    (Json.Decode.field "film"
+                        (Json.Decode.list
+                            filmDecoder
+                        )
+                    )
+                )
+            )
+        )
+        |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString (List.concat (List.concat x)))
+
+
+
+--
+
+
 decodeFilms : Json.Decode.Decoder (List Film)
 decodeFilms =
     Json.Decode.field "sekce" (Json.Decode.list (Json.Decode.field "subsekce" (Json.Decode.list (Json.Decode.field "film" (Json.Decode.list decodeFilm)))))
