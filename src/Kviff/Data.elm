@@ -61,7 +61,22 @@ type alias Film =
     , images : List String
 
     --
-    , directors : List String
+    , authors : FilmAuthors
+    , year : Int
+    , duration : Int
+    , country : Kviff.Locale.Localized String
+
+    --
+    , internalNote : String
+    }
+
+
+
+--
+
+
+type alias FilmAuthors =
+    { directors : List String
     , production : String
     , cast : String
     , dop : String
@@ -70,14 +85,6 @@ type alias Film =
     , cut : String
     , music : String
     , sound : String
-
-    --
-    , year : Int
-    , duration : Int
-    , country : Kviff.Locale.Localized String
-
-    --
-    , internalNote : String
     }
 
 
