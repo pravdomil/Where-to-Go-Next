@@ -71,7 +71,6 @@ type alias Film =
 
     --
     , internalNote : String
-    , screenings : List Screening
     }
 
 
