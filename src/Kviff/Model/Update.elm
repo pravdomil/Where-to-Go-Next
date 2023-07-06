@@ -126,15 +126,6 @@ eventId a =
 
 normalizeData : Kviff.Api.Data -> List Kviff.Api.Event
 normalizeData a =
-    a
-        |> Kviff.Api.dataToEvents
-        |> List.filter
-            (\v ->
-                v.type_ /= Kviff.Api.Restaurant
-            )
-        |> List.sortBy
-            (\v ->
-                v.startTime
-                    |> Maybe.map Time.posixToMillis
-                    |> Maybe.withDefault 0
-            )
+    Kviff.Api.dataToEvents a
+        |> List.filter (\x -> x.type_ /= Kviff.Api.Restaurant)
+        |> List.sortBy (\x -> Maybe.withDefault 0 (Maybe.map Time.posixToMillis x.startTime))
