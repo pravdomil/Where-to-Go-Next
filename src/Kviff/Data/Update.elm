@@ -21,5 +21,4 @@ get =
                 , timeout = Just 30000
                 }
     in
-    Task.map Kviff.Data.Data
-        (request Kviff.Data.decodeFilms "catalog")
+    request Kviff.Data.decoder "catalog"
