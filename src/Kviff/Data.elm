@@ -46,7 +46,25 @@ type alias Event =
 
     --
     , place : Place
+
+    -- MORE
+    , code : String
+    , name : Localized String
+    , startTime : Time.Posix
+
+    --
+    , theatreId : Int
+    , theatreCode : String
+    , theatreName : Localized String
+
+    --
+    , theatreAddress : String
+    , theatreGps : Gps
     }
+
+
+
+--
 
 
 type alias Place =
@@ -89,26 +107,6 @@ type alias Film =
 
     --
     , screenings : List Screening
-    }
-
-
-
---
-
-
-type alias Screening =
-    { code : String
-    , name : Localized String
-    , startTime : Time.Posix
-
-    --
-    , theatreId : Int
-    , theatreCode : String
-    , theatreName : Localized String
-
-    --
-    , theatreAddress : String
-    , theatreGps : Gps
     }
 
 
