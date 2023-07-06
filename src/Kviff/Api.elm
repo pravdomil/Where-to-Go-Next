@@ -21,51 +21,6 @@ type alias Data =
 --
 
 
-type alias Film =
-    { id : Int
-
-    --
-    , name : String
-    , nameLocalized : Localized String
-    , author : String
-    , images : List String
-
-    --
-    , annotation : Localized String
-    , description : Localized String
-    , additionalDesc : Localized String
-    , internalNote : String
-
-    --
-    , year : Int
-    , duration : Int
-    , country : Localized String
-
-    --
-    , screenings : List Screening
-    }
-
-
-type alias Screening =
-    { code : String
-    , name : Localized String
-    , startTime : Time.Posix
-
-    --
-    , theatreId : Int
-    , theatreCode : String
-    , theatreName : Localized String
-
-    --
-    , theatreAddress : String
-    , theatreGps : Gps
-    }
-
-
-
---
-
-
 type alias Event =
     { id : Maybe Int
     , filmId : Maybe Int
@@ -106,6 +61,51 @@ type alias Place =
     --
     , phone : String
     , website : String
+    }
+
+
+
+--
+
+
+type alias Film =
+    { id : Int
+
+    --
+    , name : String
+    , nameLocalized : Localized String
+    , author : String
+    , images : List String
+
+    --
+    , annotation : Localized String
+    , description : Localized String
+    , additionalDesc : Localized String
+    , internalNote : String
+
+    --
+    , year : Int
+    , duration : Int
+    , country : Localized String
+
+    --
+    , screenings : List Screening
+    }
+
+
+type alias Screening =
+    { code : String
+    , name : Localized String
+    , startTime : Time.Posix
+
+    --
+    , theatreId : Int
+    , theatreCode : String
+    , theatreName : Localized String
+
+    --
+    , theatreAddress : String
+    , theatreGps : Gps
     }
 
 
