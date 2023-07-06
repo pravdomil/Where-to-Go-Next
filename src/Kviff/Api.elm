@@ -1,19 +1,16 @@
 module Kviff.Api exposing (..)
 
+import Dict.Any
 import Http
-import Http.Resolver as Resolver
+import Id
 import Iso8601
-import Json.Decode as D
-import Kviff.Gps as Gps exposing (Gps)
-import Task exposing (Task)
+import Task
 import Time
-import Url exposing (Url)
-import Utils.Json.Decode_ as D_
+import Url
 
 
 type alias Data =
-    { films : List Film
-    , events : List Event
+    { events : Dict.Any.Dict (Id.Id Event) Event
     }
 
 
