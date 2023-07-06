@@ -62,7 +62,7 @@ type alias Film =
     , images : List String
 
     --
-    , director : String
+    , directors : List String
 
     --
     , year : Int
