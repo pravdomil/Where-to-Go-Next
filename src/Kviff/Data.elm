@@ -11,6 +11,9 @@ import Url
 
 type alias Data =
     { events : Dict.Any.Dict (Id.Id Event) Event
+    , films : Dict.Any.Dict (Id.Id Film) Film
+    , categories : Dict.Any.Dict (Id.Id Category) Category
+    , places : Dict.Any.Dict (Id.Id Place) Place
     }
 
 
