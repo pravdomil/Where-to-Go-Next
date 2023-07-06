@@ -289,15 +289,6 @@ decodeMaybeGps =
         ]
 
 
-decodePosix : Json.Decode.Decoder Time.Posix
-decodePosix =
-    Iso8601.decoder
-        |> Json.Decode.map
-            (\v ->
-                Time.millisToPosix (Time.posixToMillis v - (1000 * 60 * timeOffset))
-            )
-
-
 
 --
 
@@ -395,6 +386,15 @@ dataToEvents a =
 
 
 --
+
+
+decodePosix : Json.Decode.Decoder Time.Posix
+decodePosix =
+    Iso8601.decoder
+        |> Json.Decode.map
+            (\v ->
+                Time.millisToPosix (Time.posixToMillis v - (1000 * 60 * timeOffset))
+            )
 
 
 idDecoder : Json.Decode.Decoder (Id.Id a)
