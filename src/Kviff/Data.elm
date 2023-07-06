@@ -246,32 +246,6 @@ decodeEvent =
         |> D_.apply (Json.Decode.field "typ" decodeEventType)
 
 
-decodeEventType : Json.Decode.Decoder EventType
-decodeEventType =
-    Json.Decode.string
-        |> Json.Decode.andThen
-            (\v ->
-                case v of
-                    "Akce" ->
-                        Json.Decode.succeed Event_
-
-                    "Denně" ->
-                        Json.Decode.succeed Daily
-
-                    "KVIFF Talk" ->
-                        Json.Decode.succeed Talk
-
-                    "Výstava" ->
-                        Json.Decode.succeed Exhibition
-
-                    "Restaurace" ->
-                        Json.Decode.succeed Restaurant
-
-                    _ ->
-                        Json.Decode.fail ("Unknown type " ++ v ++ ".")
-            )
-
-
 decodeMaybeGps : Json.Decode.Decoder (Maybe Gps)
 decodeMaybeGps =
     Json.Decode.oneOf
