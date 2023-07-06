@@ -85,16 +85,16 @@ scrollToUpcomingEvent model =
         upcomingEvents =
             model.data
                 |> Result.map
-                    (\v1 ->
-                        v1
+                    (\x ->
+                        x
                             |> List.indexedMap Tuple.pair
                             |> List.filter
-                                (\( _, v2 ) ->
+                                (\( _, x2 ) ->
                                     Maybe.map2
                                         (\startTime now ->
                                             Time.posixToMillis startTime > Time.posixToMillis now
                                         )
-                                        v2.startTime
+                                        x2.startTime
                                         model.time
                                         |> Maybe.withDefault False
                                 )
@@ -104,10 +104,7 @@ scrollToUpcomingEvent model =
         Just ( id, _ ) ->
             ( model
             , Browser.Dom.getElement (eventId id)
-                |> Task.andThen
-                    (\v ->
-                        Browser.Dom.setViewport v.element.x (v.element.y - 12)
-                    )
+                |> Task.andThen (\x -> Browser.Dom.setViewport x.element.x (x.element.y - 12))
                 |> Task.attempt Kviff.Msg.ViewportSet
             )
 
