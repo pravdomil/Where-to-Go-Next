@@ -33,7 +33,6 @@ type Event
 type alias Screening =
     { type_ : ScreeningType
     , name : Kviff.Locale.Localized String
-    , code : String
     , films :
         List
             { filmId : Id.Id Film
