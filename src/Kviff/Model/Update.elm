@@ -43,34 +43,38 @@ getData model =
 
 
 update : Kviff.Msg.Msg -> Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
-update msg model =
+update msg =
     case msg of
         Kviff.Msg.LocaleChangeRequested b ->
-            ( { model | locale = b }
-            , Cmd.none
-            )
+            \model ->
+                ( { model | locale = b }
+                , Cmd.none
+                )
 
         Kviff.Msg.TimeReceived b ->
-            ( { model | time = Just b }
-            , Cmd.none
-            )
+            \model ->
+                ( { model | time = Just b }
+                , Cmd.none
+                )
 
         Kviff.Msg.DataReceived b ->
-            let
-                nextModel : Kviff.Model.Model
-                nextModel =
-                    { model
-                        | data = b |> Result.map normalizeData |> Result.mapError Kviff.Model.HttpError
-                    }
-            in
-            ( nextModel
-            , scrollToUpcomingEvent nextModel |> Task.attempt Kviff.Msg.ViewportSet
-            )
+            \model ->
+                let
+                    nextModel : Kviff.Model.Model
+                    nextModel =
+                        { model
+                            | data = b |> Result.map normalizeData |> Result.mapError Kviff.Model.HttpError
+                        }
+                in
+                ( nextModel
+                , scrollToUpcomingEvent nextModel |> Task.attempt Kviff.Msg.ViewportSet
+                )
 
         Kviff.Msg.ViewportSet _ ->
-            ( model
-            , Cmd.none
-            )
+            \model ->
+                ( model
+                , Cmd.none
+                )
 
 
 
