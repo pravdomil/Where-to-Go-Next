@@ -1,11 +1,11 @@
 module Kviff.ElementId exposing (..)
 
 import Id
-import Kviff.Api
+import Kviff.Data
 
 
 type ElementId
-    = Event (Id.Id Kviff.Api.Event)
+    = Event (Id.Id Kviff.Data.Event)
 
 
 toString : ElementId -> String

@@ -1,4 +1,4 @@
-module Kviff.Api exposing (..)
+module Kviff.Data exposing (..)
 
 import Dict.Any
 import Http

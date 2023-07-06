@@ -1,14 +1,14 @@
 module Kviff.Model exposing (..)
 
 import Http
-import Kviff.Api
+import Kviff.Data
 import Time
 
 
 type alias Model =
-    { locale : Kviff.Api.Locale
+    { locale : Kviff.Data.Locale
     , time : Maybe Time.Posix
-    , data : Result Error Kviff.Api.Data
+    , data : Result Error Kviff.Data.Data
     }
 
 

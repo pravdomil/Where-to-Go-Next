@@ -2,7 +2,7 @@ module Kviff.Model.Update exposing (..)
 
 import Browser.Dom
 import Json.Decode
-import Kviff.Api
+import Kviff.Data
 import Kviff.Model
 import Kviff.Msg
 import Platform.Extra
@@ -13,7 +13,7 @@ import Time
 init : Json.Decode.Value -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 init _ =
     ( Kviff.Model.Model
-        Kviff.Api.Czech
+        Kviff.Data.Czech
         Nothing
         (Err Kviff.Model.Loading)
     , Cmd.none
@@ -33,7 +33,7 @@ getTime model =
 getData : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 getData model =
     ( model
-    , Kviff.Api.getData
+    , Kviff.Data.getData
         |> Task.attempt Kviff.Msg.DataReceived
     )
 
@@ -81,7 +81,7 @@ subscriptions _ =
 scrollToUpcomingEvent : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 scrollToUpcomingEvent model =
     let
-        upcomingEvents : Result Kviff.Model.Error (List ( Int, Kviff.Api.Event ))
+        upcomingEvents : Result Kviff.Model.Error (List ( Int, Kviff.Data.Event ))
         upcomingEvents =
             model.data
                 |> Result.map

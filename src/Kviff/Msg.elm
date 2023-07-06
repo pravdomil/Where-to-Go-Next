@@ -2,14 +2,14 @@ module Kviff.Msg exposing (..)
 
 import Browser.Dom
 import Http
-import Kviff.Api
+import Kviff.Data
 import Time
 
 
 type Msg
-    = LocaleRequested Kviff.Api.Locale
+    = LocaleRequested Kviff.Data.Locale
     | TimeReceived Time.Posix
       --
-    | DataReceived (Result Http.Error Kviff.Api.Data)
+    | DataReceived (Result Http.Error Kviff.Data.Data)
       --
     | ViewportSet (Result Browser.Dom.Error ())
