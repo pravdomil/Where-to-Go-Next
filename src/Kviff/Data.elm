@@ -390,11 +390,9 @@ dataToEvents a =
 
 posixDecoder : Json.Decode.Decoder Time.Posix
 posixDecoder =
-    Iso8601.decoder
-        |> Json.Decode.map
-            (\v ->
-                Time.millisToPosix (Time.posixToMillis v - (1000 * 60 * timeOffset))
-            )
+    Json.Decode.map
+        (\x -> Time.millisToPosix (Time.posixToMillis x - (1000 * 60 * timeOffset)))
+        Iso8601.decoder
 
 
 idDecoder : Json.Decode.Decoder (Id.Id a)
