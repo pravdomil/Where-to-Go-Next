@@ -17,9 +17,9 @@ init _ =
         (Err Kviff.Model.Loading)
     , Cmd.batch
         [ Time.now
-            |> Task.perform Kviff.Msg.GotTime
+            |> Task.perform Kviff.Msg.TimeReceived
         , Kviff.Api.getData
-            |> Task.attempt Kviff.Msg.GotData
+            |> Task.attempt Kviff.Msg.DataReceived
         ]
     )
 
@@ -31,17 +31,17 @@ init _ =
 update : Kviff.Msg.Msg -> Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 update msg model =
     case msg of
-        Kviff.Msg.ChangeLocale b ->
+        Kviff.Msg.LocaleChangeRequested b ->
             ( { model | locale = b }
             , Cmd.none
             )
 
-        Kviff.Msg.GotTime b ->
+        Kviff.Msg.TimeReceived b ->
             ( { model | time = Just b }
             , Cmd.none
             )
 
-        Kviff.Msg.GotData b ->
+        Kviff.Msg.DataReceived b ->
             let
                 nextModel : Kviff.Model.Model
                 nextModel =
