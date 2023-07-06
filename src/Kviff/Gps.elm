@@ -16,11 +16,22 @@ decode =
     let
         parser : Parser.Parser Gps
         parser =
-            Parser.succeed Gps
-                |= Parser.float
-                |. Parser.symbol ","
-                |= Parser.float
-                |. Parser.end
+            Parser.float
+                |> Parser.andThen
+                    (\x ->
+                        Parser.symbol ","
+                            |> Parser.map (\() -> x)
+                    )
+                |> Parser.andThen
+                    (\x ->
+                        Parser.float
+                            |> Parser.map (\x2 -> Gps x x2)
+                    )
+                |> Parser.andThen
+                    (\x ->
+                        Parser.end
+                            |> Parser.map (\() -> x)
+                    )
     in
     Json.Decode.string
         |> Json.Decode.andThen
