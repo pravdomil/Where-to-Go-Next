@@ -46,35 +46,21 @@ update : Kviff.Msg.Msg -> Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Ms
 update msg =
     case msg of
         Kviff.Msg.LocaleChangeRequested b ->
-            \model ->
-                ( { model | locale = b }
-                , Cmd.none
-                )
+            \model -> ( { model | locale = b }, Cmd.none )
 
         Kviff.Msg.TimeReceived b ->
-            \model ->
-                ( { model | time = Just b }
-                , Cmd.none
-                )
+            \model -> ( { model | time = Just b }, Cmd.none )
 
         Kviff.Msg.DataReceived b ->
-            \model ->
-                let
-                    nextModel : Kviff.Model.Model
-                    nextModel =
-                        { model
-                            | data = b |> Result.map normalizeData |> Result.mapError Kviff.Model.HttpError
-                        }
-                in
-                ( nextModel
-                , scrollToUpcomingEvent nextModel |> Task.attempt Kviff.Msg.ViewportSet
-                )
+            case b of
+                Ok c ->
+                    \model -> ( { model | data = Ok (normalizeData c) }, Cmd.none )
+
+                Err c ->
+                    \model -> ( { model | data = Err (Kviff.Model.HttpError c) }, Cmd.none )
 
         Kviff.Msg.ViewportSet _ ->
-            \model ->
-                ( model
-                , Cmd.none
-                )
+            Platform.Extra.noOperation
 
 
 
