@@ -110,29 +110,6 @@ type alias Screening =
 --
 
 
-getData : Task Http.Error Data
-getData =
-    let
-        request : D.Decoder a -> String -> Task Http.Error a
-        request decoder a =
-            Http.task
-                { method = "GET"
-                , headers = []
-                , url = "https://www.kviff.com/en/exports/json/" ++ a
-                , body = Http.emptyBody
-                , resolver = Resolver.json decoder
-                , timeout = Just 30000
-                }
-    in
-    Task.map2 Data
-        (request decodeFilms "catalog")
-        (request decodeEvents "acmp-events")
-
-
-
---
-
-
 decodeFilms : D.Decoder (List Film)
 decodeFilms =
     D.field "sekce" (D.list (D.field "subsekce" (D.list (D.field "film" (D.list decodeFilm)))))
