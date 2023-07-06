@@ -119,6 +119,29 @@ decoder =
         placesDecoder
 
 
+eventsDecoder : Json.Decode.Decoder (Dict.Any.Dict (Id.Id Event) Event)
+eventsDecoder =
+    Json.Decode.field "sekce"
+        (Json.Decode.list
+            (Json.Decode.field "subsekce"
+                (Json.Decode.list
+                    (Json.Decode.field "film"
+                        (Json.Decode.list
+                            (Json.Decode.field "screenings"
+                                (Json.Decode.field "screening"
+                                    (Json.Decode.list
+                                        (Json.Decode.map (Tuple.mapBoth Id.toAny Screening_) screeningDecoder)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString (List.concat (List.concat (List.concat x))))
+
+
 screeningTypeDecoder : Json.Decode.Decoder ScreeningType
 screeningTypeDecoder =
     Json.Decode.string
