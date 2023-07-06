@@ -1,97 +1,18 @@
 module Kviff.Main exposing (..)
 
 import Browser
-import Browser.Navigation as Navigation
-import Html
-import Json.Decode as Decode
-import Kviff.Program as Program
-import Kviff.Router as Router
-import Kviff.Translation as Translation
-import Kviff.Ui.Base exposing (..)
-import Url exposing (Url)
+import Json.Decode
+import Kviff.Model
+import Kviff.Model.Update
+import Kviff.Model.View
+import Kviff.Msg
 
 
-main : Program Decode.Value Model Msg
+main : Program Json.Decode.Value Kviff.Model.Model Kviff.Msg.Msg
 main =
-    Browser.application
-        { init = init
-        , update = update
-        , subscriptions = subscriptions
-        , view = view
-        , onUrlRequest = Router.UrlRequested >> RouterMsg
-        , onUrlChange = Router.UrlChanged >> RouterMsg
+    Browser.document
+        { init = Kviff.Model.Update.init
+        , update = Kviff.Model.Update.update
+        , subscriptions = Kviff.Model.Update.subscriptions
+        , view = Kviff.Model.View.view
         }
-
-
-
---
-
-
-type alias Model =
-    { router : Router.Model
-    , program : Program.Model
-    }
-
-
-init : Decode.Value -> Url -> Navigation.Key -> ( Model, Cmd Msg )
-init _ url key =
-    let
-        ( router, routerCmd ) =
-            Router.init url key
-
-        ( program, programCmd ) =
-            Program.init
-    in
-    ( { router = router
-      , program = program
-      }
-    , Cmd.batch
-        [ routerCmd
-            |> Cmd.map RouterMsg
-        , programCmd
-            |> Cmd.map ProgramMsg
-        ]
-    )
-
-
-
---
-
-
-type Msg
-    = RouterMsg Router.Msg
-    | ProgramMsg Program.Msg
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        RouterMsg a ->
-            Router.update a model.router
-                |> Tuple.mapBoth (\v -> { model | router = v }) (Cmd.map RouterMsg)
-
-        ProgramMsg a ->
-            Program.update a model.program
-                |> Tuple.mapBoth (\v -> { model | program = v }) (Cmd.map ProgramMsg)
-
-
-
---
-
-
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none
-
-
-
---
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = Translation.title
-    , body =
-        [ layout [] (Program.view model.program |> map ProgramMsg)
-        ]
-    }
