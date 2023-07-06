@@ -3,6 +3,7 @@ module Kviff.Data exposing (..)
 import Dict.Any
 import Id
 import Iso8601
+import Json.Decode
 import Kviff.Gps
 import Kviff.Locale
 import Time
@@ -118,15 +119,15 @@ type alias Place =
 --
 
 
-decodeFilms : D.Decoder (List Film)
+decodeFilms : Json.Decode.Decoder (List Film)
 decodeFilms =
-    D.field "sekce" (D.list (D.field "subsekce" (D.list (D.field "film" (D.list decodeFilm)))))
-        |> D.map (List.concat >> List.concat)
+    Json.Decode.field "sekce" (Json.Decode.list (Json.Decode.field "subsekce" (Json.Decode.list (Json.Decode.field "film" (Json.Decode.list decodeFilm)))))
+        |> Json.Decode.map (List.concat >> List.concat)
 
 
-decodeFilm : D.Decoder Film
+decodeFilm : Json.Decode.Decoder Film
 decodeFilm =
-    D.map8
+    Json.Decode.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 ->
             { id = v1
             , nameLocalized = Localized v2 v3
@@ -143,29 +144,29 @@ decodeFilm =
             , images = v18
             }
         )
-        (D.field "id_film" D.int)
-        (D.field "nazev_en" D.string)
-        (D.field "nazev_cz" D.string)
-        (D.field "nazev_orig" D.string)
-        (D.field "author" D.string)
-        (D.field "anotace_en" D.string)
-        (D.field "anotace_cz" D.string)
-        (D.field "film_en" D.string)
-        |> D_.apply (D.field "film_cz" D.string)
-        |> D_.apply (D.field "doplnujici_text_en" D.string)
-        |> D_.apply (D.field "doplnujici_text_cz" D.string)
-        |> D_.apply (D.field "poznamky" D.string)
-        |> D_.apply (D.field "rok" D.int)
-        |> D_.apply (D.field "delka" D.int)
-        |> D_.apply (D.field "zeme_en" D.string)
-        |> D_.apply (D.field "zeme_cz" D.string)
-        |> D_.apply (D.field "screenings" (D.field "screening" (D.list decodeFilmScreening)))
-        |> D_.apply (D.field "film_web_images" (D.field "image" (D.list decodeFilmImage)))
+        (Json.Decode.field "id_film" Json.Decode.int)
+        (Json.Decode.field "nazev_en" Json.Decode.string)
+        (Json.Decode.field "nazev_cz" Json.Decode.string)
+        (Json.Decode.field "nazev_orig" Json.Decode.string)
+        (Json.Decode.field "author" Json.Decode.string)
+        (Json.Decode.field "anotace_en" Json.Decode.string)
+        (Json.Decode.field "anotace_cz" Json.Decode.string)
+        (Json.Decode.field "film_en" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "film_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "doplnujici_text_en" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "doplnujici_text_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "poznamky" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "rok" Json.Decode.int)
+        |> D_.apply (Json.Decode.field "delka" Json.Decode.int)
+        |> D_.apply (Json.Decode.field "zeme_en" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "zeme_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "screenings" (Json.Decode.field "screening" (Json.Decode.list decodeFilmScreening)))
+        |> D_.apply (Json.Decode.field "film_web_images" (Json.Decode.field "image" (Json.Decode.list decodeFilmImage)))
 
 
-decodeFilmScreening : D.Decoder Screening
+decodeFilmScreening : Json.Decode.Decoder Screening
 decodeFilmScreening =
-    D.map8
+    Json.Decode.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 ->
             { code = v1
             , name = Localized v2 v3
@@ -177,37 +178,37 @@ decodeFilmScreening =
             , theatreGps = v10
             }
         )
-        (D.field "code" D.string)
-        (D.field "title_en" D.string)
-        (D.field "title_cz" D.string)
-        (D.field "timestamp" decodePosix)
-        (D.field "theatre_misto_id" D.int)
-        (D.field "theatre_code" D.string)
-        (D.field "theatre_en" D.string)
-        (D.field "theatre_cz" D.string)
-        |> D_.apply (D.field "theatre_misto_adresa" D.string)
-        |> D_.apply (D.field "theatre_misto_gps" Gps.decode)
+        (Json.Decode.field "code" Json.Decode.string)
+        (Json.Decode.field "title_en" Json.Decode.string)
+        (Json.Decode.field "title_cz" Json.Decode.string)
+        (Json.Decode.field "timestamp" decodePosix)
+        (Json.Decode.field "theatre_misto_id" Json.Decode.int)
+        (Json.Decode.field "theatre_code" Json.Decode.string)
+        (Json.Decode.field "theatre_en" Json.Decode.string)
+        (Json.Decode.field "theatre_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "theatre_misto_adresa" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "theatre_misto_gps" Gps.decode)
 
 
-decodeFilmImage : D.Decoder String
+decodeFilmImage : Json.Decode.Decoder String
 decodeFilmImage =
-    D.map2
+    Json.Decode.map2
         (\v1 v2 ->
             "https://www.kviff.com/en/image/film/" ++ Url.percentEncode (String.fromInt v1) ++ "/" ++ Url.percentEncode v2
         )
-        (D.field "id" D.int)
-        (D.field "validationCode" D.string)
+        (Json.Decode.field "id" Json.Decode.int)
+        (Json.Decode.field "validationCode" Json.Decode.string)
 
 
-decodeEvents : D.Decoder (List Event)
+decodeEvents : Json.Decode.Decoder (List Event)
 decodeEvents =
-    D.field "typ" (D.list (D.field "den" (D.list (D.field "akce" (D.list decodeEvent)))))
-        |> D.map (List.concat >> List.concat)
+    Json.Decode.field "typ" (Json.Decode.list (Json.Decode.field "den" (Json.Decode.list (Json.Decode.field "akce" (Json.Decode.list decodeEvent)))))
+        |> Json.Decode.map (List.concat >> List.concat)
 
 
-decodeEvent : D.Decoder Event
+decodeEvent : Json.Decode.Decoder Event
 decodeEvent =
-    D.map8
+    Json.Decode.map8
         (\v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 ->
             { id = Just v3
             , filmId = Nothing
@@ -238,70 +239,70 @@ decodeEvent =
                 }
             }
         )
-        (D.field "cas_do" (D_.maybe decodePosix))
-        (D.field "cas_od" (D_.maybe decodePosix))
-        (D.field "id" D.int)
-        (D.field "misto_adresa" D.string)
-        (D.field "misto_cz" D.string)
-        (D.field "misto_en" D.string)
-        (D.field "misto_gps" decodeMaybeGps)
-        (D.field "misto_id" D.int)
-        |> D_.apply (D.field "misto_telefon" D.string)
-        |> D_.apply (D.field "misto_website" D.string)
-        |> D_.apply (D.field "nazev_cz" D.string)
-        |> D_.apply (D.field "nazev_en" D.string)
-        |> D_.apply (D.field "popis_cz" D.string)
-        |> D_.apply (D.field "popis_en" D.string)
-        |> D_.apply (D.field "typ" decodeEventType)
+        (Json.Decode.field "cas_do" (D_.maybe decodePosix))
+        (Json.Decode.field "cas_od" (D_.maybe decodePosix))
+        (Json.Decode.field "id" Json.Decode.int)
+        (Json.Decode.field "misto_adresa" Json.Decode.string)
+        (Json.Decode.field "misto_cz" Json.Decode.string)
+        (Json.Decode.field "misto_en" Json.Decode.string)
+        (Json.Decode.field "misto_gps" decodeMaybeGps)
+        (Json.Decode.field "misto_id" Json.Decode.int)
+        |> D_.apply (Json.Decode.field "misto_telefon" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "misto_website" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "nazev_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "nazev_en" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "popis_cz" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "popis_en" Json.Decode.string)
+        |> D_.apply (Json.Decode.field "typ" decodeEventType)
 
 
-decodeEventType : D.Decoder EventType
+decodeEventType : Json.Decode.Decoder EventType
 decodeEventType =
-    D.string
-        |> D.andThen
+    Json.Decode.string
+        |> Json.Decode.andThen
             (\v ->
                 case v of
                     "Akce" ->
-                        D.succeed Event_
+                        Json.Decode.succeed Event_
 
                     "Denně" ->
-                        D.succeed Daily
+                        Json.Decode.succeed Daily
 
                     "KVIFF Talk" ->
-                        D.succeed Talk
+                        Json.Decode.succeed Talk
 
                     "Výstava" ->
-                        D.succeed Exhibition
+                        Json.Decode.succeed Exhibition
 
                     "Restaurace" ->
-                        D.succeed Restaurant
+                        Json.Decode.succeed Restaurant
 
                     _ ->
-                        D.fail ("Unknown type " ++ v ++ ".")
+                        Json.Decode.fail ("Unknown type " ++ v ++ ".")
             )
 
 
-decodeMaybeGps : D.Decoder (Maybe Gps)
+decodeMaybeGps : Json.Decode.Decoder (Maybe Gps)
 decodeMaybeGps =
-    D.oneOf
-        [ D.string
-            |> D.andThen
+    Json.Decode.oneOf
+        [ Json.Decode.string
+            |> Json.Decode.andThen
                 (\v ->
                     if v == "" then
-                        D.succeed Nothing
+                        Json.Decode.succeed Nothing
 
                     else
-                        D.fail "GPS coordinates are not empty."
+                        Json.Decode.fail "GPS coordinates are not empty."
                 )
         , Gps.decode
-            |> D.map Just
+            |> Json.Decode.map Just
         ]
 
 
-decodePosix : D.Decoder Time.Posix
+decodePosix : Json.Decode.Decoder Time.Posix
 decodePosix =
     Iso8601.decoder
-        |> D.map
+        |> Json.Decode.map
             (\v ->
                 Time.millisToPosix (Time.posixToMillis v - (1000 * 60 * timeOffset))
             )
