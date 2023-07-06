@@ -108,12 +108,8 @@ type alias Category =
 
 type alias Place =
     { name : Kviff.Locale.Localized String
-
-    --
     , address : String
     , gps : Kviff.Gps.Gps
-
-    --
     , code : String
     }
 
