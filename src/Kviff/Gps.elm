@@ -1,4 +1,4 @@
-module Gps exposing (..)
+module Kviff.Gps exposing (..)
 
 import Json.Decode as D
 import Parser as P exposing ((|.), (|=))

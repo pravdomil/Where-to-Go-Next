@@ -1,10 +1,10 @@
 module Kviff.Api exposing (..)
 
-import Gps as Gps exposing (Gps)
 import Http
 import Http.Resolver as Resolver
 import Iso8601
 import Json.Decode as D
+import Kviff.Gps as Gps exposing (Gps)
 import Task exposing (Task)
 import Time
 import Url exposing (Url)
