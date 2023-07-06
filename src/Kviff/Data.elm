@@ -119,6 +119,20 @@ decoder =
         placesDecoder
 
 
+screeningTypeDecoder : Json.Decode.Decoder ScreeningType
+screeningTypeDecoder =
+    Json.Decode.string
+        |> Json.Decode.andThen
+            (\x ->
+                case x of
+                    "OFFICIAL" ->
+                        Json.Decode.succeed Official
+
+                    _ ->
+                        Json.Decode.fail "Unknown screening type."
+            )
+
+
 
 --
 
