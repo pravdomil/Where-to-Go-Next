@@ -111,7 +111,7 @@ type alias Place =
 
     --
     , address : String
-    , gps : Maybe Kviff.Gps.Gps
+    , gps : Kviff.Gps.Gps
 
     --
     , phone : String
