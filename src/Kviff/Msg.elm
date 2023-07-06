@@ -7,7 +7,7 @@ import Time
 
 
 type Msg
-    = LocaleChangeRequested Kviff.Api.Locale
+    = LocaleRequested Kviff.Api.Locale
     | TimeReceived Time.Posix
       --
     | DataReceived (Result Http.Error Kviff.Api.Data)

@@ -45,7 +45,7 @@ getData model =
 update : Kviff.Msg.Msg -> Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 update msg =
     case msg of
-        Kviff.Msg.LocaleChangeRequested b ->
+        Kviff.Msg.LocaleRequested b ->
             \x -> ( { x | locale = b }, Cmd.none )
 
         Kviff.Msg.TimeReceived b ->
