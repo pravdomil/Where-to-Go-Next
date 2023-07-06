@@ -36,7 +36,7 @@ type alias Screening =
     , code : String
     , films :
         List
-            { film : Id.Id Film
+            { filmId : Id.Id Film
             , note : Kviff.Locale.Localized String
             }
     , time : Time.Posix
