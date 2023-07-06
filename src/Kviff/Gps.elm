@@ -1,8 +1,8 @@
 module Kviff.Gps exposing (..)
 
-import Json.Decode as D
-import Parser as P exposing ((|.), (|=))
-import Parser.DeadEnd as DeadEnd
+import Json.Decode
+import Parser
+import Parser.DeadEnd
 
 
 type alias Gps =
@@ -11,24 +11,24 @@ type alias Gps =
     }
 
 
-decode : D.Decoder Gps
+decode : Json.Decode.Decoder Gps
 decode =
     let
-        parser : P.Parser Gps
+        parser : Parser.Parser Gps
         parser =
-            P.succeed Gps
-                |= P.float
-                |. P.symbol ","
-                |= P.float
-                |. P.end
+            Parser.succeed Gps
+                |= Parser.float
+                |. Parser.symbol ","
+                |= Parser.float
+                |. Parser.end
     in
-    D.string
-        |> D.andThen
-            (\v ->
-                case P.run parser v of
-                    Err b ->
-                        D.fail (DeadEnd.toString b)
+    Json.Decode.string
+        |> Json.Decode.andThen
+            (\x ->
+                case Parser.run parser x of
+                    Err x2 ->
+                        Json.Decode.fail (Parser.DeadEnd.listToString x2)
 
-                    Ok b ->
-                        D.succeed b
+                    Ok x2 ->
+                        Json.Decode.succeed x2
             )
