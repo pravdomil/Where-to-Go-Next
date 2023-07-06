@@ -107,8 +107,7 @@ type alias Category =
 
 
 type alias Place =
-    { id : Int
-    , name : Kviff.Locale.Localized String
+    { name : Kviff.Locale.Localized String
 
     --
     , address : String
