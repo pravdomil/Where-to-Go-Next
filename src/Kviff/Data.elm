@@ -27,7 +27,7 @@ type Event
 --
 
 
-type alias Event =
+type alias Screening =
     { id : Maybe Int
     , filmId : Maybe Int
     , type_ : EventType
