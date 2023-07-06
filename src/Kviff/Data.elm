@@ -21,6 +21,14 @@ type alias Data =
 --
 
 
+type Event
+    = Screening_ Screening
+
+
+
+--
+
+
 type alias Event =
     { id : Maybe Int
     , filmId : Maybe Int
