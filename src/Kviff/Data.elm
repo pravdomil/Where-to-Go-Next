@@ -30,7 +30,6 @@ type Event
 type alias Screening =
     { id : Maybe Int
     , filmId : Maybe Int
-    , type_ : EventType
 
     --
     , name : Localized String
