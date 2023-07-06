@@ -5,6 +5,7 @@ import Json.Decode
 import Kviff.Api
 import Kviff.Model
 import Kviff.Msg
+import Platform.Extra
 import Task
 import Time
 
@@ -15,12 +16,25 @@ init _ =
         Kviff.Api.Czech
         Nothing
         (Err Kviff.Model.Loading)
-    , Cmd.batch
-        [ Time.now
-            |> Task.perform Kviff.Msg.TimeReceived
-        , Kviff.Api.getData
-            |> Task.attempt Kviff.Msg.DataReceived
-        ]
+    , Cmd.none
+    )
+        |> Platform.Extra.andThen getTime
+        |> Platform.Extra.andThen getData
+
+
+getTime : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
+getTime model =
+    ( model
+    , Time.now
+        |> Task.perform Kviff.Msg.TimeReceived
+    )
+
+
+getData : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
+getData model =
+    ( model
+    , Kviff.Api.getData
+        |> Task.attempt Kviff.Msg.DataReceived
     )
 
 
