@@ -1,4 +1,4 @@
-module Utils.Html exposing (..)
+module Kviff.Utils.Html exposing (..)
 
 import Html.Parser
 import Parser
