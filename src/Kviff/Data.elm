@@ -31,36 +31,24 @@ type Event
 
 
 type alias Screening =
-    { id : Maybe Int
-    , filmId : Maybe Int
-
-    --
+    { type_ : ScreeningType
     , name : Kviff.Locale.Localized String
-    , image : Maybe String
-    , description : Kviff.Locale.Localized String
-    , note : Kviff.Locale.Localized String
-
-    --
-    , startTime : Maybe Time.Posix
-    , endTime : Maybe Time.Posix
-
-    --
-    , place : Place
-
-    -- MORE
     , code : String
-    , name : Kviff.Locale.Localized String
-    , startTime : Time.Posix
-
-    --
-    , theatreId : Int
-    , theatreCode : String
-    , theatreName : Kviff.Locale.Localized String
-
-    --
-    , theatreAddress : String
-    , theatreGps : Kviff.Gps.Gps
+    , films :
+        List
+            { film : Id.Id Film
+            , note : Kviff.Locale.Localized String
+            }
+    , time : Time.Posix
     }
+
+
+
+--
+
+
+type ScreeningType
+    = Official
 
 
 
