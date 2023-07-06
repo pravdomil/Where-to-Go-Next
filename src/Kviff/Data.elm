@@ -49,15 +49,6 @@ type alias Event =
     }
 
 
-type EventType
-    = Screening_
-    | Event_
-    | Daily
-    | Talk
-    | Exhibition
-    | Restaurant
-
-
 type alias Place =
     { id : Int
     , name : Localized String
