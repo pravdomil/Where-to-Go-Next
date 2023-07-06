@@ -56,10 +56,7 @@ type ScreeningType
 
 
 type alias Film =
-    { id : Int
-
-    --
-    , name : String
+    { name : String
     , nameLocalized : Kviff.Locale.Localized String
     , author : String
     , images : List String
