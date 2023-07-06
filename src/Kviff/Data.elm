@@ -62,9 +62,6 @@ type alias Film =
     , images : List String
 
     --
-    , internalNote : String
-
-    --
     , director : String
 
     --
@@ -73,6 +70,7 @@ type alias Film =
     , country : Kviff.Locale.Localized String
 
     --
+    , internalNote : String
     , screenings : List Screening
     }
 
