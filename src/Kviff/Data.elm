@@ -95,6 +95,17 @@ type alias Film =
 --
 
 
+type alias Category =
+    { name : Kviff.Locale.Localized String
+    , description : Kviff.Locale.Localized String
+    , order : Int
+    }
+
+
+
+--
+
+
 type alias Place =
     { id : Int
     , name : Kviff.Locale.Localized String
