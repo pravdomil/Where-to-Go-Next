@@ -109,6 +109,20 @@ type alias Place =
 --
 
 
+decoder : Json.Decode.Decoder Data
+decoder =
+    Json.Decode.map4
+        Data
+        eventsDecoder
+        filmsDecoder
+        categoriesDecoder
+        placesDecoder
+
+
+
+--
+
+
 decodeFilms : Json.Decode.Decoder (List Film)
 decodeFilms =
     Json.Decode.field "sekce" (Json.Decode.list (Json.Decode.field "subsekce" (Json.Decode.list (Json.Decode.field "film" (Json.Decode.list decodeFilm)))))
