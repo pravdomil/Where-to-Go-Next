@@ -55,7 +55,7 @@ update msg =
             case b of
                 Ok c ->
                     \x ->
-                        ( { x | data = Ok (normalizeData c) }, Cmd.none )
+                        ( { x | data = Ok c }, Cmd.none )
                             |> Platform.Extra.andThen scrollToUpcomingEvent
 
                 Err c ->
@@ -110,19 +110,3 @@ scrollToUpcomingEvent model =
 
         Nothing ->
             Platform.Extra.noOperation model
-
-
-
---
-
-
-eventId : Int -> String
-eventId a =
-    "e-" ++ String.fromInt a
-
-
-normalizeData : Kviff.Api.Data -> List Kviff.Api.Event
-normalizeData a =
-    Kviff.Api.dataToEvents a
-        |> List.filter (\x -> x.type_ /= Kviff.Api.Restaurant)
-        |> List.sortBy (\x -> Maybe.withDefault 0 (Maybe.map Time.posixToMillis x.startTime))
