@@ -3,6 +3,8 @@ module Kviff.Data exposing (..)
 import Dict.Any
 import Id
 import Iso8601
+import Kviff.Gps
+import Kviff.Locale
 import Time
 import Url
 
@@ -32,10 +34,10 @@ type alias Screening =
     , filmId : Maybe Int
 
     --
-    , name : Localized String
+    , name : Kviff.Locale.Localized String
     , image : Maybe String
-    , description : Localized String
-    , note : Localized String
+    , description : Kviff.Locale.Localized String
+    , note : Kviff.Locale.Localized String
 
     --
     , startTime : Maybe Time.Posix
@@ -46,17 +48,17 @@ type alias Screening =
 
     -- MORE
     , code : String
-    , name : Localized String
+    , name : Kviff.Locale.Localized String
     , startTime : Time.Posix
 
     --
     , theatreId : Int
     , theatreCode : String
-    , theatreName : Localized String
+    , theatreName : Kviff.Locale.Localized String
 
     --
     , theatreAddress : String
-    , theatreGps : Gps
+    , theatreGps : Kviff.Gps.Gps
     }
 
 
@@ -69,20 +71,20 @@ type alias Film =
 
     --
     , name : String
-    , nameLocalized : Localized String
+    , nameLocalized : Kviff.Locale.Localized String
     , author : String
     , images : List String
 
     --
-    , annotation : Localized String
-    , description : Localized String
-    , additionalDesc : Localized String
+    , annotation : Kviff.Locale.Localized String
+    , description : Kviff.Locale.Localized String
+    , additionalDesc : Kviff.Locale.Localized String
     , internalNote : String
 
     --
     , year : Int
     , duration : Int
-    , country : Localized String
+    , country : Kviff.Locale.Localized String
 
     --
     , screenings : List Screening
@@ -95,11 +97,11 @@ type alias Film =
 
 type alias Place =
     { id : Int
-    , name : Localized String
+    , name : Kviff.Locale.Localized String
 
     --
     , address : String
-    , gps : Maybe Gps
+    , gps : Maybe Kviff.Gps.Gps
 
     --
     , phone : String
