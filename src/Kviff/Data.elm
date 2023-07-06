@@ -65,24 +65,6 @@ type alias Screening =
 --
 
 
-type alias Place =
-    { id : Int
-    , name : Localized String
-
-    --
-    , address : String
-    , gps : Maybe Gps
-
-    --
-    , phone : String
-    , website : String
-    }
-
-
-
---
-
-
 type alias Film =
     { id : Int
 
@@ -105,6 +87,24 @@ type alias Film =
 
     --
     , screenings : List Screening
+    }
+
+
+
+--
+
+
+type alias Place =
+    { id : Int
+    , name : Localized String
+
+    --
+    , address : String
+    , gps : Maybe Gps
+
+    --
+    , phone : String
+    , website : String
     }
 
 
