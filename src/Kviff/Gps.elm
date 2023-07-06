@@ -13,26 +13,6 @@ type alias Gps =
 
 decode : Json.Decode.Decoder Gps
 decode =
-    let
-        parser : Parser.Parser Gps
-        parser =
-            Parser.float
-                |> Parser.andThen
-                    (\x ->
-                        Parser.symbol ","
-                            |> Parser.map (\() -> x)
-                    )
-                |> Parser.andThen
-                    (\x ->
-                        Parser.float
-                            |> Parser.map (\x2 -> Gps x x2)
-                    )
-                |> Parser.andThen
-                    (\x ->
-                        Parser.end
-                            |> Parser.map (\() -> x)
-                    )
-    in
     Json.Decode.string
         |> Json.Decode.andThen
             (\x ->
@@ -42,4 +22,24 @@ decode =
 
                     Ok x2 ->
                         Json.Decode.succeed x2
+            )
+
+
+parser : Parser.Parser Gps
+parser =
+    Parser.float
+        |> Parser.andThen
+            (\x ->
+                Parser.symbol ","
+                    |> Parser.map (\() -> x)
+            )
+        |> Parser.andThen
+            (\x ->
+                Parser.float
+                    |> Parser.map (\x2 -> Gps x x2)
+            )
+        |> Parser.andThen
+            (\x ->
+                Parser.end
+                    |> Parser.map (\() -> x)
             )
