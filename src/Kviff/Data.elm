@@ -62,8 +62,6 @@ type alias Film =
     , images : List String
 
     --
-    , annotation : Kviff.Locale.Localized String
-    , additionalDesc : Kviff.Locale.Localized String
     , internalNote : String
 
     --
