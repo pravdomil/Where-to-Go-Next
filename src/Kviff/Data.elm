@@ -114,8 +114,7 @@ type alias Place =
     , gps : Kviff.Gps.Gps
 
     --
-    , phone : String
-    , website : String
+    , code : String
     }
 
 
