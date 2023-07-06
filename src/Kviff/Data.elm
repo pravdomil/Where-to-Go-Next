@@ -141,6 +141,34 @@ eventsDecoder =
         |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString (List.concat (List.concat (List.concat x))))
 
 
+screeningDecoder : Json.Decode.Decoder ( Id.Id Screening, Screening )
+screeningDecoder =
+    Json.Decode.map2
+        Tuple.pair
+        (Json.Decode.field "code" (Json.Decode.map Id.fromString Json.Decode.string))
+        (Json.Decode.map4
+            Screening
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "title_en" Json.Decode.string)
+                (Json.Decode.field "title_cz" Json.Decode.string)
+            )
+            (Json.Decode.field "type" screeningTypeDecoder)
+            (Json.Decode.field "films"
+                (Json.Decode.list
+                    (Json.Decode.map2
+                        (\x x2 -> { filmId = x, note = x2 })
+                        (Json.Decode.field "id_film" idDecoder)
+                        (Json.Decode.map2 Kviff.Locale.Localized
+                            (Json.Decode.field "screening_note_en" Json.Decode.string)
+                            (Json.Decode.field "screening_note_cz" Json.Decode.string)
+                        )
+                    )
+                )
+            )
+            (Json.Decode.field "timestamp" posixDecoder)
+        )
+
+
 screeningTypeDecoder : Json.Decode.Decoder ScreeningType
 screeningTypeDecoder =
     Json.Decode.string
