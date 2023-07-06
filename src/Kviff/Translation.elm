@@ -1,6 +1,6 @@
 module Kviff.Translation exposing (..)
 
-import Kviff.Api as Api
+import Kviff.Data as Data
 import Time
 
 
@@ -14,25 +14,25 @@ footer =
     "You are welcome!"
 
 
-eventType : Api.EventType -> String
+eventType : Data.EventType -> String
 eventType a =
     case a of
-        Api.Screening_ ->
+        Data.Screening_ ->
             "Screening"
 
-        Api.Event_ ->
+        Data.Event_ ->
             "Event"
 
-        Api.Daily ->
+        Data.Daily ->
             "Daily"
 
-        Api.Talk ->
+        Data.Talk ->
             "Talk"
 
-        Api.Exhibition ->
+        Data.Exhibition ->
             "Exhibition"
 
-        Api.Restaurant ->
+        Data.Restaurant ->
             "Restaurant"
 
 
