@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "elm-data": "github:pravdomil/elm-data",
     "elm-utils": "github:pravdomil/elm-utils"
   }
 }
