@@ -192,6 +192,7 @@ viewScreening model data ( id, a ) =
                                     }
                             )
                             place
+                        , Just (text (Id.toString id))
                         , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
                         , Maybe.map
                             (\x ->
