@@ -183,18 +183,15 @@ viewScreening model data ( id, a ) =
                         [ Just (text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time))
                         , Just (text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time))
                         , Just (text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)))
-                        , case place of
-                            Just b ->
-                                Just
-                                    (newTabLink theme
-                                        []
-                                        { label = text (Kviff.Locale.localize model.locale b.name)
-                                        , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
-                                        }
-                                    )
-
-                            Nothing ->
-                                Nothing
+                        , Maybe.map
+                            (\x ->
+                                newTabLink theme
+                                    []
+                                    { label = text (Kviff.Locale.localize model.locale x.name)
+                                    , url = Kviff.GeoCoordinates.mapyCzLink x.coordinates
+                                    }
+                            )
+                            place
                         , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
                         , case onlyOneFilm of
                             Just b ->
