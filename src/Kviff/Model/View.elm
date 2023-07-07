@@ -157,3 +157,17 @@ viewScreening model data ( id, a ) =
             [ text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
             ]
         ]
+
+
+
+--
+
+
+emptyStringToNothing : String -> Maybe String
+emptyStringToNothing a =
+    case a of
+        "" ->
+            Nothing
+
+        _ ->
+            Just a
