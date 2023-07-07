@@ -54,7 +54,7 @@ time zone a =
     weekdayToString (Time.toWeekday zone a)
         ++ " "
         ++ String.fromInt (Time.toDay zone a)
-        ++ " - "
+        ++ " – "
         ++ String.padLeft 2 '0' (String.fromInt (Time.toHour zone a))
         ++ ":"
         ++ String.padLeft 2 '0' (String.fromInt (Time.toMinute zone a))
