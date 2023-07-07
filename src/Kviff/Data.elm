@@ -408,3 +408,17 @@ posixDecoder =
 idDecoder : Json.Decode.Decoder (Id.Id a)
 idDecoder =
     Json.Decode.map (\x -> Id.fromString (String.fromInt x)) Json.Decode.int
+
+
+map9 fn a1 a2 a3 a4 a5 a6 a7 a8 a9 =
+    Json.Decode.map2
+        (\x x2 -> x x2)
+        (Json.Decode.map8 fn a1 a2 a3 a4 a5 a6 a7 a8)
+        a9
+
+
+map10 fn a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 =
+    Json.Decode.map2
+        (\x x2 -> x x2)
+        (map9 fn a1 a2 a3 a4 a5 a6 a7 a8 a9)
+        a10
