@@ -137,6 +137,12 @@ viewScreening model data ( id, a ) =
         films =
             List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
 
+        categories : List Kviff.Data.Category
+        categories =
+            List.foldl (\x acc -> Dict.Any.union Id.toString x.categories acc) Dict.Any.empty films
+                |> Dict.Any.keys
+                |> List.filterMap (\x -> Dict.Any.get Id.toString x data.categories)
+
         name : String
         name =
             List.filterMap identity
@@ -165,6 +171,7 @@ viewScreening model data ( id, a ) =
                 [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
                 , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
                 , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
+                , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
                 , case place of
                     Just b ->
                         newTabLink theme
