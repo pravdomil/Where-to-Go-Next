@@ -26,6 +26,13 @@ type Event
     = Screening_ Screening
 
 
+eventTime : Event -> Time.Posix
+eventTime a =
+    case a of
+        Screening_ b ->
+            b.time
+
+
 
 --
 
