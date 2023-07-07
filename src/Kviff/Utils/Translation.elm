@@ -1,5 +1,6 @@
 module Kviff.Utils.Translation exposing (..)
 
+import Kviff.Locale
 import Time
 
 
@@ -11,6 +12,16 @@ title =
 footer : String
 footer =
     "You are welcome!"
+
+
+locale : Kviff.Locale.Locale -> String
+locale a =
+    case a of
+        Kviff.Locale.English ->
+            "EN"
+
+        Kviff.Locale.Czech ->
+            "CZ"
 
 
 time : Time.Zone -> Time.Posix -> String
