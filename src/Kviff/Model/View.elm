@@ -188,20 +188,20 @@ viewScreening model data ( id, a ) =
                         , Just (text (Id.toString id))
                         , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
                         , Maybe.map
-                            (\( _, x ) ->
-                                newTabLink theme
-                                    []
-                                    { label = text "CSFD"
-                                    , url = Kviff.Data.csfdLink x
-                                    }
-                            )
-                            onlyOneFilm
-                        , Maybe.map
                             (\( x, _ ) ->
                                 newTabLink theme
                                     []
                                     { label = text "Info"
                                     , url = Kviff.Data.filmLink model.locale x
+                                    }
+                            )
+                            onlyOneFilm
+                        , Maybe.map
+                            (\( _, x ) ->
+                                newTabLink theme
+                                    []
+                                    { label = text "CSFD"
+                                    , url = Kviff.Data.csfdLink x
                                     }
                             )
                             onlyOneFilm
