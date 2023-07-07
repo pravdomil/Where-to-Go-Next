@@ -1,6 +1,7 @@
 module Kviff.Model.View exposing (..)
 
 import Browser
+import Dict.Any
 import Element.PravdomilUi exposing (..)
 import Html
 import Http
@@ -104,8 +105,12 @@ viewEvents model a =
                     ]
                 )
     in
-    textColumn [ spacing 20 ]
-        (imgContain :: List.indexedMap (viewEvent model) a)
+    column [ inFront imgContain, spacing 20 ]
+        (List.indexedMap (viewEvent model)
+            (Dict.Any.toList a.events
+                |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
+            )
+        )
 
 
 viewEvent : Kviff.Model.Model -> Int -> Api.Event -> Element Kviff.Msg.Msg
