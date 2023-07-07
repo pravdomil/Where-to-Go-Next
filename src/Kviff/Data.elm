@@ -152,6 +152,11 @@ filmLink locale a =
             "https://www.kviff.com/cs/program/film/57/" ++ Url.percentEncode (Id.toString a)
 
 
+csfdLink : Film -> String
+csfdLink a =
+    "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode a.originalName
+
+
 
 --
 
