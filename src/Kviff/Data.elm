@@ -65,7 +65,7 @@ type alias Film =
     , year : Int
     , duration : Int
     , country : Kviff.Locale.Localized String
-    , categories : List (Id.Id Category)
+    , categories : Dict.Any.Dict (Id.Id Category) ()
 
     --
     , internalNote : String
@@ -237,7 +237,7 @@ filmDecoder =
                 (Json.Decode.field "zeme_en" Json.Decode.string)
                 (Json.Decode.field "zeme_cz" Json.Decode.string)
             )
-            (Json.Decode.map List.singleton (Json.Decode.field "id_sekce" idDecoder))
+            (Json.Decode.map (Dict.Any.fromList Id.toString) (Json.Decode.field "id_sekce" (Json.Decode.map (\x -> [ ( x, () ) ]) idDecoder)))
             (Json.Decode.field "poznamky" Json.Decode.string)
         )
 
