@@ -14,7 +14,7 @@ view : Kviff.Model.Model -> Browser.Document Kviff.Msg.Msg
 view model =
     { title = Kviff.Utils.Translation.title
     , body =
-        [ layout [] (viewBody model.program |> map ProgramMsg)
+        [ layout [] (viewBody model.program)
         ]
     }
 
