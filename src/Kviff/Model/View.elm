@@ -125,17 +125,17 @@ viewScreening model data ( id, a ) =
         place =
             Dict.Any.get Id.toString a.place data.places
 
-        films : List Kviff.Data.Film
+        films : List ( Id.Id Kviff.Data.Film, Kviff.Data.Film )
         films =
-            List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
+            List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films |> Maybe.map (\x2 -> ( x.filmId, x2 ))) a.films
 
         categories : List Kviff.Data.Category
         categories =
-            List.foldl (\x acc -> Dict.Any.union Id.toString x.categories acc) Dict.Any.empty films
+            List.foldl (\( _, x ) acc -> Dict.Any.union Id.toString x.categories acc) Dict.Any.empty films
                 |> Dict.Any.keys
                 |> List.filterMap (\x -> Dict.Any.get Id.toString x data.categories)
 
-        onlyOneFilm : Maybe Kviff.Data.Film
+        onlyOneFilm : Maybe ( Id.Id Kviff.Data.Film, Kviff.Data.Film )
         onlyOneFilm =
             case films of
                 b :: [] ->
