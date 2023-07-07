@@ -84,13 +84,19 @@ viewError b =
 
             Kviff.Model.HttpError c ->
                 case c of
+                    Http.BadUrl _ ->
+                        text "Sorry, but application is not available."
+
                     Http.Timeout ->
                         text "There is a network error. Try reload."
 
                     Http.NetworkError ->
                         text "There is a network error. Try reload."
 
-                    _ ->
+                    Http.BadStatus _ ->
+                        text "Sorry, but application is not available."
+
+                    Http.BadBody _ ->
                         text "Sorry, but application is not available."
         ]
 
