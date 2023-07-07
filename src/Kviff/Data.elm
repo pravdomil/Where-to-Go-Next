@@ -171,12 +171,36 @@ csfdLink a =
 
 decoder : Json.Decode.Decoder Data
 decoder =
+    let
+        computeScreeningDuration : Data -> Screening -> Screening
+        computeScreeningDuration data b =
+            let
+                films : List Film
+                films =
+                    List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) b.films
+            in
+            { b | duration = List.foldl (\x acc -> acc + x.duration) 0 films * 60 * 1000 }
+
+        normalize : Data -> Data
+        normalize data =
+            { data
+                | events =
+                    Dict.Any.map
+                        (\_ x ->
+                            case x of
+                                Screening_ x2 ->
+                                    Screening_ (computeScreeningDuration data x2)
+                        )
+                        data.events
+            }
+    in
     Json.Decode.map4
         Data
         eventsDecoder
         filmsDecoder
         categoriesDecoder
         placesDecoder
+        |> Json.Decode.map normalize
 
 
 eventsDecoder : Json.Decode.Decoder (Dict.Any.Dict (Id.Id Event) Event)
