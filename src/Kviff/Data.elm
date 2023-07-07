@@ -274,7 +274,7 @@ filmDecoder =
                 (Json.Decode.field "film_en" Json.Decode.string)
                 (Json.Decode.field "film_cz" Json.Decode.string)
             )
-            (Json.Decode.field "director_web_images" (Json.Decode.list (Json.Decode.field "image" imageUrlDecoder)))
+            (Json.Decode.field "director_web_images" (Json.Decode.field "image" (Json.Decode.list imageUrlDecoder)))
             filmAuthorsDecoder
             (Json.Decode.field "rok" Json.Decode.int)
             (Json.Decode.field "delka" Json.Decode.int)
