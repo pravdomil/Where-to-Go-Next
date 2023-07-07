@@ -11,9 +11,11 @@ import Kviff.GeoCoordinates
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
+import Kviff.Utils.Html
 import Kviff.Utils.Theme exposing (..)
 import Kviff.Utils.Translation
 import Time
+import Url
 
 
 view : Kviff.Model.Model -> Browser.Document Kviff.Msg.Msg
@@ -161,30 +163,51 @@ viewScreening model data ( id, a ) =
                    )
     in
     column [ width fill, spacing 4 ]
-        [ paragraph theme
+        (paragraph theme
             [ fontSemiBold ]
             [ textEllipsis [] name
             ]
-        , paragraph theme
-            [ fontSize 14, fontColor style.fore70 ]
-            (List.intersperse (text " – ")
-                [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
-                , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
-                , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
-                , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
-                , case place of
-                    Just b ->
-                        newTabLink theme
-                            []
-                            { label = text (Kviff.Locale.localize model.locale b.name)
-                            , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
-                            }
+            :: paragraph theme
+                [ fontSize 14, fontColor style.fore70 ]
+                (List.intersperse (text " – ")
+                    [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
+                    , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
+                    , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
+                    , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
+                    , case place of
+                        Just b ->
+                            newTabLink theme
+                                []
+                                { label = text (Kviff.Locale.localize model.locale b.name)
+                                , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
+                                }
 
-                    Nothing ->
-                        none
-                ]
-            )
-        ]
+                        Nothing ->
+                            none
+                    ]
+                )
+            :: (case films of
+                    [] ->
+                        [ text "…"
+                        ]
+
+                    _ ->
+                        List.map
+                            (\x ->
+                                paragraph theme
+                                    [ spacing 2, fontSize 14 ]
+                                    [ newTabLink theme
+                                        []
+                                        { label = text (Kviff.Locale.localize model.locale x.name)
+                                        , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode x.originalName
+                                        }
+                                    , text ": "
+                                    , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
+                                    ]
+                            )
+                            films
+               )
+        )
 
 
 
