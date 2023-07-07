@@ -231,6 +231,14 @@ viewScreening model data ( id, a ) =
                                             , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
                                             ]
                                     )
+                                , paragraph theme
+                                    [ spacing 2, fontSize 10, fontColor style.fore70 ]
+                                    [ text (String.fromInt x.year)
+                                    , text " | "
+                                    , text (Kviff.Locale.localize model.locale x.country)
+                                    , text " | "
+                                    , text x.internalNote
+                                    ]
                                 ]
                             )
                             films
