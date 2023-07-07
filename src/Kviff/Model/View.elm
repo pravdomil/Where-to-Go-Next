@@ -179,31 +179,37 @@ viewScreening model data ( id, a ) =
             :: paragraph theme
                 [ fontSize 14, fontColor style.fore70 ]
                 (List.intersperse (text " – ")
-                    [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
-                    , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
-                    , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
-                    , case place of
-                        Just b ->
-                            newTabLink theme
-                                []
-                                { label = text (Kviff.Locale.localize model.locale b.name)
-                                , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
-                                }
+                    (List.filterMap identity
+                        [ Just (text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time))
+                        , Just (text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time))
+                        , Just (text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)))
+                        , case place of
+                            Just b ->
+                                Just
+                                    (newTabLink theme
+                                        []
+                                        { label = text (Kviff.Locale.localize model.locale b.name)
+                                        , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
+                                        }
+                                    )
 
-                        Nothing ->
-                            none
-                    , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
-                    , case onlyOneFilm of
-                        Just b ->
-                            newTabLink theme
-                                []
-                                { label = text "CSFD"
-                                , url = Kviff.Data.csfdLink b
-                                }
+                            Nothing ->
+                                Nothing
+                        , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
+                        , case onlyOneFilm of
+                            Just b ->
+                                Just
+                                    (newTabLink theme
+                                        []
+                                        { label = text "CSFD"
+                                        , url = Kviff.Data.csfdLink b
+                                        }
+                                    )
 
-                        Nothing ->
-                            none
-                    ]
+                            Nothing ->
+                                Nothing
+                        ]
+                    )
                 )
             :: (case films of
                     [] ->
