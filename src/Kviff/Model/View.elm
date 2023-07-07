@@ -50,7 +50,7 @@ viewBody model =
                         , onPress = Just (Kviff.Msg.LocaleRequested Kviff.Locale.English)
                         }
     in
-    column [ spacing 32, padding 16, width (fill |> maximum (320 * 2)), centerX ]
+    column [ width (fill |> maximum (320 * 2)), spacing 32, padding 16, centerX ]
         [ row [ spacing 8 ]
             [ heading1 theme
                 []
