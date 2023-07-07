@@ -4,6 +4,7 @@ import Browser
 import Element.PravdomilUi exposing (..)
 import Html
 import Http
+import Kviff.Data
 import Kviff.Model
 import Kviff.Msg
 import Kviff.Utils.Theme exposing (..)
@@ -43,10 +44,11 @@ viewBody model =
                         , onPress = Just (ChangeLocale Api.English)
                         }
     in
-    textColumn [ spacing 32, padding 16, width (fill |> maximum (320 * 2)), centerX ]
+    column [ spacing 32, padding 16, width (fill |> maximum (320 * 2)), centerX ]
         [ row [ spacing 8 ]
-            [ h1 []
-                [ text Translation.title
+            [ heading1 theme
+                []
+                [ text Kviff.Utils.Translation.title
                 ]
             , localeChooser
             ]
@@ -56,21 +58,23 @@ viewBody model =
 
             Err b ->
                 viewError b
-        , text ""
-        , p [ fontCenter, fontSize 14, fontColor grey5 ]
-            [ text Translation.footer
+        , el [] none
+        , paragraph theme
+            [ fontCenter, fontSize 14, fontColor grey5 ]
+            [ text Kviff.Utils.Translation.footer
             ]
         ]
 
 
-viewError : Error -> Element msg
+viewError : Kviff.Model.Error -> Element msg
 viewError b =
-    p [ fontSize 14, fontColor grey4 ]
+    paragraph theme
+        [ fontSize 14, fontColor grey4 ]
         [ case b of
-            Loading ->
+            Kviff.Model.Loading ->
                 text "Loading..."
 
-            HttpError c ->
+            Http.NetworkError c ->
                 case c of
                     Http.Timeout ->
                         text "There is a network error. Try reload."
@@ -83,7 +87,7 @@ viewError b =
         ]
 
 
-viewEvents : Kviff.Model.Model -> List Api.Event -> Element Kviff.Msg.Msg
+viewEvents : Kviff.Model.Model -> Kviff.Data.Data -> Element Kviff.Msg.Msg
 viewEvents model a =
     let
         imgContain : Element msg
