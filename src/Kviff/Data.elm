@@ -293,7 +293,7 @@ filmAuthorsDecoder =
         FilmAuthors
         (Json.Decode.field "produkce" (Json.Decode.list (Json.Decode.field "jmeno" Json.Decode.string)))
         (Json.Decode.field "producent" Json.Decode.string)
-        (Json.Decode.field "directors" (Json.Decode.map List.concat (Json.Decode.list (Json.Decode.field "director" (Json.Decode.list Json.Decode.string)))))
+        (Json.Decode.field "directors" (Json.Decode.map List.concat (Json.Decode.field "director" (Json.Decode.list (Json.Decode.list Json.Decode.string)))))
         (Json.Decode.field "hraji" Json.Decode.string)
         (Json.Decode.field "kamera" Json.Decode.string)
         (Json.Decode.field "scenar" Json.Decode.string)
