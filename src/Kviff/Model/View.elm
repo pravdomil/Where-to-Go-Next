@@ -220,11 +220,30 @@ viewScreening model data ( id, a ) =
                                     [ spacing 2, fontSize 14, fontColor style.fore70 ]
                                     (case onlyOneFilm of
                                         Just _ ->
-                                            [ text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
+                                            [ column [ alignRight ]
+                                                (List.map
+                                                    (\x2 ->
+                                                        image [ width (px 128) ]
+                                                            { description = Kviff.Locale.localize model.locale x.name
+                                                            , src = x2
+                                                            }
+                                                    )
+                                                    x.images
+                                                )
+                                            , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
                                             ]
 
                                         Nothing ->
-                                            [ newTabLink theme
+                                            [ case List.head x.images of
+                                                Just x2 ->
+                                                    image [ alignRight, width (px 128) ]
+                                                        { description = Kviff.Locale.localize model.locale x.name
+                                                        , src = x2
+                                                        }
+
+                                                Nothing ->
+                                                    none
+                                            , newTabLink theme
                                                 []
                                                 { label = text (Kviff.Locale.localize model.locale x.name)
                                                 , url = Kviff.Data.csfdLink x
