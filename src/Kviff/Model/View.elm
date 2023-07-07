@@ -150,7 +150,7 @@ viewScreening model data ( id, a ) =
     column [ width fill, spacing 4 ]
         [ paragraph theme
             [ fontSemiBold ]
-            [ text name
+            [ textEllipsis [] name
             ]
         , paragraph theme
             [ fontSize 14, fontColor style.fore70 ]
