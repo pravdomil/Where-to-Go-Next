@@ -8,7 +8,7 @@ stripTags a =
     let
         nodesToString : List Html.Parser.Node -> String
         nodesToString b =
-            List.map nodeToString b |> String.join ""
+            String.join "" (List.map nodeToString b)
 
         nodeToString : Html.Parser.Node -> String
         nodeToString b =
