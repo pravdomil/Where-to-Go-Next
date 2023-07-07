@@ -145,14 +145,14 @@ viewScreening model data ( id, a ) =
                 |> Dict.Any.keys
                 |> List.filterMap (\x -> Dict.Any.get Id.toString x data.categories)
 
-        onlyOneFilm : Bool
+        onlyOneFilm : Maybe Kviff.Data.Film
         onlyOneFilm =
             case films of
-                _ :: [] ->
-                    True
+                b :: [] ->
+                    Just b
 
                 _ ->
-                    False
+                    Nothing
 
         name : String
         name =
@@ -206,11 +206,11 @@ viewScreening model data ( id, a ) =
                                 paragraph theme
                                     [ spacing 2, fontSize 14 ]
                                     (case onlyOneFilm of
-                                        True ->
+                                        Just _ ->
                                             [ text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
                                             ]
 
-                                        False ->
+                                        Nothing ->
                                             [ newTabLink theme
                                                 []
                                                 { label = text (Kviff.Locale.localize model.locale x.name)
