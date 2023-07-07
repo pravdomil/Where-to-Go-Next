@@ -144,7 +144,7 @@ viewScreening model data ( id, a ) =
                                 "Screening"
 
                             _ ->
-                                String.join ", " x
+                                String.join " – " x
                    )
     in
     column [ width fill, spacing 4 ]
