@@ -79,7 +79,7 @@ viewError b =
             Kviff.Model.Loading ->
                 text "Loading..."
 
-            Http.NetworkError c ->
+            Kviff.Model.HttpError c ->
                 case c of
                     Http.Timeout ->
                         text "There is a network error. Try reload."
