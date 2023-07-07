@@ -107,7 +107,12 @@ viewEvents : Kviff.Model.Model -> Kviff.Data.Data -> Element Kviff.Msg.Msg
 viewEvents model a =
     column [ width fill, spacing 20 ]
         (Dict.Any.toList a.events
-            |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
+            |> List.sortBy
+                (\( _, x ) ->
+                    ( Time.posixToMillis (Kviff.Data.eventTime x)
+                    , Kviff.Data.eventDuration x
+                    )
+                )
             |> List.foldl
                 (\( id, x ) ( acc, time ) ->
                     let
