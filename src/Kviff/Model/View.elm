@@ -68,7 +68,6 @@ viewBody model =
 
             Err b ->
                 viewError b
-        , el [] none
         , paragraph theme
             [ fontCenter, fontSize 14, fontColor style.fore60 ]
             [ text Kviff.Utils.Translation.footer
