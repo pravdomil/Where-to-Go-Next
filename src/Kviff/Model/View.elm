@@ -106,10 +106,9 @@ viewEvents model a =
                 )
     in
     column [ inFront imgContain, spacing 20 ]
-        (List.indexedMap (viewEvent model)
-            (Dict.Any.toList a.events
-                |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
-            )
+        (Dict.Any.toList a.events
+            |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
+            |> List.map (viewEvent model)
         )
 
 
