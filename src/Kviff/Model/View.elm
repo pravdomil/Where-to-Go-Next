@@ -68,7 +68,7 @@ viewBody model =
             Err b ->
                 viewError b
         , paragraph theme
-            [ fontSize 14, fontColor style.fore50, fontCenter ]
+            [ spacing 2, fontSize 14, fontColor style.fore50, fontCenter ]
             [ text Kviff.Utils.Translation.footer
             ]
         ]
@@ -77,7 +77,7 @@ viewBody model =
 viewError : Kviff.Model.Error -> Element msg
 viewError a =
     paragraph theme
-        [ fontSize 14, fontColor style.fore50 ]
+        [ spacing 2, fontSize 14, fontColor style.fore50 ]
         [ case a of
             Kviff.Model.Loading ->
                 text "Loading…"
@@ -170,7 +170,7 @@ viewScreening model data ( id, a ) =
             [ textEllipsis [] name
             ]
             :: paragraph theme
-                [ fontSize 14, fontColor style.fore50 ]
+                [ spacing 2, fontSize 14, fontColor style.fore50 ]
                 (List.intersperse (text " – ")
                     (List.filterMap identity
                         [ Just (text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time))
