@@ -5,6 +5,7 @@ import Element.PravdomilUi exposing (..)
 import Html
 import Http
 import Kviff.Data
+import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
 import Kviff.Utils.Theme exposing (..)
@@ -32,16 +33,20 @@ viewBody model =
         localeChooser : Element Kviff.Msg.Msg
         localeChooser =
             case model.locale of
-                Api.English ->
-                    link_ [ fontSize 14 ]
+                Kviff.Locale.English ->
+                    button theme
+                        []
                         { label = text "CZ"
-                        , onPress = Just (ChangeLocale Api.Czech)
+                        , active = model.locale == Kviff.Locale.Czech
+                        , onPress = Just (Kviff.Msg.LocaleRequested Kviff.Locale.Czech)
                         }
 
-                Api.Czech ->
-                    link_ [ fontSize 14 ]
+                Kviff.Locale.Czech ->
+                    button theme
+                        []
                         { label = text "EN"
-                        , onPress = Just (ChangeLocale Api.English)
+                        , active = model.locale == Kviff.Locale.English
+                        , onPress = Just (Kviff.Msg.LocaleRequested Kviff.Locale.English)
                         }
     in
     column [ spacing 32, padding 16, width (fill |> maximum (320 * 2)), centerX ]
