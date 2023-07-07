@@ -56,10 +56,9 @@ viewBody model =
     column [ width (fill |> maximum (320 * 2)), spacing 32, padding 16, centerX ]
         [ row [ width fill, spacing 8 ]
             [ heading1 theme
-                []
+                [ width fill ]
                 [ text Kviff.Utils.Translation.title
                 ]
-            , el [ width fill ] none
             , localeChooser
             ]
         , case model.data of
