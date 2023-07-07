@@ -164,6 +164,7 @@ viewScreening model data ( id, a ) =
             (List.intersperse (text " – ")
                 [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
                 , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
+                , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
                 , case place of
                     Just b ->
                         newTabLink theme
