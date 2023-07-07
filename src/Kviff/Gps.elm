@@ -11,8 +11,8 @@ type alias Gps =
     }
 
 
-decode : Json.Decode.Decoder Gps
-decode =
+decoder : Json.Decode.Decoder Gps
+decoder =
     Json.Decode.string
         |> Json.Decode.andThen
             (\x ->
