@@ -4,7 +4,7 @@ import Dict.Any
 import Id
 import Iso8601
 import Json.Decode
-import Kviff.Gps
+import Kviff.GeoCoordinates
 import Kviff.Locale
 import Time
 import Url
@@ -123,7 +123,7 @@ type alias Category =
 type alias Place =
     { name : Kviff.Locale.Localized String
     , address : String
-    , gps : Kviff.Gps.Gps
+    , gps : Kviff.GeoCoordinates.GeoCoordinates
     , code : String
     }
 
@@ -378,7 +378,7 @@ placeDecoder =
                 (Json.Decode.field "theatre_cz" Json.Decode.string)
             )
             (Json.Decode.field "theatre_misto_adresa" Json.Decode.string)
-            (Json.Decode.field "theatre_misto_gps" Kviff.Gps.decoder)
+            (Json.Decode.field "theatre_misto_gps" Kviff.GeoCoordinates.decoder)
             (Json.Decode.field "theatre_code" Json.Decode.string)
         )
 

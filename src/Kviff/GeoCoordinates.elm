@@ -1,4 +1,4 @@
-module Kviff.Gps exposing (..)
+module Kviff.GeoCoordinates exposing (..)
 
 import Json.Decode
 import Parser
@@ -6,13 +6,13 @@ import Parser.DeadEnd
 import Url
 
 
-type alias Gps =
+type alias GeoCoordinates =
     { lat : Float
     , lon : Float
     }
 
 
-mapyCzLink : Gps -> String
+mapyCzLink : GeoCoordinates -> String
 mapyCzLink a =
     "https://mapy.cz/?z=16&y="
         ++ Url.percentEncode (String.fromFloat a.lat)
@@ -22,7 +22,7 @@ mapyCzLink a =
         ++ Url.percentEncode (String.fromFloat a.lat ++ " " ++ String.fromFloat a.lon)
 
 
-decoder : Json.Decode.Decoder Gps
+decoder : Json.Decode.Decoder GeoCoordinates
 decoder =
     Json.Decode.string
         |> Json.Decode.andThen
@@ -36,7 +36,7 @@ decoder =
             )
 
 
-parser : Parser.Parser Gps
+parser : Parser.Parser GeoCoordinates
 parser =
     Parser.float
         |> Parser.andThen
@@ -47,7 +47,7 @@ parser =
         |> Parser.andThen
             (\x ->
                 Parser.float
-                    |> Parser.map (\x2 -> Gps x x2)
+                    |> Parser.map (\x2 -> GeoCoordinates x x2)
             )
         |> Parser.andThen
             (\x ->

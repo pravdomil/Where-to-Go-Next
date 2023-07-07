@@ -7,7 +7,7 @@ import Html
 import Http
 import Id
 import Kviff.Data
-import Kviff.Gps
+import Kviff.GeoCoordinates
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
@@ -167,7 +167,7 @@ viewScreening model data ( id, a ) =
                     newTabLink theme
                         []
                         { label = text (Kviff.Locale.localize model.locale b.name)
-                        , url = Kviff.Gps.mapyCzLink b.gps
+                        , url = Kviff.GeoCoordinates.mapyCzLink b.gps
                         }
 
                 Nothing ->
