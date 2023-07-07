@@ -65,6 +65,7 @@ type alias Film =
     , year : Int
     , duration : Int
     , country : Kviff.Locale.Localized String
+    , categories : List (Id.Id Category)
 
     --
     , internalNote : String
@@ -217,7 +218,7 @@ filmDecoder =
     Json.Decode.map2
         Tuple.pair
         (Json.Decode.field "id_film" idDecoder)
-        (map9
+        (map10
             Film
             (Json.Decode.field "nazev_orig" Json.Decode.string)
             (Json.Decode.map2 Kviff.Locale.Localized
@@ -236,6 +237,7 @@ filmDecoder =
                 (Json.Decode.field "zeme_en" Json.Decode.string)
                 (Json.Decode.field "zeme_cz" Json.Decode.string)
             )
+            (Json.Decode.map List.singleton (Json.Decode.field "id_sekce" idDecoder))
             (Json.Decode.field "poznamky" Json.Decode.string)
         )
 
