@@ -111,7 +111,7 @@ viewEvents model a =
                     ]
                 )
     in
-    column [ inFront imgContain, spacing 20 ]
+    column [ width fill, inFront imgContain, spacing 20 ]
         (Dict.Any.toList a.events
             |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
             |> List.map (viewEvent model a)
@@ -147,7 +147,7 @@ viewScreening model data ( id, a ) =
                                 String.join ", " x
                    )
     in
-    column [ spacing 4 ]
+    column [ width fill, spacing 4 ]
         [ paragraph theme
             [ fontSemiBold ]
             [ text name
