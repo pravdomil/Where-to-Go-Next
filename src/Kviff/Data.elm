@@ -154,10 +154,10 @@ filmLink : Kviff.Locale.Locale -> Id.Id Film -> String
 filmLink locale a =
     case locale of
         Kviff.Locale.English ->
-            "https://www.kviff.com/en/programme/film/57/" ++ Url.percentEncode (Id.toString a)
+            "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode (Id.toString a)
 
         Kviff.Locale.Czech ->
-            "https://www.kviff.com/cs/program/film/57/" ++ Url.percentEncode (Id.toString a)
+            "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode (Id.toString a)
 
 
 csfdLink : Film -> String
