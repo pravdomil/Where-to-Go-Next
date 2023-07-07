@@ -132,7 +132,7 @@ viewEvents model a =
 viewDay : Time.Posix -> Element msg
 viewDay a =
     heading1 theme
-        [ fontSize 48, paddingXY 0 128, fontCenter ]
+        [ fontSize 48, paddingXY 0 64 ]
         [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a)
         ]
 
