@@ -117,6 +117,30 @@ type alias Place =
 --
 
 
+timeOffset : Int
+timeOffset =
+    60 * 2
+
+
+timeZone : Time.Zone
+timeZone =
+    Time.customZone timeOffset []
+
+
+filmLink : Kviff.Locale.Locale -> Int -> String
+filmLink locale a =
+    case locale of
+        Kviff.Locale.English ->
+            "https://www.kviff.com/en/programme/film/57/" ++ Url.percentEncode (String.fromInt a)
+
+        Kviff.Locale.Czech ->
+            "https://www.kviff.com/cs/program/film/57/" ++ Url.percentEncode (String.fromInt a)
+
+
+
+--
+
+
 decoder : Json.Decode.Decoder Data
 decoder =
     Json.Decode.map4
@@ -342,30 +366,6 @@ decodeFilmImage =
         )
         (Json.Decode.field "id" Json.Decode.int)
         (Json.Decode.field "validationCode" Json.Decode.string)
-
-
-
---
-
-
-timeOffset : Int
-timeOffset =
-    60 * 2
-
-
-timeZone : Time.Zone
-timeZone =
-    Time.customZone timeOffset []
-
-
-filmLink : Locale -> Int -> String
-filmLink locale a =
-    case locale of
-        English ->
-            "https://www.kviff.com/en/programme/film/57/" ++ Url.percentEncode (String.fromInt a)
-
-        Czech ->
-            "https://www.kviff.com/cs/program/film/57/" ++ Url.percentEncode (String.fromInt a)
 
 
 
