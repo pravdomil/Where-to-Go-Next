@@ -11,6 +11,7 @@ import Kviff.ElementId
 import Kviff.GeoCoordinates
 import Kviff.Locale
 import Kviff.Model
+import Kviff.Model.Utils
 import Kviff.Msg
 import Kviff.Utils.Html
 import Kviff.Utils.Theme exposing (..)
@@ -195,8 +196,16 @@ viewScreening model data ( id, a ) =
         endTime : Time.Posix
         endTime =
             Time.millisToPosix (Time.posixToMillis a.time + a.duration)
+
+        alphaValue : Float
+        alphaValue =
+            if Kviff.Model.Utils.eventIsRelevant model ( Id.toAny id, Kviff.Data.Screening_ a ) then
+                1
+
+            else
+                0.5
     in
-    column [ width fill, spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event (Id.toAny id)) ]
+    column [ width fill, spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event (Id.toAny id)), alpha alphaValue ]
         (paragraph theme
             [ fontSemiBold ]
             [ textEllipsis [] name
