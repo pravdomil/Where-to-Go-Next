@@ -55,6 +55,7 @@ type alias Screening =
 
 type ScreeningType
     = Official
+    | InvitationOnly
 
 
 
@@ -217,6 +218,9 @@ screeningTypeDecoder =
                 case x of
                     "OFFICIAL" ->
                         Json.Decode.succeed Official
+
+                    "INVITATION_ONLY" ->
+                        Json.Decode.succeed InvitationOnly
 
                     _ ->
                         Json.Decode.fail "Unknown screening type."
