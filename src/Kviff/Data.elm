@@ -212,6 +212,50 @@ filmsDecoder =
         |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString (List.concat (List.concat x)))
 
 
+filmDecoder : Json.Decode.Decoder ( Id.Id Film, Film )
+filmDecoder =
+    Json.Decode.map2
+        Tuple.pair
+        (Json.Decode.field "id_film" idDecoder)
+        (map9
+            Film
+            (Json.Decode.field "nazev_orig" Json.Decode.string)
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "nazev_en" Json.Decode.string)
+                (Json.Decode.field "nazev_cz" Json.Decode.string)
+            )
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "film_en" Json.Decode.string)
+                (Json.Decode.field "film_cz" Json.Decode.string)
+            )
+            (Json.Decode.field "director_web_images" (Json.Decode.list (Json.Decode.field "image" (Json.Decode.field "filename" Json.Decode.string))))
+            filmAuthorsDecoder
+            (Json.Decode.field "rok" Json.Decode.int)
+            (Json.Decode.field "delka" Json.Decode.int)
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "zeme_en" Json.Decode.string)
+                (Json.Decode.field "zeme_cz" Json.Decode.string)
+            )
+            (Json.Decode.field "poznamky" Json.Decode.string)
+        )
+
+
+filmAuthorsDecoder : Json.Decode.Decoder FilmAuthors
+filmAuthorsDecoder =
+    map10
+        FilmAuthors
+        (Json.Decode.field "produkce" (Json.Decode.list (Json.Decode.field "jmeno" Json.Decode.string)))
+        (Json.Decode.field "producent" Json.Decode.string)
+        (Json.Decode.field "directors" (Json.Decode.map List.concat (Json.Decode.list (Json.Decode.field "director" (Json.Decode.list Json.Decode.string)))))
+        (Json.Decode.field "hraji" Json.Decode.string)
+        (Json.Decode.field "kamera" Json.Decode.string)
+        (Json.Decode.field "scenar" Json.Decode.string)
+        (Json.Decode.field "vytvarnik" Json.Decode.string)
+        (Json.Decode.field "strih" Json.Decode.string)
+        (Json.Decode.field "hudba" Json.Decode.string)
+        (Json.Decode.field "zvuk" Json.Decode.string)
+
+
 
 --
 
