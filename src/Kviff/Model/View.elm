@@ -7,6 +7,7 @@ import Html
 import Http
 import Id
 import Kviff.Data
+import Kviff.Gps
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
@@ -132,6 +133,10 @@ viewScreening model data ( id, a ) =
         films =
             List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
 
+        place : Maybe Kviff.Data.Place
+        place =
+            Dict.Any.get Id.toString a.place data.places
+
         name : String
         name =
             List.filterMap identity
@@ -157,6 +162,16 @@ viewScreening model data ( id, a ) =
         , paragraph theme
             [ fontSize 14, fontColor style.fore70 ]
             [ text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
+            , case place of
+                Just b ->
+                    newTabLink theme
+                        []
+                        { label = text (Kviff.Locale.localize model.locale b.name)
+                        , url = Kviff.Gps.mapyCzLink b.gps
+                        }
+
+                Nothing ->
+                    none
             ]
         ]
 
