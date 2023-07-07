@@ -139,12 +139,18 @@ viewScreening model data ( id, a ) =
 
         name : String
         name =
-            String.join " - "
-                (List.filterMap identity
-                    [ Kviff.Locale.localize model.locale a.name
-                    , Maybe.map (\x -> Kviff.Locale.localize model.locale x.localizedName) onlyOneFilm
-                    ]
-                )
+            List.filterMap identity
+                [ Kviff.Locale.localize model.locale a.name
+                , Maybe.map (\x -> Kviff.Locale.localize model.locale x.localizedName) onlyOneFilm
+                ]
+                |> (\x ->
+                        case x of
+                            [] ->
+                                "Screening"
+
+                            _ ->
+                                String.join " - " x
+                   )
     in
     column [ spacing 4 ]
         [ paragraph theme
