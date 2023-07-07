@@ -40,6 +40,7 @@ eventTime a =
 type alias Screening =
     { name : Kviff.Locale.Localized (Maybe String)
     , type_ : ScreeningType
+    , place : Id.Id Place
     , films : List ScreeningFilm
     , time : Time.Posix
     }
@@ -193,13 +194,14 @@ screeningDecoder =
     Json.Decode.map2
         Tuple.pair
         (Json.Decode.field "code" (Json.Decode.map Id.fromString Json.Decode.string))
-        (Json.Decode.map4
+        (Json.Decode.map5
             Screening
             (Json.Decode.map2 Kviff.Locale.Localized
                 (Json.Decode.field "title_en" maybeEmptyStringDecoder)
                 (Json.Decode.field "title_cz" maybeEmptyStringDecoder)
             )
             (Json.Decode.field "type" screeningTypeDecoder)
+            (Json.Decode.field "theatre_misto_id" idDecoder)
             (Json.Decode.field "films"
                 (Json.Decode.list
                     (Json.Decode.map2
