@@ -1,13 +1,12 @@
 module Kviff.Model.Update exposing (..)
 
 import Browser.Dom
-import Id
 import Json.Decode
-import Kviff.Data
 import Kviff.Data.Update
 import Kviff.ElementId
 import Kviff.Locale
 import Kviff.Model
+import Kviff.Model.Utils
 import Kviff.Msg
 import Platform.Extra
 import Task
@@ -84,28 +83,8 @@ subscriptions _ =
 
 scrollToUpcomingEvent : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 scrollToUpcomingEvent model =
-    let
-        upcomingEvents : Result Kviff.Model.Error (List ( Id.Id Kviff.Data.Event, Kviff.Data.Event ))
-        upcomingEvents =
-            model.data
-                |> Result.map
-                    (\x ->
-                        x
-                            |> List.indexedMap Tuple.pair
-                            |> List.filter
-                                (\( _, x2 ) ->
-                                    Maybe.map2
-                                        (\startTime now ->
-                                            Time.posixToMillis startTime > Time.posixToMillis now
-                                        )
-                                        x2.startTime
-                                        model.time
-                                        |> Maybe.withDefault False
-                                )
-                    )
-    in
-    case upcomingEvents of
-        Ok (( id, _ ) :: _) ->
+    case Kviff.Model.Utils.upcomingEvents model of
+        ( id, _ ) :: _ ->
             ( model
             , Browser.Dom.getElement (Kviff.ElementId.toString (Kviff.ElementId.Event id))
                 |> Task.andThen (\x -> Browser.Dom.setViewport x.element.x (x.element.y - 12))
