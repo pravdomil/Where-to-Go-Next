@@ -1,10 +1,9 @@
 module Kviff.Utils.Html exposing (..)
 
 import Html.Parser
-import Parser
 
 
-stripTags : String -> Result (List Parser.DeadEnd) String
+stripTags : String -> String
 stripTags a =
     let
         nodesToString : List Html.Parser.Node -> String
@@ -25,3 +24,4 @@ stripTags a =
     in
     Html.Parser.run a
         |> Result.map nodesToString
+        |> Result.withDefault a
