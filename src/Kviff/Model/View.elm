@@ -196,6 +196,15 @@ viewScreening model data ( id, a ) =
                                     }
                             )
                             onlyOneFilm
+                        , Maybe.map
+                            (\( x, _ ) ->
+                                newTabLink theme
+                                    []
+                                    { label = text "Info"
+                                    , url = Kviff.Data.filmLink model.locale x
+                                    }
+                            )
+                            onlyOneFilm
                         ]
                     )
                 )
