@@ -70,8 +70,8 @@ type ScreeningType
 
 
 type alias Film =
-    { name : String
-    , localizedName : Kviff.Locale.Localized String
+    { name : Kviff.Locale.Localized String
+    , originalName : String
     , description : Kviff.Locale.Localized String
     , images : List String
 
@@ -273,11 +273,11 @@ filmDecoder =
         (Json.Decode.field "id_film" idDecoder)
         (map10
             Film
-            (Json.Decode.field "nazev_orig" Json.Decode.string)
             (Json.Decode.map2 Kviff.Locale.Localized
                 (Json.Decode.field "nazev_en" Json.Decode.string)
                 (Json.Decode.field "nazev_cz" Json.Decode.string)
             )
+            (Json.Decode.field "nazev_orig" Json.Decode.string)
             (Json.Decode.map2 Kviff.Locale.Localized
                 (Json.Decode.field "film_en" Json.Decode.string)
                 (Json.Decode.field "film_cz" Json.Decode.string)
