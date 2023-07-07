@@ -173,7 +173,6 @@ viewScreening model data ( id, a ) =
                     [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
                     , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
                     , text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films))
-                    , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
                     , case place of
                         Just b ->
                             newTabLink theme
@@ -184,6 +183,7 @@ viewScreening model data ( id, a ) =
 
                         Nothing ->
                             none
+                    , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
                     ]
                 )
             :: (case films of
