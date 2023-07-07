@@ -7,6 +7,7 @@ import Html
 import Http
 import Id
 import Kviff.Data
+import Kviff.ElementId
 import Kviff.GeoCoordinates
 import Kviff.Locale
 import Kviff.Model
@@ -164,7 +165,7 @@ viewScreening model data ( id, a ) =
         endTime =
             Time.millisToPosix (Time.posixToMillis a.time + List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)
     in
-    column [ width fill, spacing 4 ]
+    column [ width fill, spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event (Id.toAny id)) ]
         (paragraph theme
             [ fontSemiBold ]
             [ textEllipsis [] name
