@@ -6,7 +6,7 @@ import Time
 
 title : String
 title =
-    "KVIFF Program"
+    "Pravdomil KVIFF Program"
 
 
 footer : String
