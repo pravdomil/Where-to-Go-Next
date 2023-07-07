@@ -22,7 +22,7 @@ view model =
 --
 
 
-viewBody : Model -> Element Msg
+viewBody : Kviff.Model.Model -> Element Msg
 viewBody model =
     let
         localeChooser : Element Msg
@@ -80,7 +80,7 @@ viewError b =
         ]
 
 
-viewEvents : Model -> List Api.Event -> Element Msg
+viewEvents : Kviff.Model.Model -> List Api.Event -> Element Msg
 viewEvents model a =
     let
         imgContain : Element msg
@@ -96,7 +96,7 @@ viewEvents model a =
         (imgContain :: List.indexedMap (viewEvent model) a)
 
 
-viewEvent : Model -> Int -> Api.Event -> Element Msg
+viewEvent : Kviff.Model.Model -> Int -> Api.Event -> Element Msg
 viewEvent model index a =
     textColumn [ spacing 4, id (eventId index) ]
         [ textColumn [ spacing 2 ]
