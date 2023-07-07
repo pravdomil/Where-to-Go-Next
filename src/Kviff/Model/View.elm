@@ -68,7 +68,7 @@ viewBody model =
                 viewError b
         , el [] none
         , paragraph theme
-            [ fontCenter, fontSize 14, fontColor grey5 ]
+            [ fontCenter, fontSize 14, fontColor style.fore60 ]
             [ text Kviff.Utils.Translation.footer
             ]
         ]
@@ -77,7 +77,7 @@ viewBody model =
 viewError : Kviff.Model.Error -> Element msg
 viewError b =
     paragraph theme
-        [ fontSize 14, fontColor grey4 ]
+        [ fontSize 14, fontColor style.fore70 ]
         [ case b of
             Kviff.Model.Loading ->
                 text "Loading..."
