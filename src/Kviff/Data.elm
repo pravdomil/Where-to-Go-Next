@@ -239,6 +239,16 @@ filmsDecoder =
 
 filmDecoder : Json.Decode.Decoder ( Id.Id Film, Film )
 filmDecoder =
+    let
+        imageUrlDecoder : Json.Decode.Decoder String
+        imageUrlDecoder =
+            Json.Decode.map2
+                (\x x2 ->
+                    "https://www.kviff.com/en/image/film/" ++ Url.percentEncode (String.fromInt x) ++ "/" ++ Url.percentEncode x2
+                )
+                (Json.Decode.field "id" Json.Decode.int)
+                (Json.Decode.field "validationCode" Json.Decode.string)
+    in
     Json.Decode.map2
         Tuple.pair
         (Json.Decode.field "id_film" idDecoder)
@@ -253,7 +263,7 @@ filmDecoder =
                 (Json.Decode.field "film_en" Json.Decode.string)
                 (Json.Decode.field "film_cz" Json.Decode.string)
             )
-            (Json.Decode.field "director_web_images" (Json.Decode.list (Json.Decode.field "image" (Json.Decode.field "filename" Json.Decode.string))))
+            (Json.Decode.field "director_web_images" (Json.Decode.list (Json.Decode.field "image" imageUrlDecoder)))
             filmAuthorsDecoder
             (Json.Decode.field "rok" Json.Decode.int)
             (Json.Decode.field "delka" Json.Decode.int)
@@ -352,20 +362,6 @@ placeDecoder =
             (Json.Decode.field "theatre_misto_gps" Kviff.Gps.decoder)
             (Json.Decode.field "theatre_code" Json.Decode.string)
         )
-
-
-
---
-
-
-decodeFilmImage : Json.Decode.Decoder String
-decodeFilmImage =
-    Json.Decode.map2
-        (\v1 v2 ->
-            "https://www.kviff.com/en/image/film/" ++ Url.percentEncode (String.fromInt v1) ++ "/" ++ Url.percentEncode v2
-        )
-        (Json.Decode.field "id" Json.Decode.int)
-        (Json.Decode.field "validationCode" Json.Decode.string)
 
 
 
