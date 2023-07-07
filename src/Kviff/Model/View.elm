@@ -7,6 +7,7 @@ import Html
 import Http
 import Id
 import Kviff.Data
+import Kviff.ElementId
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
@@ -115,7 +116,7 @@ viewEvents model a =
 
 viewEvent : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
 viewEvent model ( id, a ) =
-    textColumn [ spacing 4, id (eventId index) ]
+    column [ spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event id) ]
         [ textColumn [ spacing 2 ]
             [ h2 [ fontSemiBold ]
                 [ text (Api.localize model.locale a.name)
