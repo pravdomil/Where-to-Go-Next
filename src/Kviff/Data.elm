@@ -262,6 +262,36 @@ filmAuthorsDecoder =
 --
 
 
+categoriesDecoder : Json.Decode.Decoder (Dict.Any.Dict (Id.Id Category) Category)
+categoriesDecoder =
+    Json.Decode.field "sekce"
+        (Json.Decode.list categoryDecoder)
+        |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString x)
+
+
+categoryDecoder : Json.Decode.Decoder ( Id.Id Category, Category )
+categoryDecoder =
+    Json.Decode.map2
+        Tuple.pair
+        (Json.Decode.field "id_sekce" idDecoder)
+        (Json.Decode.map3
+            Category
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "name_en" Json.Decode.string)
+                (Json.Decode.field "name_cz" Json.Decode.string)
+            )
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "popis_en" Json.Decode.string)
+                (Json.Decode.field "popis_cz" Json.Decode.string)
+            )
+            (Json.Decode.field "k_order" Json.Decode.int)
+        )
+
+
+
+--
+
+
 decodeFilms : Json.Decode.Decoder (List Film)
 decodeFilms =
     Json.Decode.field "sekce" (Json.Decode.list (Json.Decode.field "subsekce" (Json.Decode.list (Json.Decode.field "film" (Json.Decode.list decodeFilm)))))
