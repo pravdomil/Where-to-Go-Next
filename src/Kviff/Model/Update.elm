@@ -18,7 +18,7 @@ init : Json.Decode.Value -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 init _ =
     ( Kviff.Model.Model
         Kviff.Locale.Czech
-        Nothing
+        (Time.millisToPosix 0)
         (Err Kviff.Model.Loading)
     , Cmd.none
     )
@@ -53,7 +53,7 @@ update msg =
             \x -> ( { x | locale = b }, Cmd.none )
 
         Kviff.Msg.TimeReceived b ->
-            \x -> ( { x | time = Just b }, Cmd.none )
+            \x -> ( { x | time = b }, Cmd.none )
 
         Kviff.Msg.DataReceived b ->
             case b of

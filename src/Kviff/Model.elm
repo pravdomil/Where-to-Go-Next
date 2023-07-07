@@ -8,7 +8,7 @@ import Time
 
 type alias Model =
     { locale : Kviff.Locale.Locale
-    , time : Maybe Time.Posix
+    , time : Time.Posix
     , data : Result Error Kviff.Data.Data
     }
 
