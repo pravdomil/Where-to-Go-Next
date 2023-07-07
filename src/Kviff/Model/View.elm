@@ -5,13 +5,14 @@ import Html
 import Http
 import Kviff.Model
 import Kviff.Msg
+import Kviff.Utils.Translation
 import Time
 import Url
 
 
 view : Kviff.Model.Model -> Browser.Document Kviff.Msg.Msg
 view model =
-    { title = Translation.title
+    { title = Kviff.Utils.Translation.title
     , body =
         [ layout [] (viewBody model.program |> map ProgramMsg)
         ]
