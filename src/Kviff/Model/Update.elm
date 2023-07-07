@@ -4,6 +4,7 @@ import Browser.Dom
 import Json.Decode
 import Kviff.Data
 import Kviff.Data.Update
+import Kviff.ElementId
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
@@ -105,7 +106,7 @@ scrollToUpcomingEvent model =
     case upcomingEvents |> Result.toMaybe |> Maybe.andThen List.head of
         Just ( id, _ ) ->
             ( model
-            , Browser.Dom.getElement (eventId id)
+            , Browser.Dom.getElement (Kviff.ElementId.toString (Kviff.ElementId.Event id))
                 |> Task.andThen (\x -> Browser.Dom.setViewport x.element.x (x.element.y - 12))
                 |> Task.attempt Kviff.Msg.ViewportSet
             )
