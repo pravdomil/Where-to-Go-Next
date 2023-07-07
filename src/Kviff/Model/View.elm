@@ -7,14 +7,12 @@ import Html
 import Http
 import Id
 import Kviff.Data
-import Kviff.ElementId
 import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
 import Kviff.Utils.Theme exposing (..)
 import Kviff.Utils.Translation
 import Time
-import Url
 
 
 view : Kviff.Model.Model -> Browser.Document Kviff.Msg.Msg
@@ -116,12 +114,45 @@ viewEvents model a =
     column [ inFront imgContain, spacing 20 ]
         (Dict.Any.toList a.events
             |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
-            |> List.map (viewEvent model)
+            |> List.map (viewEvent model a)
         )
 
 
-viewEvent : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
-viewEvent model ( id, a ) =
+viewEvent : Kviff.Model.Model -> Kviff.Data.Data -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
+viewEvent model data ( id, a ) =
     case a of
         Kviff.Data.Screening_ b ->
-            text (Debug.toString b)
+            viewScreening model data ( Id.toAny id, b )
+
+
+viewScreening : Kviff.Model.Model -> Kviff.Data.Data -> ( Id.Id Kviff.Data.Screening, Kviff.Data.Screening ) -> Element Kviff.Msg.Msg
+viewScreening model data ( id, a ) =
+    let
+        onlyOneFilm : Maybe Kviff.Data.Film
+        onlyOneFilm =
+            case a.films of
+                first :: [] ->
+                    Dict.Any.get Id.toString first.filmId data.films
+
+                _ ->
+                    Nothing
+
+        name : String
+        name =
+            String.join " - "
+                (List.filterMap identity
+                    [ Kviff.Locale.localize model.locale a.name
+                    , Maybe.map (\x -> Kviff.Locale.localize model.locale x.localizedName) onlyOneFilm
+                    ]
+                )
+    in
+    column [ spacing 4 ]
+        [ paragraph theme
+            [ fontSemiBold ]
+            [ text name
+            ]
+        , paragraph theme
+            [ fontSize 14, fontColor style.fore70 ]
+            [ text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
+            ]
+        ]
