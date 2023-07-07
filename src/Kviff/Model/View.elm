@@ -145,6 +145,15 @@ viewScreening model data ( id, a ) =
                 |> Dict.Any.keys
                 |> List.filterMap (\x -> Dict.Any.get Id.toString x data.categories)
 
+        onlyOneFilm : Bool
+        onlyOneFilm =
+            case films of
+                _ :: [] ->
+                    True
+
+                _ ->
+                    False
+
         name : String
         name =
             List.filterMap identity
@@ -196,14 +205,21 @@ viewScreening model data ( id, a ) =
                             (\x ->
                                 paragraph theme
                                     [ spacing 2, fontSize 14 ]
-                                    [ newTabLink theme
-                                        []
-                                        { label = text (Kviff.Locale.localize model.locale x.name)
-                                        , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode x.originalName
-                                        }
-                                    , text ": "
-                                    , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
-                                    ]
+                                    (case onlyOneFilm of
+                                        True ->
+                                            [ text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
+                                            ]
+
+                                        False ->
+                                            [ newTabLink theme
+                                                []
+                                                { label = text (Kviff.Locale.localize model.locale x.name)
+                                                , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode x.originalName
+                                                }
+                                            , text ": "
+                                            , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
+                                            ]
+                                    )
                             )
                             films
                )
