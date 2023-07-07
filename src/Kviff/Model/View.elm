@@ -39,7 +39,7 @@ viewBody model =
                 Kviff.Locale.English ->
                     button theme
                         []
-                        { label = text "CZ"
+                        { label = text (Kviff.Utils.Translation.locale model.locale)
                         , active = model.locale == Kviff.Locale.Czech
                         , onPress = Just (Kviff.Msg.LocaleRequested Kviff.Locale.Czech)
                         }
@@ -47,7 +47,7 @@ viewBody model =
                 Kviff.Locale.Czech ->
                     button theme
                         []
-                        { label = text "EN"
+                        { label = text (Kviff.Utils.Translation.locale model.locale)
                         , active = model.locale == Kviff.Locale.English
                         , onPress = Just (Kviff.Msg.LocaleRequested Kviff.Locale.English)
                         }
