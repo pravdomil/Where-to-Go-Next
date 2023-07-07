@@ -193,18 +193,15 @@ viewScreening model data ( id, a ) =
                             )
                             place
                         , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
-                        , case onlyOneFilm of
-                            Just b ->
-                                Just
-                                    (newTabLink theme
-                                        []
-                                        { label = text "CSFD"
-                                        , url = Kviff.Data.csfdLink b
-                                        }
-                                    )
-
-                            Nothing ->
-                                Nothing
+                        , Maybe.map
+                            (\x ->
+                                newTabLink theme
+                                    []
+                                    { label = text "CSFD"
+                                    , url = Kviff.Data.csfdLink x
+                                    }
+                            )
+                            onlyOneFilm
                         ]
                     )
                 )
