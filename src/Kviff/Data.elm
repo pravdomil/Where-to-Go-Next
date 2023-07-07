@@ -33,6 +33,13 @@ eventTime a =
             b.time
 
 
+eventDuration : Event -> Int
+eventDuration a =
+    case a of
+        Screening_ b ->
+            b.duration
+
+
 
 --
 
