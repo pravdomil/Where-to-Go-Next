@@ -79,7 +79,7 @@ viewError a =
         [ fontSize 14, fontColor style.fore70 ]
         [ case a of
             Kviff.Model.Loading ->
-                text "Loading..."
+                text "Loading…"
 
             Kviff.Model.HttpError b ->
                 case b of
