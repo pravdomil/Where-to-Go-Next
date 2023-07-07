@@ -248,7 +248,7 @@ viewScreening model data ( id, a ) =
                                                 { label = text (Kviff.Locale.localize model.locale x.name)
                                                 , url = Kviff.Data.csfdLink x
                                                 }
-                                            , text ": "
+                                            , text " "
                                             , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
                                             ]
                                     )
