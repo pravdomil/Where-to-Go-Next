@@ -129,13 +129,13 @@ viewEvent model data ( id, a ) =
 viewScreening : Kviff.Model.Model -> Kviff.Data.Data -> ( Id.Id Kviff.Data.Screening, Kviff.Data.Screening ) -> Element Kviff.Msg.Msg
 viewScreening model data ( id, a ) =
     let
-        films : List Kviff.Data.Film
-        films =
-            List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
-
         place : Maybe Kviff.Data.Place
         place =
             Dict.Any.get Id.toString a.place data.places
+
+        films : List Kviff.Data.Film
+        films =
+            List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
 
         name : String
         name =
