@@ -5,6 +5,7 @@ import Dict.Any
 import Element.PravdomilUi exposing (..)
 import Html
 import Http
+import Id
 import Kviff.Data
 import Kviff.Locale
 import Kviff.Model
@@ -112,8 +113,8 @@ viewEvents model a =
         )
 
 
-viewEvent : Kviff.Model.Model -> Int -> Api.Event -> Element Kviff.Msg.Msg
-viewEvent model index a =
+viewEvent : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
+viewEvent model ( id, a ) =
     textColumn [ spacing 4, id (eventId index) ]
         [ textColumn [ spacing 2 ]
             [ h2 [ fontSemiBold ]
