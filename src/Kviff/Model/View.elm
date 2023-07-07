@@ -220,7 +220,7 @@ viewScreening model data ( id, a ) =
                                     [ spacing 2, fontSize 14, fontColor style.fore70 ]
                                     (case onlyOneFilm of
                                         Just _ ->
-                                            [ column [ alignRight ]
+                                            [ column [ alignRight, spacing 8 ]
                                                 (List.map
                                                     (\x2 ->
                                                         image [ width (px 128) ]
