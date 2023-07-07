@@ -118,8 +118,9 @@ viewEvent : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) ->
 viewEvent model ( id, a ) =
     column [ spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event id) ]
         [ column [ spacing 2 ]
-            [ heading2 [ fontSemiBold ]
-                [ text (Api.localize model.locale a.name)
+            [ heading2 theme
+                [ fontSemiBold ]
+                [ text (Kviff.Locale.localize model.locale a.name)
                 ]
             , paragraph theme
                 [ fontSize 14, fontColor style.fore70 ]
