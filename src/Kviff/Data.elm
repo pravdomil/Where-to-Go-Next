@@ -292,6 +292,48 @@ categoryDecoder =
 --
 
 
+placesDecoder : Json.Decode.Decoder (Dict.Any.Dict (Id.Id Place) Place)
+placesDecoder =
+    Json.Decode.field "sekce"
+        (Json.Decode.list
+            (Json.Decode.field "subsekce"
+                (Json.Decode.list
+                    (Json.Decode.field "film"
+                        (Json.Decode.list
+                            (Json.Decode.field "screenings"
+                                (Json.Decode.field "screening"
+                                    (Json.Decode.list placeDecoder)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        |> Json.Decode.map (\x -> Dict.Any.fromList Id.toString (List.concat (List.concat (List.concat x))))
+
+
+placeDecoder : Json.Decode.Decoder ( Id.Id Place, Place )
+placeDecoder =
+    Json.Decode.map2
+        Tuple.pair
+        (Json.Decode.field "theatre_misto_id" idDecoder)
+        (Json.Decode.map4
+            Place
+            (Json.Decode.map2 Kviff.Locale.Localized
+                (Json.Decode.field "theatre_en" Json.Decode.string)
+                (Json.Decode.field "theatre_cz" Json.Decode.string)
+            )
+            (Json.Decode.field "theatre_misto_adresa" Json.Decode.string)
+            (Json.Decode.field "theatre_misto_gps" Kviff.Gps.decoder)
+            (Json.Decode.field "theatre_code" Json.Decode.string)
+        )
+
+
+
+--
+
+
 decodeFilms : Json.Decode.Decoder (List Film)
 decodeFilms =
     Json.Decode.field "sekce" (Json.Decode.list (Json.Decode.field "subsekce" (Json.Decode.list (Json.Decode.field "film" (Json.Decode.list decodeFilm)))))
