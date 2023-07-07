@@ -1,6 +1,7 @@
 module Kviff.Model.Update exposing (..)
 
 import Browser.Dom
+import Id
 import Json.Decode
 import Kviff.Data
 import Kviff.Data.Update
@@ -84,7 +85,7 @@ subscriptions _ =
 scrollToUpcomingEvent : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 scrollToUpcomingEvent model =
     let
-        upcomingEvents : Result Kviff.Model.Error (List ( Int, Kviff.Data.Event ))
+        upcomingEvents : Result Kviff.Model.Error (List ( Id.Id Kviff.Data.Event, Kviff.Data.Event ))
         upcomingEvents =
             model.data
                 |> Result.map
@@ -103,13 +104,13 @@ scrollToUpcomingEvent model =
                                 )
                     )
     in
-    case upcomingEvents |> Result.toMaybe |> Maybe.andThen List.head of
-        Just ( id, _ ) ->
+    case upcomingEvents of
+        Ok (( id, _ ) :: _) ->
             ( model
             , Browser.Dom.getElement (Kviff.ElementId.toString (Kviff.ElementId.Event id))
                 |> Task.andThen (\x -> Browser.Dom.setViewport x.element.x (x.element.y - 12))
                 |> Task.attempt Kviff.Msg.ViewportSet
             )
 
-        Nothing ->
+        _ ->
             Platform.Extra.noOperation model
