@@ -104,17 +104,7 @@ viewError a =
 
 viewEvents : Kviff.Model.Model -> Kviff.Data.Data -> Element Kviff.Msg.Msg
 viewEvents model a =
-    let
-        imgContain : Element msg
-        imgContain =
-            html
-                (Html.node "style"
-                    []
-                    [ Html.text "img { object-fit: contain; }"
-                    ]
-                )
-    in
-    column [ width fill, inFront imgContain, spacing 20 ]
+    column [ width fill, spacing 20 ]
         (Dict.Any.toList a.events
             |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
             |> List.map (viewEvent model a)
