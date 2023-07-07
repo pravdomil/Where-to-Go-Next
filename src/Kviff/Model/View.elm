@@ -23,7 +23,7 @@ view model =
     { title = Kviff.Utils.Translation.title
     , body =
         [ layout theme [] (viewBody model)
-        , Html.node "style" [] [ Html.text "body{background-color:rgb(31,36,38)}" ]
+        , Html.node "style" [] [ Html.text "body{background-color:rgb(0,0,0)}" ]
         ]
     }
 

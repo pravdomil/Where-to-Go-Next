@@ -8,6 +8,11 @@ import Element.PravdomilUi.Theme.Basic
 theme : Element.PravdomilUi.Theme.Theme msg
 theme =
     Element.PravdomilUi.Theme.Basic.theme style
+        |> (\x ->
+                { x
+                    | page = \x2 -> x.page (bgColor style.back100 :: x2)
+                }
+           )
 
 
 style : Element.PravdomilUi.Theme.Style
