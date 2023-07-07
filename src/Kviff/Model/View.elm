@@ -163,7 +163,7 @@ viewScreening model data ( id, a ) =
 
         endTime : Time.Posix
         endTime =
-            Time.millisToPosix (Time.posixToMillis a.time + List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)
+            Time.millisToPosix (Time.posixToMillis a.time + a.duration)
     in
     column [ width fill, spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event (Id.toAny id)) ]
         (paragraph theme
