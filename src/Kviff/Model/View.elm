@@ -215,7 +215,7 @@ viewScreening model data ( id, a ) =
 
                     _ ->
                         List.concatMap
-                            (\x ->
+                            (\( _, x ) ->
                                 [ paragraph theme
                                     [ spacing 2, fontSize 14, fontColor style.fore70 ]
                                     (case onlyOneFilm of
