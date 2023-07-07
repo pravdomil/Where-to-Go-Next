@@ -117,11 +117,12 @@ viewEvents model a =
 viewEvent : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
 viewEvent model ( id, a ) =
     column [ spacing 4, Kviff.ElementId.toId (Kviff.ElementId.Event id) ]
-        [ textColumn [ spacing 2 ]
-            [ h2 [ fontSemiBold ]
+        [ column [ spacing 2 ]
+            [ heading2 [ fontSemiBold ]
                 [ text (Api.localize model.locale a.name)
                 ]
-            , p [ fontSize 14, fontColor grey4 ]
+            , paragraph theme
+                [ fontSize 14, fontColor style.fore70 ]
                 ([ case a.type_ of
                     Api.Screening_ ->
                         Nothing
