@@ -206,6 +206,15 @@ viewScreening model data ( id, a ) =
                                     }
                             )
                             onlyOneFilm
+                        , Maybe.map
+                            (\( _, x ) ->
+                                newTabLink theme
+                                    []
+                                    { label = text "IMDb"
+                                    , url = Kviff.Data.imdbLink x
+                                    }
+                            )
+                            onlyOneFilm
                         ]
                     )
                 )
