@@ -198,7 +198,7 @@ viewScreening model data ( id, a ) =
                             newTabLink theme
                                 []
                                 { label = text "CSFD"
-                                , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode b.originalName
+                                , url = Kviff.Data.csfdLink b
                                 }
 
                         Nothing ->
@@ -224,7 +224,7 @@ viewScreening model data ( id, a ) =
                                             [ newTabLink theme
                                                 []
                                                 { label = text (Kviff.Locale.localize model.locale x.name)
-                                                , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode x.originalName
+                                                , url = Kviff.Data.csfdLink x
                                                 }
                                             , text ": "
                                             , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
