@@ -1,4 +1,4 @@
-module Kviff.Translation exposing (..)
+module Kviff.Utils.Translation exposing (..)
 
 import Time
 
