@@ -24,8 +24,8 @@ locale a =
             "CZ"
 
 
-time : Time.Zone -> Time.Posix -> String
-time zone a =
+date : Time.Zone -> Time.Posix -> String
+date zone a =
     let
         weekdayToString : Time.Weekday -> String
         weekdayToString b =
@@ -54,8 +54,11 @@ time zone a =
     weekdayToString (Time.toWeekday zone a)
         ++ " "
         ++ String.fromInt (Time.toDay zone a)
-        ++ " – "
-        ++ String.padLeft 2 '0' (String.fromInt (Time.toHour zone a))
+
+
+time : Time.Zone -> Time.Posix -> String
+time zone a =
+    String.padLeft 2 '0' (String.fromInt (Time.toHour zone a))
         ++ ":"
         ++ String.padLeft 2 '0' (String.fromInt (Time.toMinute zone a))
 

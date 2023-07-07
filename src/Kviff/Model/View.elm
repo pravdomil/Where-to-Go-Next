@@ -161,7 +161,8 @@ viewScreening model data ( id, a ) =
             ]
         , paragraph theme
             [ fontSize 14, fontColor style.fore70 ]
-            [ text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
+            [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time)
+            , text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time)
             , case place of
                 Just b ->
                     newTabLink theme
