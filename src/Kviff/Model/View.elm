@@ -128,28 +128,23 @@ viewEvent model data ( id, a ) =
 viewScreening : Kviff.Model.Model -> Kviff.Data.Data -> ( Id.Id Kviff.Data.Screening, Kviff.Data.Screening ) -> Element Kviff.Msg.Msg
 viewScreening model data ( id, a ) =
     let
-        onlyOneFilm : Maybe Kviff.Data.Film
-        onlyOneFilm =
-            case a.films of
-                first :: [] ->
-                    Dict.Any.get Id.toString first.filmId data.films
-
-                _ ->
-                    Nothing
+        films : List Kviff.Data.Film
+        films =
+            List.filterMap (\x -> Dict.Any.get Id.toString x.filmId data.films) a.films
 
         name : String
         name =
             List.filterMap identity
-                [ Kviff.Locale.localize model.locale a.name
-                , Maybe.map (\x -> Kviff.Locale.localize model.locale x.localizedName) onlyOneFilm
-                ]
+                (Kviff.Locale.localize model.locale a.name
+                    :: List.map (\x -> Just (Kviff.Locale.localize model.locale x.localizedName)) films
+                )
                 |> (\x ->
                         case x of
                             [] ->
                                 "Screening"
 
                             _ ->
-                                String.join " - " x
+                                String.join ", " x
                    )
     in
     column [ spacing 4 ]
