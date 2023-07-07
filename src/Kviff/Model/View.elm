@@ -6,6 +6,7 @@ import Html
 import Http
 import Kviff.Model
 import Kviff.Msg
+import Kviff.Utils.Theme exposing (..)
 import Kviff.Utils.Translation
 import Time
 import Url
