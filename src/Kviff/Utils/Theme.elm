@@ -1,4 +1,4 @@
-module Kviff.Ui.Theme exposing (..)
+module Kviff.Utils.Theme exposing (..)
 
 import Element.PravdomilUi.Theme.Basic
 
