@@ -24,6 +24,7 @@ view model =
     , body =
         [ layout theme [] (viewBody model)
         , Html.node "style" [] [ Html.text "body{background-color:rgb(0,0,0)}" ]
+        , Html.node "style" [] [ Html.text "img{object-fit:contain;}" ]
         ]
     }
 
@@ -223,7 +224,7 @@ viewScreening model data ( id, a ) =
                                             [ column [ alignRight, spacing 8 ]
                                                 (List.map
                                                     (\x2 ->
-                                                        image [ width (px 128) ]
+                                                        image [ width (px 128), height (px 72) ]
                                                             { description = Kviff.Locale.localize model.locale x.name
                                                             , src = x2
                                                             }
@@ -236,7 +237,7 @@ viewScreening model data ( id, a ) =
                                         Nothing ->
                                             [ case List.head x.images of
                                                 Just x2 ->
-                                                    image [ alignRight, width (px 128) ]
+                                                    image [ alignRight, width (px 128), height (px 72) ]
                                                         { description = Kviff.Locale.localize model.locale x.name
                                                         , src = x2
                                                         }
