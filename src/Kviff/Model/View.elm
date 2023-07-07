@@ -170,6 +170,10 @@ viewScreening model data ( id, a ) =
                             _ ->
                                 String.join " – " x
                    )
+
+        endTime : Time.Posix
+        endTime =
+            Time.millisToPosix (Time.posixToMillis a.time + List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)
     in
     column [ width fill, spacing 4 ]
         (paragraph theme
@@ -181,8 +185,7 @@ viewScreening model data ( id, a ) =
                 (List.intersperse (text " – ")
                     (List.filterMap identity
                         [ Just (text (Kviff.Utils.Translation.date Kviff.Data.timeZone a.time))
-                        , Just (text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time))
-                        , Just (text (Kviff.Utils.Translation.duration (List.foldl (\x acc -> acc + (60 * 1000 * x.duration)) 0 films)))
+                        , Just (text (Kviff.Utils.Translation.time Kviff.Data.timeZone a.time ++ "–" ++ Kviff.Utils.Translation.time Kviff.Data.timeZone endTime))
                         , Maybe.map
                             (\x ->
                                 newTabLink theme
