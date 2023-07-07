@@ -78,6 +78,7 @@ type alias Film =
 type alias FilmAuthors =
     { directors : List String
     , production : List String
+    , producer : String
     , cast : String
     , dop : String
     , screenplay : String
