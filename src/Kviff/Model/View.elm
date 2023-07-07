@@ -135,9 +135,11 @@ viewScreening model data ( id, a ) =
         name : String
         name =
             List.filterMap identity
-                (Kviff.Locale.localize model.locale a.name
-                    :: List.map (\x -> Just (Kviff.Locale.localize model.locale x.localizedName)) films
-                )
+                [ Kviff.Locale.localize model.locale a.name
+                , List.map (\x -> Kviff.Locale.localize model.locale x.localizedName) films
+                    |> String.join ", "
+                    |> emptyStringToNothing
+                ]
                 |> (\x ->
                         case x of
                             [] ->
