@@ -11,11 +11,23 @@ relevantEvents : Kviff.Model.Model -> List ( Id.Id Kviff.Data.Event, Kviff.Data.
 relevantEvents model =
     case model.data of
         Ok data ->
-            List.filter (eventIsRelevant model) (Dict.Any.toList data.events)
-                |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
+            Dict.Any.toList data.events
+                |> List.filter (eventIsRelevant model)
+                |> sortEvents
 
         Err _ ->
             []
+
+
+sortEvents : List ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> List ( Id.Id Kviff.Data.Event, Kviff.Data.Event )
+sortEvents a =
+    List.sortBy
+        (\( _, x ) ->
+            ( Time.posixToMillis (Kviff.Data.eventTime x)
+            , Kviff.Data.eventDuration x
+            )
+        )
+        a
 
 
 eventIsRelevant : Kviff.Model.Model -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Bool
