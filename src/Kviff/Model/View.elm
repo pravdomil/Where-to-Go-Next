@@ -75,15 +75,15 @@ viewBody model =
 
 
 viewError : Kviff.Model.Error -> Element msg
-viewError b =
+viewError a =
     paragraph theme
         [ fontSize 14, fontColor style.fore70 ]
-        [ case b of
+        [ case a of
             Kviff.Model.Loading ->
                 text "Loading..."
 
-            Kviff.Model.HttpError c ->
-                case c of
+            Kviff.Model.HttpError b ->
+                case b of
                     Http.BadUrl _ ->
                         text "Sorry, but application is not available."
 
