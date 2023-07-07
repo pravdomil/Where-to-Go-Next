@@ -211,9 +211,9 @@ viewScreening model data ( id, a ) =
                         ]
 
                     _ ->
-                        List.map
+                        List.concatMap
                             (\x ->
-                                paragraph theme
+                                [ paragraph theme
                                     [ spacing 2, fontSize 14 ]
                                     (case onlyOneFilm of
                                         Just _ ->
@@ -230,6 +230,7 @@ viewScreening model data ( id, a ) =
                                             , text (Kviff.Utils.Html.stripTags (Kviff.Locale.localize model.locale x.description))
                                             ]
                                     )
+                                ]
                             )
                             films
                )
