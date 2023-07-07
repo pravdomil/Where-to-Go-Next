@@ -167,7 +167,7 @@ viewScreening model data ( id, a ) =
                     newTabLink theme
                         []
                         { label = text (Kviff.Locale.localize model.locale b.name)
-                        , url = Kviff.GeoCoordinates.mapyCzLink b.gps
+                        , url = Kviff.GeoCoordinates.mapyCzLink b.coordinates
                         }
 
                 Nothing ->

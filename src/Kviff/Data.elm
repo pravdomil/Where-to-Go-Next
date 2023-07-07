@@ -123,7 +123,7 @@ type alias Category =
 type alias Place =
     { name : Kviff.Locale.Localized String
     , address : String
-    , gps : Kviff.GeoCoordinates.GeoCoordinates
+    , coordinates : Kviff.GeoCoordinates.GeoCoordinates
     , code : String
     }
 
