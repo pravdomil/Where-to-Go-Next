@@ -3,6 +3,8 @@ module Kviff.Model.Update exposing (..)
 import Browser.Dom
 import Json.Decode
 import Kviff.Data
+import Kviff.Data.Update
+import Kviff.Locale
 import Kviff.Model
 import Kviff.Msg
 import Platform.Extra
@@ -13,7 +15,7 @@ import Time
 init : Json.Decode.Value -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 init _ =
     ( Kviff.Model.Model
-        Kviff.Data.Czech
+        Kviff.Locale.Czech
         Nothing
         (Err Kviff.Model.Loading)
     , Cmd.none
@@ -33,7 +35,7 @@ getTime model =
 getData : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 getData model =
     ( model
-    , Kviff.Data.getData
+    , Kviff.Data.Update.get
         |> Task.attempt Kviff.Msg.DataReceived
     )
 
