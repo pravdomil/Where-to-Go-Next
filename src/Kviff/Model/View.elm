@@ -193,6 +193,16 @@ viewScreening model data ( id, a ) =
                         Nothing ->
                             none
                     , text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories))
+                    , case onlyOneFilm of
+                        Just b ->
+                            newTabLink theme
+                                []
+                                { label = text "CSFD"
+                                , url = "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode b.originalName
+                                }
+
+                        Nothing ->
+                            none
                     ]
                 )
             :: (case films of
