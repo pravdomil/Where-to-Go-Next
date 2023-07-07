@@ -22,10 +22,10 @@ view model =
 --
 
 
-viewBody : Kviff.Model.Model -> Element Msg
+viewBody : Kviff.Model.Model -> Element Kviff.Msg.Msg
 viewBody model =
     let
-        localeChooser : Element Msg
+        localeChooser : Element Kviff.Msg.Msg
         localeChooser =
             case model.locale of
                 Api.English ->
@@ -80,7 +80,7 @@ viewError b =
         ]
 
 
-viewEvents : Kviff.Model.Model -> List Api.Event -> Element Msg
+viewEvents : Kviff.Model.Model -> List Api.Event -> Element Kviff.Msg.Msg
 viewEvents model a =
     let
         imgContain : Element msg
@@ -96,7 +96,7 @@ viewEvents model a =
         (imgContain :: List.indexedMap (viewEvent model) a)
 
 
-viewEvent : Kviff.Model.Model -> Int -> Api.Event -> Element Msg
+viewEvent : Kviff.Model.Model -> Int -> Api.Event -> Element Kviff.Msg.Msg
 viewEvent model index a =
     textColumn [ spacing 4, id (eventId index) ]
         [ textColumn [ spacing 2 ]
