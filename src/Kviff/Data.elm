@@ -43,6 +43,7 @@ type alias Screening =
     , place : Id.Id Place
     , films : List ScreeningFilm
     , time : Time.Posix
+    , duration : Int
     }
 
 
@@ -199,7 +200,7 @@ screeningDecoder =
     Json.Decode.map2
         Tuple.pair
         (Json.Decode.field "code" (Json.Decode.map Id.fromString Json.Decode.string))
-        (Json.Decode.map5
+        (Json.Decode.map6
             Screening
             (Json.Decode.map2 Kviff.Locale.Localized
                 (Json.Decode.field "title_en" maybeEmptyStringDecoder)
@@ -220,6 +221,7 @@ screeningDecoder =
                 )
             )
             (Json.Decode.field "timestamp" posixDecoder)
+            (Json.Decode.succeed 0)
         )
 
 
