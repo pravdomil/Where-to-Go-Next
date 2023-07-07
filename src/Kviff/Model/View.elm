@@ -15,7 +15,6 @@ import Kviff.Utils.Html
 import Kviff.Utils.Theme exposing (..)
 import Kviff.Utils.Translation
 import Time
-import Url
 
 
 view : Kviff.Model.Model -> Browser.Document Kviff.Msg.Msg
