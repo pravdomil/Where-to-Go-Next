@@ -108,8 +108,33 @@ viewEvents model a =
     column [ width fill, spacing 20 ]
         (Dict.Any.toList a.events
             |> List.sortBy (\( _, x ) -> Time.posixToMillis (Kviff.Data.eventTime x))
-            |> List.map (viewEvent model a)
+            |> List.foldl
+                (\( id, x ) ( acc, time ) ->
+                    let
+                        maybePrependDate : List (Element msg) -> List (Element msg)
+                        maybePrependDate b =
+                            if Time.toDay Kviff.Data.timeZone (Kviff.Data.eventTime x) == Time.toDay Kviff.Data.timeZone time then
+                                b
+
+                            else
+                                viewDay (Kviff.Data.eventTime x) :: b
+                    in
+                    ( viewEvent model a ( id, x ) :: maybePrependDate acc
+                    , Kviff.Data.eventTime x
+                    )
+                )
+                ( [], Time.millisToPosix 0 )
+            |> Tuple.first
+            |> List.reverse
         )
+
+
+viewDay : Time.Posix -> Element msg
+viewDay a =
+    heading1 theme
+        [ fontSize 48, paddingXY 0 128, fontCenter ]
+        [ text (Kviff.Utils.Translation.date Kviff.Data.timeZone a)
+        ]
 
 
 viewEvent : Kviff.Model.Model -> Kviff.Data.Data -> ( Id.Id Kviff.Data.Event, Kviff.Data.Event ) -> Element Kviff.Msg.Msg
