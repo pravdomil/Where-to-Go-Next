@@ -7,8 +7,8 @@ import Kviff.Model
 import Time
 
 
-upcomingEvents : Kviff.Model.Model -> List ( Id.Id Kviff.Data.Event, Kviff.Data.Event )
-upcomingEvents model =
+relevantEvents : Kviff.Model.Model -> List ( Id.Id Kviff.Data.Event, Kviff.Data.Event )
+relevantEvents model =
     let
         hour : Int
         hour =

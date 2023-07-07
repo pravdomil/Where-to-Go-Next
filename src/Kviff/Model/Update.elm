@@ -83,7 +83,7 @@ subscriptions _ =
 
 scrollToUpcomingEvent : Kviff.Model.Model -> ( Kviff.Model.Model, Cmd Kviff.Msg.Msg )
 scrollToUpcomingEvent model =
-    case Kviff.Model.Utils.upcomingEvents model of
+    case Kviff.Model.Utils.relevantEvents model of
         ( id, _ ) :: _ ->
             ( model
             , Browser.Dom.getElement (Kviff.ElementId.toString (Kviff.ElementId.Event id))
