@@ -40,12 +40,18 @@ eventTime a =
 type alias Screening =
     { name : Kviff.Locale.Localized (Maybe String)
     , type_ : ScreeningType
-    , films :
-        List
-            { filmId : Id.Id Film
-            , note : Kviff.Locale.Localized String
-            }
+    , films : List ScreeningFilm
     , time : Time.Posix
+    }
+
+
+
+--
+
+
+type alias ScreeningFilm =
+    { filmId : Id.Id Film
+    , note : Kviff.Locale.Localized String
     }
 
 
@@ -197,7 +203,7 @@ screeningDecoder =
             (Json.Decode.field "films"
                 (Json.Decode.list
                     (Json.Decode.map2
-                        (\x x2 -> { filmId = x, note = x2 })
+                        ScreeningFilm
                         (Json.Decode.field "id_film" idDecoder)
                         (Json.Decode.map2 Kviff.Locale.Localized
                             (Json.Decode.field "screening_note_en" Json.Decode.string)
