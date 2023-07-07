@@ -27,49 +27,34 @@ locale a =
 time : Time.Zone -> Time.Posix -> String
 time zone a =
     let
-        monthToInt : Time.Month -> Int
-        monthToInt b =
+        weekdayToString : Time.Weekday -> String
+        weekdayToString b =
             case b of
-                Time.Jan ->
-                    1
+                Time.Mon ->
+                    "Mon"
 
-                Time.Feb ->
-                    2
+                Time.Tue ->
+                    "Tue"
 
-                Time.Mar ->
-                    3
+                Time.Wed ->
+                    "Wed"
 
-                Time.Apr ->
-                    4
+                Time.Thu ->
+                    "Thu"
 
-                Time.May ->
-                    5
+                Time.Fri ->
+                    "Fri"
 
-                Time.Jun ->
-                    6
+                Time.Sat ->
+                    "Sat"
 
-                Time.Jul ->
-                    7
-
-                Time.Aug ->
-                    8
-
-                Time.Sep ->
-                    9
-
-                Time.Oct ->
-                    10
-
-                Time.Nov ->
-                    11
-
-                Time.Dec ->
-                    12
+                Time.Sun ->
+                    "Sun"
     in
-    String.fromInt (Time.toDay zone a)
-        ++ ". "
-        ++ String.fromInt (monthToInt (Time.toMonth zone a))
-        ++ ". "
+    weekdayToString (Time.toWeekday zone a)
+        ++ " "
+        ++ String.fromInt (Time.toDay zone a)
+        ++ " - "
         ++ String.padLeft 2 '0' (String.fromInt (Time.toHour zone a))
         ++ ":"
         ++ String.padLeft 2 '0' (String.fromInt (Time.toMinute zone a))
