@@ -188,7 +188,7 @@ viewScreening model data ( id, a ) =
                         , Just (text (Id.toString id))
                         , Just (text (String.join ", " (List.map (\x -> Kviff.Locale.localize model.locale x.name) categories)))
                         , Maybe.map
-                            (\x ->
+                            (\( _, x ) ->
                                 newTabLink theme
                                     []
                                     { label = text "CSFD"
