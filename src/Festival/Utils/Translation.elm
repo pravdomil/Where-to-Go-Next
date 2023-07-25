@@ -6,7 +6,7 @@ import Time
 
 title : String
 title =
-    "Pravdomil KVIFF Program"
+    "Festival Program"
 
 
 footer : String
