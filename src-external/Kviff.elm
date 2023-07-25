@@ -201,12 +201,12 @@ filmDecoder =
             )
             (Json.Decode.map (Dict.Any.fromList Id.toString) (Json.Decode.field "id_sekce" (Json.Decode.map (\x -> [ ( x, () ) ]) idDecoder)))
             (Json.Decode.map2 Festival.Locale.Localized
-                (Json.Decode.map (\x -> "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode x)
-                    (Json.Decode.field "id_film" Json.Decode.string)
+                (Json.Decode.map (\x -> "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode (Id.toString x))
+                    (Json.Decode.field "id_film" idDecoder)
                 )
                 (Json.Decode.map
-                    (\x -> "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode x)
-                    (Json.Decode.field "id_film" Json.Decode.string)
+                    (\x -> "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode (Id.toString x))
+                    (Json.Decode.field "id_film" idDecoder)
                 )
             )
             (Json.Decode.map (\x -> "https://www.imdb.com/find/?q=" ++ x) (Json.Decode.field "nazev_orig" Json.Decode.string))
