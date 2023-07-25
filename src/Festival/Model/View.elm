@@ -290,7 +290,7 @@ viewScreening model data ( id, a ) =
                                             , newTabLink theme
                                                 []
                                                 { label = text (Festival.Locale.localize model.locale x.name)
-                                                , url = Festival.Data.csfdLink x
+                                                , url = x.csfdLink
                                                 }
                                             , text " "
                                             , text (Festival.Utils.Html.stripTags (Festival.Locale.localize model.locale x.description))
