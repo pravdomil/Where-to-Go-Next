@@ -24,8 +24,8 @@ getIds =
         regex =
             Regex.fromString "href=\"/detail/\\?film=([^\"]+)\"" |> Maybe.withDefault Regex.never
 
-        idsDecoder : String -> Result String (List (Id.Id Festival.Data.Film))
-        idsDecoder a =
+        decoder : String -> Result String (List (Id.Id Festival.Data.Film))
+        decoder a =
             Regex.find regex a
                 |> List.filterMap
                     (\x ->
@@ -41,7 +41,7 @@ getIds =
         , headers = []
         , url = "https://program.lfs.cz/"
         , body = Http.emptyBody
-        , resolver = Http.stringResolver (Http.Resolver.helper idsDecoder)
+        , resolver = Http.stringResolver (Http.Resolver.helper decoder)
         , timeout = Just 30000
         }
 
