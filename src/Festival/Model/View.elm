@@ -245,7 +245,7 @@ viewScreening model data ( id, a ) =
                                 newTabLink theme
                                     []
                                     { label = text "IMDb"
-                                    , url = Festival.Data.imdbLink x
+                                    , url = x.imdbLink
                                     }
                             )
                             onlyOneFilm
