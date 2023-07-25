@@ -5,7 +5,6 @@ import Festival.GeoCoordinates
 import Festival.Locale
 import Id
 import Time
-import Url
 
 
 type alias Data =
@@ -87,6 +86,9 @@ type alias Film =
     , duration : Int
     , country : Festival.Locale.Localized String
     , categories : Dict.Any.Dict (Id.Id Category) ()
+    , link : Festival.Locale.Localized String
+    , imdbLink : String
+    , csfdLink : String
 
     --
     , internalNote : String
@@ -132,27 +134,3 @@ type alias Place =
     , coordinates : Festival.GeoCoordinates.GeoCoordinates
     , code : String
     }
-
-
-
---
-
-
-filmLink : Festival.Locale.Locale -> Id.Id Film -> String
-filmLink locale a =
-    case locale of
-        Festival.Locale.English ->
-            "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode (Id.toString a)
-
-        Festival.Locale.Czech ->
-            "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode (Id.toString a)
-
-
-imdbLink : Film -> String
-imdbLink a =
-    "https://www.imdb.com/find/?q=" ++ Url.percentEncode a.originalName
-
-
-csfdLink : Film -> String
-csfdLink a =
-    "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode a.originalName
