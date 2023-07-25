@@ -236,7 +236,7 @@ viewScreening model data ( id, a ) =
                                 newTabLink theme
                                     []
                                     { label = text "CSFD"
-                                    , url = Festival.Data.csfdLink x
+                                    , url = x.csfdLink
                                     }
                             )
                             onlyOneFilm
