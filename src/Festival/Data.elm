@@ -15,6 +15,15 @@ type alias Data =
     }
 
 
+empty : Data
+empty =
+    Data
+        Dict.Any.empty
+        Dict.Any.empty
+        Dict.Any.empty
+        Dict.Any.empty
+
+
 
 --
 
