@@ -18,18 +18,22 @@ init _ =
     ( Festival.Model.Model
         Festival.Locale.Czech
         (Time.millisToPosix 0)
+        (Time.customZone 0 [])
         (Err Festival.Model.Loading)
     , Cmd.none
     )
-        |> Platform.Extra.andThen getTime
+        |> Platform.Extra.andThen getTimeAndZone
         |> Platform.Extra.andThen getData
 
 
-getTime : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
-getTime model =
+getTimeAndZone : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
+getTimeAndZone model =
     ( model
-    , Time.now
-        |> Task.perform Festival.Msg.TimeReceived
+    , Task.map2
+        Tuple.pair
+        Time.now
+        Time.here
+        |> Task.perform Festival.Msg.TimeAndZoneReceived
     )
 
 
@@ -51,8 +55,8 @@ update msg =
         Festival.Msg.LocaleRequested b ->
             \x -> ( { x | locale = b }, Cmd.none )
 
-        Festival.Msg.TimeReceived b ->
-            \x -> ( { x | time = b }, Cmd.none )
+        Festival.Msg.TimeAndZoneReceived ( b, c ) ->
+            \x -> ( { x | time = b, timeZone = c }, Cmd.none )
 
         Festival.Msg.DataReceived b ->
             case b of

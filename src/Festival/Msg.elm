@@ -9,7 +9,7 @@ import Time
 
 type Msg
     = LocaleRequested Festival.Locale.Locale
-    | TimeReceived Time.Posix
+    | TimeAndZoneReceived ( Time.Posix, Time.Zone )
       --
     | DataReceived (Result Http.Error Festival.Data.Data)
       --

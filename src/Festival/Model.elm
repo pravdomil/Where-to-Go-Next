@@ -9,6 +9,7 @@ import Time
 type alias Model =
     { locale : Festival.Locale.Locale
     , time : Time.Posix
+    , timeZone : Time.Zone
     , data : Result Error Festival.Data.Data
     }
 
