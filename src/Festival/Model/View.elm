@@ -209,8 +209,8 @@ viewScreening model data ( id, a ) =
                 [ spacing 2, fontSize 14, fontColor style.fore50 ]
                 (List.intersperse (text " – ")
                     (List.filterMap identity
-                        [ Just (text (Festival.Utils.Translation.date Festival.Data.timeZone a.time))
-                        , Just (text (Festival.Utils.Translation.time Festival.Data.timeZone a.time ++ "–" ++ Festival.Utils.Translation.time Festival.Data.timeZone endTime))
+                        [ Just (text (Festival.Utils.Translation.date model.timeZone a.time))
+                        , Just (text (Festival.Utils.Translation.time model.timeZone a.time ++ "–" ++ Festival.Utils.Translation.time Festival.Data.timeZone endTime))
                         , Maybe.map
                             (\x ->
                                 newTabLink theme
