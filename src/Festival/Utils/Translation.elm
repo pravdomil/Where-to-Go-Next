@@ -1,6 +1,6 @@
-module Kviff.Utils.Translation exposing (..)
+module Festival.Utils.Translation exposing (..)
 
-import Kviff.Locale
+import Festival.Locale
 import Time
 
 
@@ -14,13 +14,13 @@ footer =
     "You are welcome!"
 
 
-locale : Kviff.Locale.Locale -> String
+locale : Festival.Locale.Locale -> String
 locale a =
     case a of
-        Kviff.Locale.English ->
+        Festival.Locale.English ->
             "EN"
 
-        Kviff.Locale.Czech ->
+        Festival.Locale.Czech ->
             "CZ"
 
 

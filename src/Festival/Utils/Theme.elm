@@ -1,4 +1,4 @@
-module Kviff.Utils.Theme exposing (..)
+module Festival.Utils.Theme exposing (..)
 
 import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Theme

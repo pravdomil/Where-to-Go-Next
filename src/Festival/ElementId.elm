@@ -1,12 +1,12 @@
-module Kviff.ElementId exposing (..)
+module Festival.ElementId exposing (..)
 
 import Element.PravdomilUi
+import Festival.Data
 import Id
-import Kviff.Data
 
 
 type ElementId
-    = Event (Id.Id Kviff.Data.Event)
+    = Event (Id.Id Festival.Data.Event)
 
 
 toString : ElementId -> String

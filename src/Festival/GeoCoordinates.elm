@@ -1,4 +1,4 @@
-module Kviff.GeoCoordinates exposing (..)
+module Festival.GeoCoordinates exposing (..)
 
 import Json.Decode
 import Parser

@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Kviff.Main
+import Festival.Main
 
 
 main =
-    Kviff.Main.main
+    Festival.Main.main

@@ -1,13 +1,13 @@
-module Kviff.Data.Update exposing (..)
+module Festival.Data.Update exposing (..)
 
+import Festival.Data
 import Http
 import Http.Resolver
 import Json.Decode
-import Kviff.Data
 import Task
 
 
-get : Task.Task Http.Error Kviff.Data.Data
+get : Task.Task Http.Error Festival.Data.Data
 get =
     let
         request : Json.Decode.Decoder a -> String -> Task.Task Http.Error a
@@ -21,4 +21,4 @@ get =
                 , timeout = Just 30000
                 }
     in
-    request Kviff.Data.decoder "catalog"
+    request Festival.Data.decoder "catalog"

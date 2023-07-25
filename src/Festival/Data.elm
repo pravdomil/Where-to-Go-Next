@@ -1,11 +1,11 @@
-module Kviff.Data exposing (..)
+module Festival.Data exposing (..)
 
 import Dict.Any
+import Festival.GeoCoordinates
+import Festival.Locale
 import Id
 import Iso8601
 import Json.Decode
-import Kviff.GeoCoordinates
-import Kviff.Locale
 import Time
 import Url
 
@@ -45,7 +45,7 @@ eventDuration a =
 
 
 type alias Screening =
-    { name : Kviff.Locale.Localized (Maybe String)
+    { name : Festival.Locale.Localized (Maybe String)
     , type_ : ScreeningType
     , place : Id.Id Place
     , films : List ScreeningFilm
@@ -60,7 +60,7 @@ type alias Screening =
 
 type alias ScreeningFilm =
     { filmId : Id.Id Film
-    , note : Kviff.Locale.Localized String
+    , note : Festival.Locale.Localized String
     }
 
 
@@ -78,16 +78,16 @@ type ScreeningType
 
 
 type alias Film =
-    { name : Kviff.Locale.Localized String
+    { name : Festival.Locale.Localized String
     , originalName : String
-    , description : Kviff.Locale.Localized String
+    , description : Festival.Locale.Localized String
     , images : List String
 
     --
     , authors : FilmAuthors
     , year : Int
     , duration : Int
-    , country : Kviff.Locale.Localized String
+    , country : Festival.Locale.Localized String
     , categories : Dict.Any.Dict (Id.Id Category) ()
 
     --
@@ -118,8 +118,8 @@ type alias FilmAuthors =
 
 
 type alias Category =
-    { name : Kviff.Locale.Localized String
-    , description : Kviff.Locale.Localized String
+    { name : Festival.Locale.Localized String
+    , description : Festival.Locale.Localized String
     , order : Int
     }
 
@@ -129,9 +129,9 @@ type alias Category =
 
 
 type alias Place =
-    { name : Kviff.Locale.Localized String
+    { name : Festival.Locale.Localized String
     , address : String
-    , coordinates : Kviff.GeoCoordinates.GeoCoordinates
+    , coordinates : Festival.GeoCoordinates.GeoCoordinates
     , code : String
     }
 
@@ -150,13 +150,13 @@ timeZone =
     Time.customZone timeOffset []
 
 
-filmLink : Kviff.Locale.Locale -> Id.Id Film -> String
+filmLink : Festival.Locale.Locale -> Id.Id Film -> String
 filmLink locale a =
     case locale of
-        Kviff.Locale.English ->
+        Festival.Locale.English ->
             "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode (Id.toString a)
 
-        Kviff.Locale.Czech ->
+        Festival.Locale.Czech ->
             "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode (Id.toString a)
 
 
@@ -238,7 +238,7 @@ screeningDecoder =
         (Json.Decode.field "code" (Json.Decode.map Id.fromString Json.Decode.string))
         (Json.Decode.map6
             Screening
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "title_en" maybeEmptyStringDecoder)
                 (Json.Decode.field "title_cz" maybeEmptyStringDecoder)
             )
@@ -249,7 +249,7 @@ screeningDecoder =
                     (Json.Decode.map2
                         ScreeningFilm
                         (Json.Decode.field "id_film" idDecoder)
-                        (Json.Decode.map2 Kviff.Locale.Localized
+                        (Json.Decode.map2 Festival.Locale.Localized
                             (Json.Decode.field "screening_note_en" Json.Decode.string)
                             (Json.Decode.field "screening_note_cz" Json.Decode.string)
                         )
@@ -316,12 +316,12 @@ filmDecoder =
         (Json.Decode.field "id_film" idDecoder)
         (map10
             Film
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "nazev_en" Json.Decode.string)
                 (Json.Decode.field "nazev_cz" Json.Decode.string)
             )
             (Json.Decode.field "nazev_orig" Json.Decode.string)
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "film_en" Json.Decode.string)
                 (Json.Decode.field "film_cz" Json.Decode.string)
             )
@@ -329,7 +329,7 @@ filmDecoder =
             filmAuthorsDecoder
             (Json.Decode.field "rok" Json.Decode.int)
             (Json.Decode.field "delka" Json.Decode.int)
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "zeme_en" Json.Decode.string)
                 (Json.Decode.field "zeme_cz" Json.Decode.string)
             )
@@ -372,11 +372,11 @@ categoryDecoder =
         (Json.Decode.field "id_sekce" idDecoder)
         (Json.Decode.map3
             Category
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "name_en" Json.Decode.string)
                 (Json.Decode.field "name_cz" Json.Decode.string)
             )
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "popis_en" Json.Decode.string)
                 (Json.Decode.field "popis_cz" Json.Decode.string)
             )
@@ -416,12 +416,12 @@ placeDecoder =
         (Json.Decode.field "theatre_misto_id" idDecoder)
         (Json.Decode.map4
             Place
-            (Json.Decode.map2 Kviff.Locale.Localized
+            (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "theatre_en" Json.Decode.string)
                 (Json.Decode.field "theatre_cz" Json.Decode.string)
             )
             (Json.Decode.field "theatre_misto_adresa" Json.Decode.string)
-            (Json.Decode.field "theatre_misto_gps" Kviff.GeoCoordinates.decoder)
+            (Json.Decode.field "theatre_misto_gps" Festival.GeoCoordinates.decoder)
             (Json.Decode.field "theatre_code" Json.Decode.string)
         )
 

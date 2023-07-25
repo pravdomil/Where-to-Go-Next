@@ -1,4 +1,4 @@
-module Kviff.Locale exposing (..)
+module Festival.Locale exposing (..)
 
 
 type Locale

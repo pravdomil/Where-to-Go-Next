@@ -1,4 +1,4 @@
-module Kviff.Utils.Html exposing (..)
+module Festival.Utils.Html exposing (..)
 
 import Html.Parser
 
