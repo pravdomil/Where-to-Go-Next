@@ -223,11 +223,11 @@ viewScreening model data ( id, a ) =
                         , Just (text (Id.toString id))
                         , Just (text (String.join ", " (List.map (\x -> Festival.Locale.localize model.locale x.name) categories)))
                         , Maybe.map
-                            (\( x, _ ) ->
+                            (\( _, x ) ->
                                 newTabLink theme
                                     []
                                     { label = text "Info"
-                                    , url = Festival.Data.filmLink model.locale x
+                                    , url = Festival.Locale.localize model.locale x.link
                                     }
                             )
                             onlyOneFilm
