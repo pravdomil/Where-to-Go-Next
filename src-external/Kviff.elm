@@ -1,4 +1,4 @@
-module Festival.Data.Update exposing (..)
+module Kviff exposing (..)
 
 import Festival.Data
 import Http

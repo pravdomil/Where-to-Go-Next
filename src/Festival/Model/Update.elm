@@ -1,13 +1,13 @@
 module Festival.Model.Update exposing (..)
 
 import Browser.Dom
-import Festival.Data.Update
 import Festival.ElementId
 import Festival.Locale
 import Festival.Model
 import Festival.Model.Utils
 import Festival.Msg
 import Json.Decode
+import Kviff
 import Platform.Extra
 import Task
 import Time
@@ -36,7 +36,7 @@ getTime model =
 getData : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
 getData model =
     ( model
-    , Festival.Data.Update.get
+    , Kviff.get
         |> Task.attempt Festival.Msg.DataReceived
     )
 
