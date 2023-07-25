@@ -8,6 +8,7 @@ import Festival.Model.Utils
 import Festival.Msg
 import Json.Decode
 import Kviff
+import Lfs
 import Platform.Extra
 import Task
 import Time
@@ -23,7 +24,6 @@ init _ =
     , Cmd.none
     )
         |> Platform.Extra.andThen getTimeAndZone
-        |> Platform.Extra.andThen getData
 
 
 getTimeAndZone : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
@@ -37,12 +37,13 @@ getTimeAndZone model =
     )
 
 
-getData : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
-getData model =
-    ( model
-    , Kviff.get
-        |> Task.attempt Festival.Msg.DataReceived
-    )
+getData : Time.Posix -> Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
+getData now model =
+    if Time.posixToMillis now > 1689811200000 then
+        ( model, Lfs.get |> Task.attempt Festival.Msg.DataReceived )
+
+    else
+        ( model, Kviff.get |> Task.attempt Festival.Msg.DataReceived )
 
 
 
@@ -56,7 +57,8 @@ update msg =
             \x -> ( { x | locale = b }, Cmd.none )
 
         Festival.Msg.TimeAndZoneReceived ( b, c ) ->
-            \x -> ( { x | time = b, timeZone = c }, Cmd.none )
+            (\x -> ( { x | time = b, timeZone = c }, Cmd.none ))
+                >> Platform.Extra.andThen (getData b)
 
         Festival.Msg.DataReceived b ->
             case b of
