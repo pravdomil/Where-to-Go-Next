@@ -180,7 +180,7 @@ filmDecoder =
     Json.Decode.map2
         Tuple.pair
         (Json.Decode.field "id_film" idDecoder)
-        (map10
+        (map13
             Festival.Data.Film
             (Json.Decode.map2 Festival.Locale.Localized
                 (Json.Decode.field "nazev_en" Json.Decode.string)
@@ -200,6 +200,17 @@ filmDecoder =
                 (Json.Decode.field "zeme_cz" Json.Decode.string)
             )
             (Json.Decode.map (Dict.Any.fromList Id.toString) (Json.Decode.field "id_sekce" (Json.Decode.map (\x -> [ ( x, () ) ]) idDecoder)))
+            (Json.Decode.map2 Festival.Locale.Localized
+                (Json.Decode.map (\x -> "https://www.kviff.com/en/programme/film/1/" ++ Url.percentEncode x)
+                    (Json.Decode.field "id_film" Json.Decode.string)
+                )
+                (Json.Decode.map
+                    (\x -> "https://www.kviff.com/cs/program/film/1/" ++ Url.percentEncode x)
+                    (Json.Decode.field "id_film" Json.Decode.string)
+                )
+            )
+            (Json.Decode.map (\x -> "https://www.imdb.com/find/?q=" ++ x) (Json.Decode.field "nazev_orig" Json.Decode.string))
+            (Json.Decode.map (\x -> "https://www.csfd.cz/hledat/?q=" ++ x) (Json.Decode.field "nazev_orig" Json.Decode.string))
             (Json.Decode.field "poznamky" Json.Decode.string)
         )
 
@@ -320,6 +331,15 @@ map10 fn a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 =
         (\x x2 -> x x2)
         (map9 fn a1 a2 a3 a4 a5 a6 a7 a8 a9)
         a10
+
+
+map13 fn a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 =
+    Json.Decode.map4
+        (\x x2 x3 x4 -> x x2 x3 x4)
+        (map10 fn a1 a2 a3 a4 a5 a6 a7 a8 a9 a10)
+        a11
+        a12
+        a13
 
 
 maybeEmptyStringDecoder : Json.Decode.Decoder (Maybe String)
