@@ -209,8 +209,8 @@ filmDecoder =
                     (Json.Decode.field "id_film" idDecoder)
                 )
             )
-            (Json.Decode.map (\x -> "https://www.imdb.com/find/?q=" ++ x) (Json.Decode.field "nazev_orig" Json.Decode.string))
-            (Json.Decode.map (\x -> "https://www.csfd.cz/hledat/?q=" ++ x) (Json.Decode.field "nazev_orig" Json.Decode.string))
+            (Json.Decode.map (\x -> "https://www.imdb.com/find/?q=" ++ Url.percentEncode x) (Json.Decode.field "nazev_orig" Json.Decode.string))
+            (Json.Decode.map (\x -> "https://www.csfd.cz/hledat/?q=" ++ Url.percentEncode x) (Json.Decode.field "nazev_orig" Json.Decode.string))
             (Json.Decode.field "poznamky" Json.Decode.string)
         )
 
