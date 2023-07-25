@@ -114,11 +114,11 @@ viewEvents model a =
                     let
                         maybePrependDate : List (Element msg) -> List (Element msg)
                         maybePrependDate b =
-                            if Time.toDay Festival.Data.timeZone (Festival.Data.eventTime x) == Time.toDay Festival.Data.timeZone time then
+                            if Time.toDay model.timeZone (Festival.Data.eventTime x) == Time.toDay model.timeZone time then
                                 b
 
                             else
-                                viewDay (Festival.Data.eventTime x) :: b
+                                viewDay model (Festival.Data.eventTime x) :: b
                     in
                     ( viewEvent model a ( id, x ) :: maybePrependDate acc
                     , Festival.Data.eventTime x
@@ -130,11 +130,11 @@ viewEvents model a =
         )
 
 
-viewDay : Time.Posix -> Element msg
-viewDay a =
+viewDay : Festival.Model.Model -> Time.Posix -> Element msg
+viewDay model a =
     heading1 theme
         [ fontSize 48, paddingXY 0 64 ]
-        [ text (Festival.Utils.Translation.date Festival.Data.timeZone a)
+        [ text (Festival.Utils.Translation.date model.timeZone a)
         ]
 
 
@@ -210,7 +210,7 @@ viewScreening model data ( id, a ) =
                 (List.intersperse (text " – ")
                     (List.filterMap identity
                         [ Just (text (Festival.Utils.Translation.date model.timeZone a.time))
-                        , Just (text (Festival.Utils.Translation.time model.timeZone a.time ++ "–" ++ Festival.Utils.Translation.time Festival.Data.timeZone endTime))
+                        , Just (text (Festival.Utils.Translation.time model.timeZone a.time ++ "–" ++ Festival.Utils.Translation.time model.timeZone endTime))
                         , Maybe.map
                             (\x ->
                                 newTabLink theme
