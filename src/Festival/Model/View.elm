@@ -299,7 +299,7 @@ viewScreening model data ( id, a ) =
                                             ]
                                     )
                                 , paragraph
-                                    [ spacing 2, fontSize 10, fontColor style.fore50 ]
+                                    [ spacing 2, Element.Font.size 10, Element.Font.color mutedText ]
                                     [ text (String.fromInt x.year)
                                     , text " | "
                                     , text (Festival.Locale.localize model.locale x.country)
