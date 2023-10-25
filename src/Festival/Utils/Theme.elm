@@ -70,7 +70,3 @@ fore50 =
 
 primaryBack =
     rgb 0.2471 0.5961 1
-
-
-primaryFore =
-    rgb 1 1 1
