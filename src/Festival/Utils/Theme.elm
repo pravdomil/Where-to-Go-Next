@@ -1,6 +1,23 @@
 module Festival.Utils.Theme exposing (..)
 
 import Element exposing (..)
+import Element.Border
+import Element.Font
+import Element.Region
+import Html
+import Html.Attributes
+
+
+type alias EdgesXY =
+    { left : Int
+    , right : Int
+    , top : Int
+    , bottom : Int
+    }
+
+
+
+--
 
 
 back100 =
