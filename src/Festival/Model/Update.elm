@@ -45,6 +45,7 @@ getData model =
     if
         (Festival.Utils.Time.monthToInt (Time.toMonth model.timeZone model.time) >= 7)
             && (Time.toDay model.timeZone model.time >= 15)
+            |> always False
     then
         ( model, Lfs.get |> Task.attempt Festival.Msg.DataReceived )
 
