@@ -46,7 +46,6 @@ viewBody model =
                     button
                         []
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.Czech)
-                        , active = model.locale == Festival.Locale.Czech
                         , onPress = Just (Festival.Msg.LocaleRequested Festival.Locale.Czech)
                         }
 
@@ -54,7 +53,6 @@ viewBody model =
                     button
                         []
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.English)
-                        , active = model.locale == Festival.Locale.English
                         , onPress = Just (Festival.Msg.LocaleRequested Festival.Locale.English)
                         }
     in
