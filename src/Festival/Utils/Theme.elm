@@ -91,6 +91,21 @@ link_ a =
         :: a
 
 
+button a =
+    height (px 40)
+        :: Element.Font.color blue
+        :: focused
+            [ Element.Border.shadow
+                { color = fromRgb ((\x -> { x | alpha = 0.4 }) (toRgb blue))
+                , offset = ( 0, 0 )
+                , blur = 0
+                , size = 4
+                }
+            ]
+        :: Element.Border.rounded 4
+        :: a
+
+
 
 --
 
