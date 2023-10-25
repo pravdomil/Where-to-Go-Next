@@ -82,7 +82,7 @@ viewBody model =
 viewError : Festival.Model.Error -> Element msg
 viewError a =
     paragraph
-        [ spacing 2, fontSize 14, fontColor style.fore50 ]
+        [ spacing 2, Element.Font.size 14, Element.Font.color mutedText ]
         [ case a of
             Festival.Model.Loading ->
                 text "Loading…"
