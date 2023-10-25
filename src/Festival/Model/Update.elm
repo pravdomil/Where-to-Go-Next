@@ -47,10 +47,18 @@ getData model =
             && (Time.toDay model.timeZone model.time >= 15)
             |> always False
     then
-        ( model, Lfs.get |> Task.attempt Festival.Msg.DataReceived )
+        ( model
+        , Task.attempt
+            Festival.Msg.DataReceived
+            Lfs.get
+        )
 
     else
-        ( model, Kviff.get |> Task.attempt Festival.Msg.DataReceived )
+        ( model
+        , Task.attempt
+            Festival.Msg.DataReceived
+            Kviff.get
+        )
 
 
 
