@@ -204,7 +204,7 @@ viewScreening model data ( id, a ) =
     in
     column [ width fill, spacing 4, Festival.ElementId.toId (Festival.ElementId.Event (Id.toAny id)), alpha alphaValue ]
         (paragraph
-            [ fontSemiBold ]
+            [ Element.Font.semiBold ]
             [ textEllipsis [] name
             ]
             :: paragraph
