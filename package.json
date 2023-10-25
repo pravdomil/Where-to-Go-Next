@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "elm-codec": "github:pravdomil/elm-codec",
     "elm-data": "github:pravdomil/elm-data",
-    "elm-utils": "github:pravdomil/elm-utils",
-    "pravdomil-ui": "github:pravdomil/pravdomil-ui"
+    "elm-ffi": "github:pravdomil/elm-ffi",
+    "elm-serve": "github:pravdomil/elm-serve",
+    "elm-utils": "github:pravdomil/elm-utils"
   }
 }
