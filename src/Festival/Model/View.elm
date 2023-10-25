@@ -106,28 +106,35 @@ viewError a =
 
 viewEvents : Festival.Model.Model -> Festival.Data.Data -> Element Festival.Msg.Msg
 viewEvents model a =
-    column [ width fill, spacing 20 ]
-        (Dict.Any.toList a.events
-            |> Festival.Model.Utils.sortEvents
-            |> List.foldl
-                (\( id, x ) ( acc, time ) ->
-                    let
-                        maybePrependDate : List (Element msg) -> List (Element msg)
-                        maybePrependDate b =
-                            if Time.toDay model.timeZone (Festival.Data.eventTime x) == Time.toDay model.timeZone time then
-                                b
+    case Festival.Model.Utils.sortEvents (Dict.Any.toList a.events) of
+        [] ->
+            paragraph
+                [ spacing 2, Element.Font.size 14, Element.Font.color mutedText ]
+                [ text "Stay home."
+                ]
 
-                            else
-                                viewDay model (Festival.Data.eventTime x) :: b
-                    in
-                    ( viewEvent model a ( id, x ) :: maybePrependDate acc
-                    , Festival.Data.eventTime x
-                    )
+        b ->
+            column [ width fill, spacing 20 ]
+                (b
+                    |> List.foldl
+                        (\( id, x ) ( acc, time ) ->
+                            let
+                                maybePrependDate : List (Element msg) -> List (Element msg)
+                                maybePrependDate c =
+                                    if Time.toDay model.timeZone (Festival.Data.eventTime x) == Time.toDay model.timeZone time then
+                                        c
+
+                                    else
+                                        viewDay model (Festival.Data.eventTime x) :: c
+                            in
+                            ( viewEvent model a ( id, x ) :: maybePrependDate acc
+                            , Festival.Data.eventTime x
+                            )
+                        )
+                        ( [], Time.millisToPosix 0 )
+                    |> Tuple.first
+                    |> List.reverse
                 )
-                ( [], Time.millisToPosix 0 )
-            |> Tuple.first
-            |> List.reverse
-        )
 
 
 viewDay : Festival.Model.Model -> Time.Posix -> Element msg
