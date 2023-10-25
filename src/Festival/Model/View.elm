@@ -2,7 +2,7 @@ module Festival.Model.View exposing (..)
 
 import Browser
 import Dict.Any
-import Element.PravdomilUi exposing (..)
+import Element exposing (..)
 import Festival.Data
 import Festival.ElementId
 import Festival.GeoCoordinates
@@ -23,7 +23,7 @@ view : Festival.Model.Model -> Browser.Document Festival.Msg.Msg
 view model =
     { title = Festival.Utils.Translation.title
     , body =
-        [ layout theme [] (viewBody model)
+        [ layout [] (viewBody model)
         , Html.node "style" [] [ Html.text "body{background-color:rgb(0,0,0)}" ]
         , Html.node "style" [] [ Html.text "img{object-fit:contain;}" ]
         ]
@@ -41,7 +41,7 @@ viewBody model =
         localeChooser =
             case model.locale of
                 Festival.Locale.English ->
-                    button theme
+                    button
                         []
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.Czech)
                         , active = model.locale == Festival.Locale.Czech
@@ -49,7 +49,7 @@ viewBody model =
                         }
 
                 Festival.Locale.Czech ->
-                    button theme
+                    button
                         []
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.English)
                         , active = model.locale == Festival.Locale.English
@@ -58,7 +58,7 @@ viewBody model =
     in
     column [ width (fill |> maximum (320 * 2)), spacing 32, padding 8, centerX ]
         [ row [ width fill, spacing 8 ]
-            [ heading1 theme
+            [ heading1
                 [ width fill ]
                 [ text Festival.Utils.Translation.title
                 ]
@@ -70,7 +70,7 @@ viewBody model =
 
             Err b ->
                 viewError b
-        , paragraph theme
+        , paragraph
             [ spacing 2, fontSize 14, fontColor style.fore50, fontCenter ]
             [ text Festival.Utils.Translation.footer
             ]
@@ -79,7 +79,7 @@ viewBody model =
 
 viewError : Festival.Model.Error -> Element msg
 viewError a =
-    paragraph theme
+    paragraph
         [ spacing 2, fontSize 14, fontColor style.fore50 ]
         [ case a of
             Festival.Model.Loading ->
@@ -132,7 +132,7 @@ viewEvents model a =
 
 viewDay : Festival.Model.Model -> Time.Posix -> Element msg
 viewDay model a =
-    heading1 theme
+    heading1
         [ fontSize 48, paddingXY 0 64 ]
         [ text (Festival.Utils.Translation.date model.timeZone a)
         ]
@@ -201,11 +201,11 @@ viewScreening model data ( id, a ) =
                 0.5
     in
     column [ width fill, spacing 4, Festival.ElementId.toId (Festival.ElementId.Event (Id.toAny id)), alpha alphaValue ]
-        (paragraph theme
+        (paragraph
             [ fontSemiBold ]
             [ textEllipsis [] name
             ]
-            :: paragraph theme
+            :: paragraph
                 [ spacing 2, fontSize 14, fontColor style.fore50 ]
                 (List.intersperse (text " – ")
                     (List.filterMap identity
@@ -213,7 +213,7 @@ viewScreening model data ( id, a ) =
                         , Just (text (Festival.Utils.Translation.time model.timeZone a.time ++ "–" ++ Festival.Utils.Translation.time model.timeZone endTime))
                         , Maybe.map
                             (\x ->
-                                newTabLink theme
+                                newTabLink
                                     []
                                     { label = text (Festival.Locale.localize model.locale x.name)
                                     , url = Festival.GeoCoordinates.mapyCzLink x.coordinates
@@ -224,7 +224,7 @@ viewScreening model data ( id, a ) =
                         , Just (text (String.join ", " (List.map (\x -> Festival.Locale.localize model.locale x.name) categories)))
                         , Maybe.map
                             (\( _, x ) ->
-                                newTabLink theme
+                                newTabLink
                                     []
                                     { label = text "Info"
                                     , url = Festival.Locale.localize model.locale x.link
@@ -233,7 +233,7 @@ viewScreening model data ( id, a ) =
                             onlyOneFilm
                         , Maybe.map
                             (\( _, x ) ->
-                                newTabLink theme
+                                newTabLink
                                     []
                                     { label = text "CSFD"
                                     , url = x.csfdLink
@@ -242,7 +242,7 @@ viewScreening model data ( id, a ) =
                             onlyOneFilm
                         , Maybe.map
                             (\( _, x ) ->
-                                newTabLink theme
+                                newTabLink
                                     []
                                     { label = text "IMDb"
                                     , url = x.imdbLink
@@ -260,7 +260,7 @@ viewScreening model data ( id, a ) =
                     _ ->
                         List.concatMap
                             (\( _, x ) ->
-                                [ paragraph theme
+                                [ paragraph
                                     [ spacing 2, fontSize 14, fontColor style.fore70 ]
                                     (case onlyOneFilm of
                                         Just _ ->
@@ -287,7 +287,7 @@ viewScreening model data ( id, a ) =
 
                                                 Nothing ->
                                                     none
-                                            , newTabLink theme
+                                            , newTabLink
                                                 []
                                                 { label = text (Festival.Locale.localize model.locale x.name)
                                                 , url = x.csfdLink
@@ -296,7 +296,7 @@ viewScreening model data ( id, a ) =
                                             , text (Festival.Utils.Html.stripTags (Festival.Locale.localize model.locale x.description))
                                             ]
                                     )
-                                , paragraph theme
+                                , paragraph
                                     [ spacing 2, fontSize 10, fontColor style.fore50 ]
                                     [ text (String.fromInt x.year)
                                     , text " | "
