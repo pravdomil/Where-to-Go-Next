@@ -214,7 +214,7 @@ viewScreening model data ( id, a ) =
                         , Maybe.map
                             (\x ->
                                 newTabLink
-                                    []
+                                    (link_ [])
                                     { label = text (Festival.Locale.localize model.locale x.name)
                                     , url = Festival.GeoCoordinates.mapyCzLink x.coordinates
                                     }
@@ -225,7 +225,7 @@ viewScreening model data ( id, a ) =
                         , Maybe.map
                             (\( _, x ) ->
                                 newTabLink
-                                    []
+                                    (link_ [])
                                     { label = text "Info"
                                     , url = Festival.Locale.localize model.locale x.link
                                     }
@@ -234,7 +234,7 @@ viewScreening model data ( id, a ) =
                         , Maybe.map
                             (\( _, x ) ->
                                 newTabLink
-                                    []
+                                    (link_ [])
                                     { label = text "CSFD"
                                     , url = x.csfdLink
                                     }
@@ -243,7 +243,7 @@ viewScreening model data ( id, a ) =
                         , Maybe.map
                             (\( _, x ) ->
                                 newTabLink
-                                    []
+                                    (link_ [])
                                     { label = text "IMDb"
                                     , url = x.imdbLink
                                     }
@@ -288,7 +288,7 @@ viewScreening model data ( id, a ) =
                                                 Nothing ->
                                                     none
                                             , newTabLink
-                                                []
+                                                (link_ [])
                                                 { label = text (Festival.Locale.localize model.locale x.name)
                                                 , url = x.csfdLink
                                                 }
