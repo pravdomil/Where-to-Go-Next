@@ -6,7 +6,7 @@ import Time
 
 title : String
 title =
-    "Where to Go Next"
+    "Where to Go Next?"
 
 
 footer : String
