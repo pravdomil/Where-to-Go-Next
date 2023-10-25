@@ -24,6 +24,10 @@ black =
     rgb 0 0 0
 
 
+white =
+    rgb 1 1 1
+
+
 fore70 =
     rgb 0.86 0.88 0.89
 
