@@ -1,7 +1,8 @@
 module Festival.ElementId exposing (..)
 
-import Element.PravdomilUi
+import Element
 import Festival.Data
+import Html.Attributes
 import Id
 
 
@@ -16,6 +17,6 @@ toString a =
             "event-" ++ Id.toString b
 
 
-toId : ElementId -> Element.PravdomilUi.Attribute msg
+toId : ElementId -> Element.Attribute msg
 toId a =
-    Element.PravdomilUi.id (toString a)
+    Element.htmlAttribute (Html.Attributes.id (toString a))
