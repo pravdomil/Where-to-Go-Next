@@ -79,7 +79,6 @@ heading3 a =
 
 link_ a =
     Element.Font.color blue
-        :: Element.Border.rounded 4
         :: focused
             [ Element.Border.shadow
                 { color = fromRgb ((\x -> { x | alpha = 0.4 }) (toRgb blue))
@@ -88,6 +87,7 @@ link_ a =
                 , size = 4
                 }
             ]
+        :: Element.Border.rounded 4
         :: a
 
 
