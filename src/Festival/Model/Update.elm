@@ -30,11 +30,13 @@ init _ =
 getTimeAndZone : Festival.Model.Model -> ( Festival.Model.Model, Cmd Festival.Msg.Msg )
 getTimeAndZone model =
     ( model
-    , Task.map2
-        Tuple.pair
-        Time.now
-        Time.here
-        |> Task.perform Festival.Msg.TimeAndZoneReceived
+    , Task.perform
+        Festival.Msg.TimeAndZoneReceived
+        (Task.map2
+            Tuple.pair
+            Time.now
+            Time.here
+        )
     )
 
 
