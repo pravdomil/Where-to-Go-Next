@@ -23,7 +23,7 @@ view : Festival.Model.Model -> Browser.Document Festival.Msg.Msg
 view model =
     { title = Festival.Utils.Translation.title
     , body =
-        [ layout [] (viewBody model)
+        [ layout (page []) (viewBody model)
         , Html.node "style" [] [ Html.text "body{background-color:rgb(0,0,0)}" ]
         , Html.node "style" [] [ Html.text "img{object-fit:contain;}" ]
         ]
