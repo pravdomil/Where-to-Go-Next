@@ -73,7 +73,7 @@ viewBody model =
             Err b ->
                 viewError b
         , paragraph
-            [ spacing 2, fontSize 14, fontColor style.fore50, fontCenter ]
+            [ spacing 2, Element.Font.size 14, Element.Font.color mutedText, Element.Font.center ]
             [ text Festival.Utils.Translation.footer
             ]
         ]
