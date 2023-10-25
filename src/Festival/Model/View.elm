@@ -60,8 +60,8 @@ viewBody model =
     in
     column [ width (fill |> maximum (320 * 2)), spacing 32, padding 8, centerX ]
         [ row [ width fill, spacing 8 ]
-            [ heading1
-                [ width fill ]
+            [ paragraph
+                (heading1 [ width fill ])
                 [ text Festival.Utils.Translation.title
                 ]
             , localeChooser
