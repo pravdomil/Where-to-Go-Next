@@ -134,8 +134,8 @@ viewEvents model a =
 
 viewDay : Festival.Model.Model -> Time.Posix -> Element msg
 viewDay model a =
-    heading1
-        [ fontSize 48, paddingXY 0 64 ]
+    paragraph
+        (heading1 [ Element.Font.size 48, paddingXY 0 64 ])
         [ text (Festival.Utils.Translation.date model.timeZone a)
         ]
 
