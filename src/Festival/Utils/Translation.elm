@@ -6,7 +6,7 @@ import Time
 
 title : String
 title =
-    "Festival Program"
+    "Where to Go Next"
 
 
 footer : String
