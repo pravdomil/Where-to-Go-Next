@@ -28,11 +28,11 @@ white =
     rgb 1 1 1
 
 
-fore70 =
+lightText =
     rgb 0.86 0.88 0.89
 
 
-fore50 =
+mutedText =
     rgb 0.67 0.7 0.73
 
 
