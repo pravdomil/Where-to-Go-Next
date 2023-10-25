@@ -32,5 +32,5 @@ fore50 =
     rgb 0.67 0.7 0.73
 
 
-primary =
+blue =
     rgb 0.2471 0.5961 1
