@@ -29,12 +29,12 @@ white =
 
 
 lightText =
-    rgb 0.86 0.88 0.89
+    rgb 0.86 0.86 0.86
 
 
 mutedText =
-    rgb 0.67 0.7 0.73
+    rgb 0.68 0.68 0.68
 
 
 blue =
-    rgb 0.2471 0.5961 1
+    rgb 0.25 0.6 1
