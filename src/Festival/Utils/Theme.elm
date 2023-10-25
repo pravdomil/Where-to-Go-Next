@@ -20,7 +20,7 @@ type alias EdgesXY =
 --
 
 
-back100 =
+black =
     rgb 0 0 0
 
 
