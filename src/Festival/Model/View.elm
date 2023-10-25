@@ -208,7 +208,7 @@ viewScreening model data ( id, a ) =
             [ textEllipsis [] name
             ]
             :: paragraph
-                [ spacing 2, fontSize 14, fontColor style.fore50 ]
+                [ spacing 2, Element.Font.size 14, Element.Font.color mutedText ]
                 (List.intersperse (text " – ")
                     (List.filterMap identity
                         [ Just (text (Festival.Utils.Translation.date model.timeZone a.time))
