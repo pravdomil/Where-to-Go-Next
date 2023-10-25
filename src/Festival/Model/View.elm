@@ -263,7 +263,7 @@ viewScreening model data ( id, a ) =
                         List.concatMap
                             (\( _, x ) ->
                                 [ paragraph
-                                    [ spacing 2, fontSize 14, fontColor style.fore70 ]
+                                    [ spacing 2, Element.Font.size 14, Element.Font.color lightText ]
                                     (case onlyOneFilm of
                                         Just _ ->
                                             [ column [ alignRight, spacing 8 ]
