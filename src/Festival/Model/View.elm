@@ -43,15 +43,15 @@ viewBody model =
         localeChooser =
             case model.locale of
                 Festival.Locale.English ->
-                    button
-                        []
+                    Element.Input.button
+                        (button [])
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.Czech)
                         , onPress = Just (Festival.Msg.LocaleRequested Festival.Locale.Czech)
                         }
 
                 Festival.Locale.Czech ->
-                    button
-                        []
+                    Element.Input.button
+                        (button [])
                         { label = text (Festival.Utils.Translation.locale Festival.Locale.English)
                         , onPress = Just (Festival.Msg.LocaleRequested Festival.Locale.English)
                         }
